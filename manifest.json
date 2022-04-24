@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "MouseHunt Bot",
+  "description": "Automate tasks on MouseHunt",
+  "version": "1.0",
+  "homepage_url": "https://github.com/Juneezee/mhbot",
+  "host_permissions": ["https://*.mousehuntgame.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://*.mousehuntgame.com/*"],
+      "js": ["src/bot.js"]
+    }
+  ]
+}
