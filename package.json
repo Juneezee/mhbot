@@ -1,0 +1,26 @@
+{
+  "name": "mhbot",
+  "version": "1.0.0",
+  "description": "Automate tasks on MouseHunt",
+  "homepage": "https://github.com/Juneezee/mhbot#readme",
+  "bugs": {
+    "url": "https://github.com/Juneezee/mhbot/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Eng Zer Jun",
+    "email": "engzerjun@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Juneezee/mhbot.git"
+  },
+  "devDependencies": {
+    "prettier": "2.6.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.6.0"
+  },
+  "private": true
+}
