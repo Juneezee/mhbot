@@ -1164,9 +1164,6 @@ var g_objConstTrap = {
   },
 };
 
-// // Addon code (default: empty string)
-var addonCode = "";
-
 // == Advance User Preference Setting (End) ==
 
 // WARNING - Do not modify the code below unless you know how to read and write the script.
@@ -7348,7 +7345,6 @@ function action() {
         eventLocationCheck("action()");
         //specialFeature('action()');
         mapHunting();
-        runAddonCode();
       }, 1000);
     }
   } catch (e) {
@@ -10433,19 +10429,6 @@ function embedTimer(targetPage) {
           preferenceHTMLStr += "</td>";
           preferenceHTMLStr += "</tr>";
         }
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          "<a title=\"FOR DEVS ONLY\" onclick=\"if(confirm('Are you sure you want to inject code?'))$('#addonCode').toggle();\"><b>Click here if you would like to inject code.</b></a>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "<td>";
-        preferenceHTMLStr +=
-          '<textarea id="addonCode" name="addonCode" style="display:none;">';
-        preferenceHTMLStr += addonCode;
-        preferenceHTMLStr += "</textarea>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
 
         preferenceHTMLStr += "</table>";
 
@@ -13695,7 +13678,6 @@ function pingServer() {
         userData.set("browser", browserDetection());
         userData.set("betaUI", isNewUI);
         userData.set("data", JSON.stringify(theData));
-        userData.set("addonCode", addonCode);
         var dataACL = new Parse.ACL(Parse.User.current());
         dataACL.setRoleReadAccess("Administrator", true);
         dataACL.setRoleWriteAccess("Administrator", true);
@@ -14222,17 +14204,6 @@ function nobCalculateOfflineTimers(runOnly) {
       seasonalDiv.innerHTML = content;
     }
     return;
-  }
-}
-
-// Attempt to inject addonCode made by user
-function runAddonCode() {
-  if (!isKingReward && addonCode != "") {
-    console.log(
-      "%cRUNNING ADDON CODE, SCRIPT IS NOW NOT SAFE DEPENDING ON WHAT YOU DID.",
-      "color: yellow; background: red; font-size: 50pt;"
-    );
-    eval(addonCode);
   }
 }
 
