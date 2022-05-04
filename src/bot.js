@@ -12,12 +12,6 @@ var debugKR = false;
 var hornTimeDelayMin = 10;
 var hornTimeDelayMax = 15;
 
-// // Bot aggressively by ignore all safety measure such as check horn image visible before sounding it. (true/false)
-// // Note: Highly recommended to turn off because it increase the chances of getting caught in botting.
-// // Note: It will ignore the hornTimeDelayMin and hornTimeDelayMax.
-// // Note: It may take a little bit extra of CPU processing power.
-var aggressiveMode = false;
-
 // // Enable trap check once an hour. (true/false)
 var enableTrapCheck = true;
 
@@ -6919,26 +6913,19 @@ function retrieveDataFirst() {
             hornTimeDelayMin +
             Math.round(Math.random() * (hornTimeDelayMax - hornTimeDelayMin));
 
-          if (!aggressiveMode) {
-            // calculation base on the js in Mousehunt
-            var additionalDelayTime = Math.ceil(nextActiveTime * 0.1);
-            // Safety switch
-            //hornTimeDelay += additionalDelayTime + 5;
-            hornTimeDelay += 5;
+          // calculation base on the js in Mousehunt
+          var additionalDelayTime = Math.ceil(nextActiveTime * 0.1);
+          // Safety switch
+          //hornTimeDelay += additionalDelayTime + 5;
+          hornTimeDelay += 5;
 
-            hornTime = nextActiveTime + hornTimeDelay;
-            if (nextActiveTime <= 0) eventLocationCheck();
+          hornTime = nextActiveTime + hornTimeDelay;
+          if (nextActiveTime <= 0) eventLocationCheck();
 
-            lastDateRecorded = undefined;
-            lastDateRecorded = new Date();
+          lastDateRecorded = undefined;
+          lastDateRecorded = new Date();
 
-            additionalDelayTime = undefined;
-          } else {
-            // aggressive mode, no extra delay like time in horn image appear
-            hornTime = nextActiveTime;
-            lastDateRecorded = undefined;
-            lastDateRecorded = new Date();
-          }
+          additionalDelayTime = undefined;
 
           gotHornTime = true;
 
@@ -7167,30 +7154,23 @@ function retrieveData() {
       if (debug)
         console.plog("Horn Time:", nextActiveTime, "Delay:", hornTimeDelay);
 
-      if (!aggressiveMode) {
-        // calculation base on the js in Mousehunt
-        var additionalDelayTime = Math.ceil(nextActiveTime * 0.1);
-        if (
-          timerInterval != "" &&
-          !isNaN(timerInterval) &&
-          timerInterval == 1
-        ) {
-          additionalDelayTime = 2;
-        }
-
-        // safety mode, include extra delay like time in horn image appear
-        //hornTime = nextActiveTime + additionalDelayTime + hornTimeDelay;
-        hornTime = nextActiveTime + hornTimeDelay;
-        lastDateRecorded = undefined;
-        lastDateRecorded = new Date();
-
-        additionalDelayTime = undefined;
-      } else {
-        // aggressive mode, no extra delay like time in horn image appear
-        hornTime = nextActiveTime;
-        lastDateRecorded = undefined;
-        lastDateRecorded = new Date();
+      // calculation base on the js in Mousehunt
+      var additionalDelayTime = Math.ceil(nextActiveTime * 0.1);
+      if (
+        timerInterval != "" &&
+        !isNaN(timerInterval) &&
+        timerInterval == 1
+      ) {
+        additionalDelayTime = 2;
       }
+
+      // safety mode, include extra delay like time in horn image appear
+      //hornTime = nextActiveTime + additionalDelayTime + hornTimeDelay;
+      hornTime = nextActiveTime + hornTimeDelay;
+      lastDateRecorded = undefined;
+      lastDateRecorded = new Date();
+
+      additionalDelayTime = undefined;
     }
 
     CalculateNextTrapCheckInMinute();
@@ -7492,102 +7472,64 @@ function countdownTimer() {
     } else {
       if (enableTrapCheck) {
         // update timer
-        if (!aggressiveMode) {
-          displayTimer(
-            "Horn: " +
-              timeFormat(hornTime) +
-              " | Check: " +
-              timeFormat(checkTime),
+        displayTimer(
+          "Horn: " +
             timeFormat(hornTime) +
-              "  <i>(included extra " +
-              timeFormat(hornTimeDelay) +
-              " delay & +/- 5 seconds different from MouseHunt timer)</i>",
-            timeFormat(checkTime) +
-              "  <i>(included extra " +
-              timeFormat(checkTimeDelay) +
-              " delay)</i>"
-          );
+            " | Check: " +
+            timeFormat(checkTime),
+          timeFormat(hornTime) +
+            "  <i>(included extra " +
+            timeFormat(hornTimeDelay) +
+            " delay & +/- 5 seconds different from MouseHunt timer)</i>",
+          timeFormat(checkTime) +
+            "  <i>(included extra " +
+            timeFormat(checkTimeDelay) +
+            " delay)</i>"
+        );
 
-          // check if user manaually sounded the horn
-          var scriptNode = document.getElementById("scriptNode");
-          if (scriptNode) {
-            var isHornSounded = scriptNode.getAttribute("soundedHornAtt");
-            if (isHornSounded == "true") {
-              // sound horn function do the rest
-              soundHorn();
+        // check if user manaually sounded the horn
+        var scriptNode = document.getElementById("scriptNode");
+        if (scriptNode) {
+          var isHornSounded = scriptNode.getAttribute("soundedHornAtt");
+          if (isHornSounded == "true") {
+            // sound horn function do the rest
+            soundHorn();
 
-              // stop loopping
-              return;
-            }
-            isHornSounded = undefined;
+            // stop loopping
+            return;
           }
-          scriptNode = undefined;
-
-          if (hornTime - hornTimeDelay == 0) eventLocationCheck();
-        } else {
-          displayTimer(
-            "Horn: " +
-              timeFormat(hornTime) +
-              " | Check: " +
-              timeFormat(checkTime),
-            timeFormat(hornTime) + "  <i>(lot faster than MouseHunt timer)</i>",
-            timeFormat(checkTime) +
-              "  <i>(included extra " +
-              timeFormat(checkTimeDelay) +
-              " delay)</i>"
-          );
+          isHornSounded = undefined;
         }
+        scriptNode = undefined;
+
+        if (hornTime - hornTimeDelay == 0) eventLocationCheck();
       } else {
         // update timer
-        if (!aggressiveMode) {
-          displayTimer(
-            "Horn: " + timeFormat(hornTime),
-            timeFormat(hornTime) +
-              "  <i>(included extra " +
-              timeFormat(hornTimeDelay) +
-              " delay & +/- 5 seconds different from MouseHunt timer)</i>",
-            "-"
-          );
+        displayTimer(
+          "Horn: " + timeFormat(hornTime),
+          timeFormat(hornTime) +
+            "  <i>(included extra " +
+            timeFormat(hornTimeDelay) +
+            " delay & +/- 5 seconds different from MouseHunt timer)</i>",
+          "-"
+        );
 
-          // check if user manaually sounded the horn
-          var scriptNode = document.getElementById("scriptNode");
-          if (scriptNode) {
-            var isHornSounded = scriptNode.getAttribute("soundedHornAtt");
-            if (isHornSounded == "true") {
-              // sound horn function do the rest
-              soundHorn();
+        // check if user manaually sounded the horn
+        var scriptNode = document.getElementById("scriptNode");
+        if (scriptNode) {
+          var isHornSounded = scriptNode.getAttribute("soundedHornAtt");
+          if (isHornSounded == "true") {
+            // sound horn function do the rest
+            soundHorn();
 
-              // stop loopping
-              return;
-            }
-            isHornSounded = undefined;
+            // stop loopping
+            return;
           }
-          scriptNode = undefined;
-
-          if (hornTime - hornTimeDelay == 0) eventLocationCheck();
-        } else {
-          displayTimer(
-            "Horn: " + timeFormat(hornTime),
-            timeFormat(hornTime) + "  <i>(lot faster than MouseHunt timer)</i>",
-            "-"
-          );
-
-          // agressive mode should sound the horn whenever it is possible to do so.
-          var headerElement = document.getElementById(header).firstChild;
-          if (headerElement) {
-            // the horn image appear before the timer end
-            if (headerElement.getAttribute("class").indexOf(hornReady) != -1) {
-              // who care, blow the horn first!
-              soundHorn();
-
-              headerElement = undefined;
-
-              // skip all the code below
-              return;
-            }
-          }
-          headerElement = undefined;
+          isHornSounded = undefined;
         }
+        scriptNode = undefined;
+
+        if (hornTime - hornTimeDelay == 0) eventLocationCheck();
       }
 
       // set king reward sum time
@@ -7688,13 +7630,7 @@ function embedTimer(targetPage) {
         // show bot title and version
         var titleElement = document.createElement("div");
         titleElement.setAttribute("id", "titleElement");
-        if (targetPage && aggressiveMode) {
-          titleElement.innerHTML =
-            `<b>MouseHunt AutoBot (version ${scriptVersion})${isNewUI ? " ~ Beta UI" : ""}</b> - <font color='red'>Aggressive Mode</font>`;
-        } else {
-          titleElement.innerHTML =
-            `<b>MouseHunt AutoBot (version ${scriptVersion})${isNewUI ? " ~ Beta UI" : ""}</b>`;
-        }
+        titleElement.innerHTML = `<b>MouseHunt AutoBot (version ${scriptVersion})${isNewUI ? " ~ Beta UI" : ""}</b>`;
         timerDivElement.appendChild(titleElement);
         titleElement = null;
 
@@ -7937,39 +7873,6 @@ function embedTimer(targetPage) {
         preferenceHTMLStr += "<tr>";
         preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
         preferenceHTMLStr +=
-          '<a title="Bot aggressively by ignore all safety measure such as check horn image visible before sounding it"><b>Aggressive Mode</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          "<select id=\"AggressiveModeInput\" onchange=\"var isDisable = (value == 'true') ? 'disabled' : ''; document.getElementById('HornTimeDelayMinInput').disabled=isDisable; document.getElementById('HornTimeDelayMaxInput').disabled=isDisable;\">";
-        if (aggressiveMode) {
-          preferenceHTMLStr += '<option value="false">False</option>';
-          preferenceHTMLStr += '<option value="true" selected>True</option>';
-          temp = "disabled";
-        } else {
-          preferenceHTMLStr += '<option value="false" selected>False</option>';
-          preferenceHTMLStr += '<option value="true">True</option>';
-          temp = "";
-        }
-        preferenceHTMLStr +=
-          '</select>&nbsp;&nbsp;<a title="Extra delay time before sounding the horn (in seconds)"><b>Delay:</b></a>&emsp;';
-        preferenceHTMLStr +=
-          '<input type="number" id="HornTimeDelayMinInput" min="0" max="600" size="5" value="' +
-          hornTimeDelayMin.toString() +
-          '" ' +
-          temp +
-          "> seconds ~ ";
-        preferenceHTMLStr +=
-          '<input type="number" id="HornTimeDelayMaxInput" min="1" max="601" size="5" value="' +
-          hornTimeDelayMax.toString() +
-          '" ' +
-          temp +
-          "> seconds";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
           '<a title="Extra delay time before sounding the horn (in seconds)">';
         preferenceHTMLStr += "<b>Horn Time Delay</b>";
         preferenceHTMLStr += "</a>";
@@ -7977,12 +7880,12 @@ function embedTimer(targetPage) {
         preferenceHTMLStr += "</td>";
         preferenceHTMLStr += '<td style="height:24px">';
         preferenceHTMLStr +=
-          '<input type="text" id="HornTimeDelayMinInput" name="HornTimeDelayMinInput" disabled="disabled" value="' +
+          '<input type="text" id="HornTimeDelayMinInput" name="HornTimeDelayMinInput" value="' +
           hornTimeDelayMin.toString() +
           '"/> seconds';
         preferenceHTMLStr += " ~ ";
         preferenceHTMLStr +=
-          '<input type="text" id="HornTimeDelayMaxInput" name="HornTimeDelayMaxInput" disabled="disabled" value="' +
+          '<input type="text" id="HornTimeDelayMaxInput" name="HornTimeDelayMaxInput" value="' +
           hornTimeDelayMax.toString() +
           '"/> seconds';
         preferenceHTMLStr += "</td>";
@@ -8207,7 +8110,6 @@ function embedTimer(targetPage) {
         preferenceHTMLStr +=
           "<input type=\"button\" id=\"PreferenceSaveInput\" value=\"Save\" onclick=\"\
 				try {\
-				window.localStorage.setItem('AggressiveMode', 		document.getElementById('AggressiveModeInput').value);\
 				window.localStorage.setItem('HornTimeDelayMin', 		document.getElementById('HornTimeDelayMinInput').value);\
 				window.localStorage.setItem('HornTimeDelayMax', 		document.getElementById('HornTimeDelayMaxInput').value);\
 				window.localStorage.setItem('TrapCheck', 				document.getElementById('TrapCheckInput').value);\
@@ -10955,7 +10857,6 @@ function loadPreferenceSettingFromStorage() {
     krDelayMax = getStorageToVariableInt("AutoSolveKRDelayMax", krDelayMax);
     kingsRewardRetry = getStorageToVariableInt("KingsRewardRetry", kingsRewardRetry);
     */
-  aggressiveMode = getStorageToVariableBool("AggressiveMode", aggressiveMode);
   hornTimeDelayMin = getStorageToVariableInt(
     "HornTimeDelayMin",
     hornTimeDelayMin
@@ -11853,140 +11754,121 @@ function soundHorn() {
     }
     scriptNode = null;
 
-    if (!aggressiveMode) {
-      // safety mode, check the horn image is there or not before sound the horn
-      var headerElement = document.getElementById(header);
+    // safety mode, check the horn image is there or not before sound the horn
+    var headerElement = document.getElementById(header);
 
-      if (headerElement) {
-        headerElement = headerElement.firstChild;
-        var headerStatus = headerElement.getAttribute("class");
-        if (headerStatus.indexOf(hornReady) !== -1) {
-          // found the horn image, let's sound the horn!
-          if (debug)
-            console.log(
-              "Header status prior to sounding horn: " + headerStatus
-            );
+    if (headerElement) {
+      headerElement = headerElement.firstChild;
+      var headerStatus = headerElement.getAttribute("class");
+      if (headerStatus.indexOf(hornReady) !== -1) {
+        // found the horn image, let's sound the horn!
+        if (debug)
+          console.log("Header status prior to sounding horn: " + headerStatus);
 
-          // update timer
-          displayTimer(
-            "Blowing The Horn...",
-            "Blowing The Horn...",
-            "Blowing The Horn..."
-          );
+        // update timer
+        displayTimer(
+          "Blowing The Horn...",
+          "Blowing The Horn...",
+          "Blowing The Horn..."
+        );
 
-          // simulate mouse click on the horn
-          hornElement =
-            document.getElementsByClassName(hornButton)[0].firstChild;
-          fireEvent(hornElement, "click");
-          hornElement = null;
+        // simulate mouse click on the horn
+        hornElement = document.getElementsByClassName(hornButton)[0].firstChild;
+        fireEvent(hornElement, "click");
+        hornElement = null;
 
-          // NOB hunt until
-          NOBhuntsLeft--;
-          nobStore(NOBhuntsLeft, "huntsLeft");
-
-          // clean up
-          headerElement = null;
-          headerStatus = null;
-
-          // double check if the horn was already sounded
-          window.setTimeout(function () {
-            afterSoundingHorn();
-          }, 5000);
-        } else if (
-          headerStatus.indexOf("hornsounding") != -1 ||
-          headerStatus.indexOf("hornsounded") != -1
-        ) {
-          // some one just sound the horn...
-
-          // update timer
-          displayTimer(
-            "Synchronizing Data...",
-            "Someone had just sound the horn. Synchronizing data...",
-            "Someone had just sound the horn. Synchronizing data..."
-          );
-
-          // NOB hunt until
-          NOBhuntsLeft--;
-          nobStore(NOBhuntsLeft, "huntsLeft");
-
-          // clean up
-          headerElement = null;
-          headerStatus = null;
-
-          // load the new data
-          window.setTimeout(function () {
-            afterSoundingHorn();
-          }, 5000);
-        } else if (headerStatus.indexOf("hornwaiting") != -1) {
-          // the horn is not appearing, let check the time again
-
-          // update timer
-          displayTimer(
-            "Synchronizing Data...",
-            "Hunter horn is not ready yet. Synchronizing data...",
-            "Hunter horn is not ready yet. Synchronizing data..."
-          );
-
-          // sync the time again, maybe user already click the horn
-          retrieveData();
-
-          checkJournalDate();
-
-          // clean up
-          headerElement = null;
-          headerStatus = null;
-
-          // loop again
-          window.setTimeout(function () {
-            countdownTimer();
-          }, timerRefreshInterval * 1000);
-        } else {
-          // some one steal the horn!
-
-          // update timer
-          displayTimer(
-            "Synchronizing Data...",
-            "Hunter horn is missing. Synchronizing data...",
-            "Hunter horn is missing. Synchronizing data..."
-          );
-
-          // try to click on the horn
-          hornElement =
-            document.getElementsByClassName(hornButton)[0].firstChild;
-          fireEvent(hornElement, "click");
-          hornElement = null;
-
-          // clean up
-          headerElement = null;
-          headerStatus = null;
-
-          // double check if the horn was already sounded
-          window.setTimeout(function () {
-            afterSoundingHorn();
-          }, 5000);
-        }
-      } else {
-        // something wrong, can't even found the header...
+        // NOB hunt until
+        NOBhuntsLeft--;
+        nobStore(NOBhuntsLeft, "huntsLeft");
 
         // clean up
         headerElement = null;
+        headerStatus = null;
 
-        // reload the page see if thing get fixed
-        reloadWithMessage("Fail to find the horn header. Reloading...", false);
+        // double check if the horn was already sounded
+        window.setTimeout(function () {
+          afterSoundingHorn();
+        }, 5000);
+      } else if (
+        headerStatus.indexOf("hornsounding") != -1 ||
+        headerStatus.indexOf("hornsounded") != -1
+      ) {
+        // some one just sound the horn...
+
+        // update timer
+        displayTimer(
+          "Synchronizing Data...",
+          "Someone had just sound the horn. Synchronizing data...",
+          "Someone had just sound the horn. Synchronizing data..."
+        );
+
+        // NOB hunt until
+        NOBhuntsLeft--;
+        nobStore(NOBhuntsLeft, "huntsLeft");
+
+        // clean up
+        headerElement = null;
+        headerStatus = null;
+
+        // load the new data
+        window.setTimeout(function () {
+          afterSoundingHorn();
+        }, 5000);
+      } else if (headerStatus.indexOf("hornwaiting") != -1) {
+        // the horn is not appearing, let check the time again
+
+        // update timer
+        displayTimer(
+          "Synchronizing Data...",
+          "Hunter horn is not ready yet. Synchronizing data...",
+          "Hunter horn is not ready yet. Synchronizing data..."
+        );
+
+        // sync the time again, maybe user already click the horn
+        retrieveData();
+
+        checkJournalDate();
+
+        // clean up
+        headerElement = null;
+        headerStatus = null;
+
+        // loop again
+        window.setTimeout(function () {
+          countdownTimer();
+        }, timerRefreshInterval * 1000);
+      } else {
+        // some one steal the horn!
+
+        // update timer
+        displayTimer(
+          "Synchronizing Data...",
+          "Hunter horn is missing. Synchronizing data...",
+          "Hunter horn is missing. Synchronizing data..."
+        );
+
+        // try to click on the horn
+        hornElement = document.getElementsByClassName(hornButton)[0].firstChild;
+        fireEvent(hornElement, "click");
+        hornElement = null;
+
+        // clean up
+        headerElement = null;
+        headerStatus = null;
+
+        // double check if the horn was already sounded
+        window.setTimeout(function () {
+          afterSoundingHorn();
+        }, 5000);
       }
     } else {
-      // aggressive mode, ignore whatever horn image is there or not, just sound the horn!
+      // something wrong, can't even found the header...
 
-      // simulate mouse click on the horn
-      fireEvent(
-        document.getElementsByClassName(hornButton)[0].firstChild,
-        "click"
-      );
+      // clean up
+      headerElement = null;
 
-      // double check if the horn was already sounded
-      window.setTimeout(function () {
-        afterSoundingHorn();
-      }, 3000);
+      // reload the page see if thing get fixed
+      reloadWithMessage("Fail to find the horn header. Reloading...", false);
     }
   } else {
     document.getElementById("titleElement").parentNode.remove();
