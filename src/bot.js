@@ -1410,7 +1410,6 @@ function FinalizePuzzleImageAnswer(answer) {
       alert(strTemp);
       displayTimer(strTemp, strTemp, strTemp);
       console.perror(strTemp);
-      return;
     } else {
       ++kingsRewardRetry;
       setStorage("KingsRewardRetry", kingsRewardRetry);
@@ -3329,10 +3328,8 @@ function loadTrain(location) {
         fireEvent(document.getElementsByClassName("phaseButton")[0], "click");
         break;
     }
-    return;
   } catch (e) {
     if (debug) console.debug(e.message);
-    return;
   }
 }
 
@@ -4319,7 +4316,6 @@ function ZTower() {
     }
 
     season = null;
-    return;
   } else if (location.indexOf("Zugzwang's Tower") > -1) {
     var ztTriesLeft = 5;
     retrieveMouseList();
@@ -4347,7 +4343,6 @@ function ZTower() {
         clearInterval(intervalZT);
         intervalZT = null;
         mouseList = [];
-        return;
       } else {
         if (debug) console.log(`Count down to ZT bot give up: ${ztTriesLeft}`);
         if (ztTriesLeft === 0) {
@@ -4356,10 +4351,8 @@ function ZTower() {
           mouseList = [];
           ztTriesLeft = null;
         }
-        return;
       }
     }, 3000);
-    return;
   }
 }
 
@@ -5222,7 +5215,6 @@ function labyrinth() {
     checkThenArm("best", "weapon", objBestTrap.weapon.forgotten);
     checkThenArm(null, "bait", "Gouda");
     disarmTrap("trinket");
-    return;
   }
 }
 
@@ -5853,7 +5845,6 @@ function retrieveMouseList() {
       fireEvent(document.getElementById("trapSelectorBrowserClose"), "click");
       clearInterval(intervalRML);
       intervalRML = null;
-      return;
     } else {
       --sec;
       if (sec <= 0) {
@@ -5862,7 +5853,6 @@ function retrieveMouseList() {
       }
     }
   }, 1000);
-  return;
 }
 
 function checkMouse(mouseName) {
@@ -6316,7 +6306,6 @@ function checkCharge(stopDischargeAt) {
       setStorage("discharge", false.toString());
       checkThenArm(null, "trinket", "Eggscavator");
     }
-    return;
   } catch (e) {
     console.perror("checkCharge", e.message);
   }
@@ -6423,7 +6412,6 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
       arming = false;
       intervalGTLFTS = null;
       checkThenArm(sort, category, name, isForcedRetry);
-      return;
     } else if (!isNewUI && tagGroupElement.length > 0) {
       for (i = 0; i < tagGroupElement.length; ++i) {
         tagElement = tagGroupElement[i].getElementsByTagName("a");
@@ -6441,7 +6429,6 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
       arming = false;
       intervalGTLFTS = null;
       checkThenArm(sort, category, name, isForcedRetry);
-      return;
     } else {
       --sec;
       if (sec <= 0) {
@@ -6452,12 +6439,10 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
           clearInterval(intervalGTLFTS);
           arming = false;
           intervalGTLFTS = null;
-          return;
         }
       }
     }
   }, 1000);
-  return;
 }
 
 function getBestTrap() {
@@ -6522,7 +6507,6 @@ function checkThenArm(sort, category, name, isForcedRetry) {
           getTrapListFromTrapSelector(sort, category, name, isForcedRetry);
           clearInterval(intervalCTA1);
           intervalCTA1 = null;
-          return;
         }
       }, 1000);
       return;
@@ -6581,7 +6565,6 @@ function checkThenArm(sort, category, name, isForcedRetry) {
         clickThenArmTrapInterval(sort, category, name);
         clearInterval(intervalCTA);
         intervalCTA = null;
-        return;
       }
     }, 1000);
   }
@@ -6643,7 +6626,6 @@ function clickThenArmTrapInterval(sort, trap, name) {
           closeTrapSelector(trap);
         }
       }
-      return;
     } else {
       --sec;
       if (sec <= 0) {
@@ -6657,12 +6639,10 @@ function clickThenArmTrapInterval(sort, trap, name) {
           clearInterval(intervalCTATI);
           arming = false;
           intervalCTATI = null;
-          return;
         }
       }
     }
   }, 1000);
-  return;
 }
 
 // name = Brie/Gouda/Swiss (brie = wrong)
@@ -7745,7 +7725,6 @@ function embedTimer(targetPage) {
                 window.setTimeout(function () {
                   if (doubleCheckLocation()) {
                     exeScript();
-                    return;
                   }
                 }, 1000);
               });
@@ -10856,7 +10835,6 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
       arming = false;
       intervalGTLFTS = null;
       checkThenArm(sort, category, name, isForcedRetry);
-      return;
     } else if (!isNewUI && tagGroupElement.length > 0) {
       for (i = 0; i < tagGroupElement.length; ++i) {
         tagElement = tagGroupElement[i].getElementsByTagName("a");
@@ -10874,7 +10852,6 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
       arming = false;
       intervalGTLFTS = null;
       checkThenArm(sort, category, name, isForcedRetry);
-      return;
     } else {
       --sec;
       if (sec <= 0) {
@@ -10885,12 +10862,10 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
           clearInterval(intervalGTLFTS);
           arming = false;
           intervalGTLFTS = null;
-          return;
         }
       }
     }
   }, 1000);
-  return;
 }
 
 function getBestTrap() {
@@ -11742,7 +11717,6 @@ function kingRewardCountdownTimer(interval, isReloadToSolve) {
         if (checkResumeButton()) {
           clearInterval(intervalCRB);
           intervalCRB = null;
-          return;
         }
       }, 1000);
       CallKRSolver();
@@ -12319,7 +12293,6 @@ function disarmTrap(trapSelector) {
             //window.setTimeout(function () { closeTrapSelector(trapSelector); }, 1000);
             clearInterval(intervalDT);
             intervalDT = null;
-            return;
           }
         } else {
           x = document.getElementsByClassName(`${trapSelector} canDisarm`);
@@ -12343,7 +12316,6 @@ function disarmTrap(trapSelector) {
       intervalDisarm = null;
     }
   }, 1000);
-  return;
 }
 
 function assignMissingDefault(obj, objDefault) {
@@ -13185,7 +13157,6 @@ function nobRaffle() {
       if (intState === 0 && !($(".tabs a:eq(1)").length > 0)) {
         $("#hgbar_messages").click();
         intState = 1;
-        return;
       } else if ($("a.active.tab")[0].dataset.tab !== "daily_draw") {
         var tabs = $("a.tab");
         var theTab = "";
@@ -13205,7 +13176,6 @@ function nobRaffle() {
         nobRafInt = null;
         intState = null;
         i = null;
-        return;
       } else if (
         intState !== 2 &&
         $("a.active.tab")[0].dataset.tab === "daily_draw"
@@ -13215,7 +13185,6 @@ function nobRaffle() {
           ballot[i].click();
         }
         intState = 2;
-        return;
       } else if ($("a.active.tab")[0].dataset.tab === "daily_draw") {
         intState = 3;
       } else {
@@ -13240,7 +13209,6 @@ function nobRaffle() {
         nobRafInt = null;
         intState = null;
         i = null;
-        return;
       } else if (intState === -1) {
         console.log("Present error, user pls resolve yourself");
         window.clearInterval(nobRafInt);
@@ -13248,7 +13216,6 @@ function nobRaffle() {
         nobRafInt = null;
         intState = null;
         i = null;
-        return;
       }
     }
   }, 2000);
@@ -13263,7 +13230,6 @@ function nobPresent() {
       if (intState === 0 && !($(".tabs a:eq(1)").length > 0)) {
         $("#hgbar_freegifts").click();
         intState = 1;
-        return;
       } else if (intState !== 2) {
         var presents = $('a[class~="return"]');
         for (i = presents.length - 1; i >= 0; i--) {
@@ -13274,7 +13240,6 @@ function nobPresent() {
           presents[i].click();
         }
         intState = 2;
-        return;
       } else if (intState === 2) {
         intState = 3;
       } else {
@@ -13298,14 +13263,12 @@ function nobPresent() {
         nobPresInt = null;
         intState = null;
         i = null;
-        return;
       } else if (intState === -1) {
         console.log("Present error, user pls resolve yourself");
         window.clearInterval(nobPresInt);
         nobPresInt = null;
         intState = null;
         i = null;
-        return;
       }
     }
   }, 2000);
@@ -13591,7 +13554,6 @@ function nobCalculateOfflineTimers(runOnly) {
       content += ` &#126; For ${updateTimer(SeasonRemaining, true)}`;
       seasonalDiv.innerHTML = content;
     }
-    return;
   }
 }
 
