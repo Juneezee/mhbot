@@ -1368,7 +1368,7 @@ function saveToSessionStorage() {
 
   try {
     setSessionStorage(
-      "Log_" + (performance.timing.navigationStart + performance.now()),
+      `Log_${performance.timing.navigationStart + performance.now()}`,
       str
     );
   } catch (e) {
@@ -1406,8 +1406,7 @@ function FinalizePuzzleImageAnswer(answer) {
     if (kingsRewardRetry >= kingsRewardRetryMax) {
       kingsRewardRetry = 0;
       setStorage("KingsRewardRetry", kingsRewardRetry);
-      var strTemp =
-        "Max " + kingsRewardRetryMax + "retries. Pls solve it manually ASAP.";
+      var strTemp = `Max ${kingsRewardRetryMax}retries. Pls solve it manually ASAP.`;
       alert(strTemp);
       displayTimer(strTemp, strTemp, strTemp);
       console.perror(strTemp);
@@ -1430,7 +1429,7 @@ function FinalizePuzzleImageAnswer(answer) {
       }
     }
   } else {
-    if (debug) console.log("Submitting captcha answer: " + answer);
+    if (debug) console.log(`Submitting captcha answer: ${answer}`);
     //Submit answer
 
     //var puzzleAns = document.getElementById("puzzle_answer");
@@ -1439,7 +1438,7 @@ function FinalizePuzzleImageAnswer(answer) {
     )[0];
 
     if (!puzzleAns) {
-      if (debug) console.plog("puzzleAns: " + puzzleAns);
+      if (debug) console.plog(`puzzleAns: ${puzzleAns}`);
       return;
     }
     puzzleAns.value = "";
@@ -1451,7 +1450,7 @@ function FinalizePuzzleImageAnswer(answer) {
     )[0];
 
     if (!puzzleSubmit) {
-      if (debug) console.plog("puzzleSubmit: " + puzzleSubmit);
+      if (debug) console.plog(`puzzleSubmit: ${puzzleSubmit}`);
       return;
     }
 
@@ -1468,7 +1467,7 @@ function FinalizePuzzleImageAnswer(answer) {
 }
 
 function receiveMessage(event) {
-  if (debug) console.debug("Event origin: " + event.origin);
+  if (debug) console.debug(`Event origin: ${event.origin}`);
 
   if (!debugKR && !isAutoSolve) return;
 
@@ -1484,10 +1483,10 @@ function receiveMessage(event) {
           event.data.indexOf("~") + 1,
           event.data.length
         );
-        var strKR = "KR" + separator;
+        var strKR = `KR${separator}`;
         strKR += Date.now() + separator;
         strKR += result + separator;
-        strKR += "RETRY" + kingsRewardRetry;
+        strKR += `RETRY${kingsRewardRetry}`;
         try {
           setStorage(strKR, processedImg);
         } catch (e) {
@@ -1559,8 +1558,7 @@ function CheckKRAnswerCorrectness() {
       if (kingsRewardRetry >= kingsRewardRetryMax) {
         kingsRewardRetry = 0;
         setStorage("KingsRewardRetry", kingsRewardRetry);
-        strTemp =
-          "Max " + kingsRewardRetryMax + "retries. Pls solve it manually ASAP.";
+        strTemp = `Max ${kingsRewardRetryMax}retries. Pls solve it manually ASAP.`;
         alert(strTemp);
         displayTimer(strTemp, strTemp, strTemp);
         console.perror(strTemp);
@@ -1598,13 +1596,13 @@ function addKREntries() {
     // append keyKR for new KR entries under new UI
     for (i = 0; i < window.localStorage.length; i++) {
       keyName = window.localStorage.key(i);
-      if (keyName.indexOf("KR" + separator) > -1 && keyKR.indexOf(keyName) < 0)
+      if (keyName.indexOf(`KR${separator}`) > -1 && keyKR.indexOf(keyName) < 0)
         keyKR.push(keyName);
     }
   }
   maxLen = keyKR.length.toString().length;
   for (i = 0; i < keyKR.length; i++) {
-    if (keyKR[i].indexOf("KR" + separator) > -1) {
+    if (keyKR[i].indexOf(`KR${separator}`) > -1) {
       temp = keyKR[i].split(separator);
       temp.splice(0, 1);
       temp[0] = parseInt(temp[0]);
@@ -1615,17 +1613,12 @@ function addKREntries() {
       replaced = temp.join("&nbsp;&nbsp;");
       temp = count.toString();
       while (temp.length < maxLen) {
-        temp = "0" + temp;
+        temp = `0${temp}`;
       }
-      replaced = temp + ". " + replaced;
-      strInnerHTML +=
-        '<option value="' +
-        keyKR[i] +
-        '"' +
-        (i == keyKR.length - 1 ? " selected" : "") +
-        ">" +
-        replaced +
-        "</option>";
+      replaced = `${temp}. ${replaced}`;
+      strInnerHTML += `<option value="${keyKR[i]}"${
+        i == keyKR.length - 1 ? " selected" : ""
+      }>${replaced}</option>`;
       count++;
     }
   }
@@ -1658,12 +1651,11 @@ if (debugKR) CallKRSolver();
 // CNN KR SOLVER END
 
 // start executing script
-if (debug) console.log("STARTING SCRIPT - ver: " + scriptVersion);
+if (debug) console.log(`STARTING SCRIPT - ver: ${scriptVersion}`);
 if (window.top != window.self) {
   if (debug)
     console.log(
-      "In IFRAME - may cause firefox to error, location: " +
-        window.location.href
+      `In IFRAME - may cause firefox to error, location: ${window.location.href}`
     );
   //return;
 } else {
@@ -1813,9 +1805,9 @@ function exeScript() {
           nobInit();
         } else {
           // fail to retrieve data, display error msg and reload the page
-          document.title =
-            "Fail to retrieve data from page. Reloading in " +
-            timeFormat(errorReloadTime);
+          document.title = `Fail to retrieve data from page. Reloading in ${timeFormat(
+            errorReloadTime
+          )}`;
           window.setTimeout(function () {
             reloadPage(false);
           }, errorReloadTime * 1000);
@@ -1865,9 +1857,9 @@ function exeScript() {
           nobInit();
         } else {
           // fail to retrieve data, display error msg and reload the page
-          document.title =
-            "Fail to retrieve data from page. Reloading in " +
-            timeFormat(errorReloadTime);
+          document.title = `Fail to retrieve data from page. Reloading in ${timeFormat(
+            errorReloadTime
+          )}`;
           window.setTimeout(function () {
             reloadPage(false);
           }, errorReloadTime * 1000);
@@ -1920,9 +1912,9 @@ function exeScript() {
           nobInit();
         } else {
           // fail to retrieve data, display error msg and reload the page
-          document.title =
-            "Fail to retrieve data from page. Reloading in " +
-            timeFormat(errorReloadTime);
+          document.title = `Fail to retrieve data from page. Reloading in ${timeFormat(
+            errorReloadTime
+          )}`;
           window.setTimeout(function () {
             reloadPage(false);
           }, errorReloadTime * 1000);
@@ -1935,7 +1927,7 @@ function exeScript() {
       }
     }
   } catch (e) {
-    if (debug) console.log("exeScript error - " + e);
+    if (debug) console.log(`exeScript error - ${e}`);
   }
 }
 
@@ -2063,7 +2055,7 @@ function getJournalDetail() {
   for (var prop in objResave) {
     if (objResave.hasOwnProperty(prop) && objResave[prop] === true)
       setStorage(
-        "TrapList" + capitalizeFirstLetter(prop),
+        `TrapList${capitalizeFirstLetter(prop)}`,
         objTrapList[prop].join(",")
       );
   }
@@ -2101,13 +2093,13 @@ function getJournalDetailFRift() {
 
 //// EMBEDING ENHANCED EDITION CODE
 function eventLocationCheck(caller) {
-  if (debug) console.log("RUN eventLocationCheck(" + caller + ")");
+  if (debug) console.log(`RUN eventLocationCheck(${caller})`);
 
   var selAlgo = getStorageToVariableStr("eventLocation", "None");
   var temp = "";
 
   if (selAlgo != null && selAlgo != "" && debug)
-    console.debug("Running " + selAlgo + " bot.");
+    console.debug(`Running ${selAlgo} bot.`);
 
   switch (selAlgo) {
     case "Hunt For":
@@ -2314,7 +2306,7 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
       if (isNullOrUndefined(getMapPort)) {
         // direct call jquery
         ajaxPost(
-          window.location.origin + "/managers/ajax/users/relichunter.php",
+          `${window.location.origin}/managers/ajax/users/relichunter.php`,
           objData,
           function (data) {
             console.log(data.treasure_map);
@@ -2342,7 +2334,7 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
         getMapPort.postMessage({
           request: "getUncaught",
           data: objData,
-          url: window.location.origin + "/managers/ajax/users/relichunter.php",
+          url: `${window.location.origin}/managers/ajax/users/relichunter.php`,
           objMapHunting: obj,
         });
       }
@@ -2401,7 +2393,7 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
     if (isNullOrUndefined(getMapPort)) {
       // direct call jquery
       ajaxPost(
-        window.location.origin + "/managers/ajax/users/relichunter.php",
+        `${window.location.origin}/managers/ajax/users/relichunter.php`,
         objData,
         function (data) {
           console.plog("Map discarded");
@@ -2414,7 +2406,7 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
       getMapPort.postMessage({
         request: "discard",
         data: objData,
-        url: window.location.origin + "/managers/ajax/users/relichunter.php",
+        url: `${window.location.origin}/managers/ajax/users/relichunter.php`,
       });
     }
   }
@@ -2889,10 +2881,10 @@ function bwRift() {
       }
     }
   } else {
-  /*else if(strChamberName == 'INGRESS'){
-	}
-	else if(strChamberName == 'FROZEN'){
-	}*/
+    /*else if(strChamberName == 'INGRESS'){
+    }
+    else if(strChamberName == 'FROZEN'){
+    }*/
     for (var prop in objTemp) {
       if (objTemp.hasOwnProperty(prop))
         objTemp[prop] = objBWRift.master[prop][nIndex];
@@ -3060,7 +3052,7 @@ function Halloween2014() {
       "halloween2014Hud-areaDetails-warning active"
     ).length;
     var isWarning = warning > 0;
-    console.debug("Current Area Name: " + areaName + " Warning: " + isWarning);
+    console.debug(`Current Area Name: ${areaName} Warning: ${isWarning}`);
     if (isWarning) {
       var trickContainer = document.getElementsByClassName(
         "halloween2014Hud-bait trick_cheese clear-block"
@@ -3094,7 +3086,7 @@ function Halloween2015() {
       "halloweenHud-areaDetails-warning active"
     ).length;
     var isWarning = warning > 0;
-    console.debug("Current Area Name: " + areaName + " Warning: " + isWarning);
+    console.debug(`Current Area Name: ${areaName} Warning: ${isWarning}`);
     if (isWarning) {
       var trickContainer = document.getElementsByClassName(
         "halloweenHud-bait trick_cheese clear-block"
@@ -3271,7 +3263,7 @@ function gnawnianExpress(load) {
                 attacking[i].className.indexOf(" ")
               );
           }
-          console.debug("Raiders are attacking " + attacking);
+          console.debug(`Raiders are attacking ${attacking}`);
           switch (attacking) {
             case "roof":
               checkThenArm(null, "trinket", "Roof Rack", "disarm");
@@ -3291,8 +3283,7 @@ function gnawnianExpress(load) {
           break;
         case "Daredevil Canyon":
           checkThenArm("best", "weapon", daredevilCanyonTrap);
-          if (debug)
-            console.log("Starting to look for " + coalCharm + " charm.");
+          if (debug) console.log(`Starting to look for ${coalCharm} charm.`);
           checkThenArm("best", "trinket", coalCharm);
           if (debug) console.log("Done looking for charm.");
           if (load) loadTrain("canyon");
@@ -3765,7 +3756,7 @@ function iceberg(waxOrSticky) {
         .getElementsByClassName("user_progress")[0]
         .textContent.replace(",", "")
     );
-    console.debug("In " + stage + " at " + progress + " feets right now.");
+    console.debug(`In ${stage} at ${progress} feets right now.`);
 
     // Check if theres general
     if (
@@ -4298,7 +4289,7 @@ function ZTower() {
     checkThenArm("best", "base", ["Seasonal", "Fissure", "Golden Tournament"]);
 
     var season = nobCalculateOfflineTimers("seasonal");
-    console.debug("It is " + season + " in Seasonal Gardens right now.");
+    console.debug(`It is ${season} in Seasonal Gardens right now.`);
     switch (season) {
       case "Spring":
         checkThenArm("best", "weapon", bestPhysical);
@@ -4351,7 +4342,7 @@ function ZTower() {
         mouseList = [];
         return;
       } else {
-        if (debug) console.log("Count down to ZT bot give up: " + ztTriesLeft);
+        if (debug) console.log(`Count down to ZT bot give up: ${ztTriesLeft}`);
         if (ztTriesLeft == 0) {
           clearInterval(intervalZT);
           intervalZT = null;
@@ -5286,13 +5277,7 @@ function fieryWarpath(superCharm) {
     }
 
     console.log(
-      "Current Wave: " +
-        wave +
-        ", with " +
-        streak +
-        " streak(s) in " +
-        ", mice retreating? " +
-        retreating
+      `Current Wave: ${wave}, with ${streak} streak(s) in , mice retreating? ${retreating}`
     );
 
     if (retreating) {
@@ -5412,7 +5397,7 @@ function fw() {
     }
   }
   if (temp) setStorage("FW", JSON.stringify(objFWAll));
-  var objFW = objFWAll["wave" + wave];
+  var objFW = objFWAll[`wave${wave}`];
   if (wave == 4) {
     var nWardenLeft = parseInt(
       document
@@ -5457,7 +5442,7 @@ function fw() {
 
   console.plog("Current streak mouse type:", objFW.streakMouse);
   var population = document
-    .getElementsByClassName("warpathHUD-wave wave_" + wave.toString())[0]
+    .getElementsByClassName(`warpathHUD-wave wave_${wave.toString()}`)[0]
     .getElementsByClassName("warpathHUD-wave-mouse-population");
   objFW.population = {
     all: [],
@@ -5577,18 +5562,17 @@ function fw() {
         var count = countArrayElement(temp, objFW.population[objFW.focusType]);
         if (count > 1) {
           if (objFW.population[objFW.focusType][objPopulation.SCOUT] == temp)
-            charmName = objFW.charmType[0] + " Scout";
+            charmName = `${objFW.charmType[0]} Scout`;
           else if (
             objFW.population[objFW.focusType][objPopulation.ARCHER] == temp
           )
-            charmName = objFW.charmType[0] + " Archer";
+            charmName = `${objFW.charmType[0]} Archer`;
           else if (
             objFW.population[objFW.focusType][objPopulation.WARRIOR] == temp
           )
-            charmName = objFW.charmType[0] + " Warrior";
+            charmName = `${objFW.charmType[0]} Warrior`;
         } else {
-          charmName =
-            objFW.charmType[0] + " " + objPopulation.name[indexMinMax];
+          charmName = `${objFW.charmType[0]} ${objPopulation.name[indexMinMax]}`;
         }
       } else {
         if (indexMinMax + 3 == objPopulation.ARTILLERY && nSum != 1) {
@@ -5600,10 +5584,10 @@ function fw() {
         indexMinMax += 3;
         if (indexMinMax == objPopulation.CAVALRY) {
           checkThenArm("best", "weapon", objBestTrap.weapon.tactical);
-          charmName = objFW.charmType[0] + " Cavalry";
+          charmName = `${objFW.charmType[0]} Cavalry`;
         } else if (indexMinMax == objPopulation.MAGE) {
           checkThenArm("best", "weapon", objBestTrap.weapon.hydro);
-          charmName = objFW.charmType[0] + " Mage";
+          charmName = `${objFW.charmType[0]} Mage`;
         } else if (indexMinMax == objPopulation.ARTILLERY) {
           checkThenArm("best", "weapon", objBestTrap.weapon.arcane);
           if (charmArmed.indexOf("Warpath") > -1) charmName = "None";
@@ -5620,12 +5604,13 @@ function fw() {
       else {
         if (objFW.charmType[objFW.streak].indexOf("Super") > -1)
           charmName = [
-            objFW.charmType[objFW.streak] + " " + objPopulation.name[index],
-            "Warpath " + objPopulation.name[index],
+            `${objFW.charmType[objFW.streak]} ${objPopulation.name[index]}`,
+            `Warpath ${objPopulation.name[index]}`,
           ];
         else
-          charmName =
-            objFW.charmType[objFW.streak] + " " + objPopulation.name[index];
+          charmName = `${objFW.charmType[objFW.streak]} ${
+            objPopulation.name[index]
+          }`;
       }
 
       if (index == objPopulation.CAVALRY)
@@ -5758,7 +5743,7 @@ function fRiftArmTrap(obj, nIndex, bReadJournal) {
   else if (obj.bait[nIndex] == "ORDER_MASTER") {
     var arr = obj.masterOrder[nIndex].split("=>");
     arr = arr.map(function (e) {
-      return "Rift " + e;
+      return `Rift ${e}`;
     });
     checkThenArm("best", "bait", arr);
   } else if (obj.bait[nIndex] == "BALANCE_MASTER") {
@@ -6128,8 +6113,8 @@ function gwh() {
         .replace(/ /g, "_");
     } else {
       if (arrZone[nIndex].isOrderZone)
-        arrZone[nIndex].codename = "ORDER" + arrZone[nIndex].tier;
-      else arrZone[nIndex].codename = "NONORDER" + arrZone[nIndex].tier;
+        arrZone[nIndex].codename = `ORDER${arrZone[nIndex].tier}`;
+      else arrZone[nIndex].codename = `NONORDER${arrZone[nIndex].tier}`;
     }
     arrZone[nIndex].depth = parseInt(
       userVariable.sprites[i].name.substr(nIndexTemp + 1, 5)
@@ -6350,13 +6335,13 @@ function buildTrapList(afterBuilding, failedBuilding) {
         afterBuilding();
       },
       function (error) {
-        console.log("BuildTrapList ajax error: " + error);
+        console.log(`BuildTrapList ajax error: ${error}`);
         returning = false;
         failedBuilding();
       }
     );
   } catch (e) {
-    console.log("BuildTrapList try error: " + e);
+    console.log(`BuildTrapList try error: ${e}`);
   } finally {
     //clickTrapSelector(category);
     return returning;
@@ -6372,7 +6357,7 @@ function getTrapList(category) {
 
   for (var i = 0; i < arrObjList.length; i++) {
     temp = getStorageToVariableStr(
-      "TrapList" + capitalizeFirstLetter(arrObjList[i]),
+      `TrapList${capitalizeFirstLetter(arrObjList[i])}`,
       ""
     );
     if (temp === "") {
@@ -6394,7 +6379,7 @@ function clearTrapList(category) {
   else arrObjList = [category];
 
   for (var i = 0; i < arrObjList.length; i++) {
-    removeStorage("TrapList" + capitalizeFirstLetter(arrObjList[i]));
+    removeStorage(`TrapList${capitalizeFirstLetter(arrObjList[i])}`);
     objTrapList[arrObjList[i]] = [];
   }
 }
@@ -6424,7 +6409,7 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
         objTrapList[category].push(nameElement);
       }
       setStorage(
-        "TrapList" + capitalizeFirstLetter(category),
+        `TrapList${capitalizeFirstLetter(category)}`,
         objTrapList[category].join(",")
       );
       clearInterval(intervalGTLFTS);
@@ -6442,7 +6427,7 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
         }
       }
       setStorage(
-        "TrapList" + capitalizeFirstLetter(category),
+        `TrapList${capitalizeFirstLetter(category)}`,
         objTrapList[category].join(",")
       );
       clearInterval(intervalGTLFTS);
@@ -6521,7 +6506,7 @@ function checkThenArm(sort, category, name, isForcedRetry) {
   if (isNullOrUndefined(isForcedRetry)) isForcedRetry = true;
 
   var trapArmed = undefined;
-  var userVariable = getPageVariable("user." + category + "_name");
+  var userVariable = getPageVariable(`user.${category}_name`);
   if (sort == "best") {
     getTrapList(category);
     if (objTrapList[category].length === 0) {
@@ -6578,7 +6563,7 @@ function checkThenArm(sort, category, name, isForcedRetry) {
   if (trapArmed === undefined && isForcedRetry) {
     console.plog(
       name.join("/"),
-      "not found in TrapList" + capitalizeFirstLetter(category)
+      `not found in TrapList${capitalizeFirstLetter(category)}`
     );
     clearTrapList(category);
     checkThenArm(sort, category, name, false);
@@ -6706,7 +6691,7 @@ function armTrapClassicUI(sort, trap, name) {
           if (objTrapList[trap].indexOf(nameElement) < 0) {
             objTrapList[trap].unshift(nameElement);
             setStorage(
-              "TrapList" + capitalizeFirstLetter(trap),
+              `TrapList${capitalizeFirstLetter(trap)}`,
               objTrapList[trap].join(",")
             );
           }
@@ -6720,7 +6705,7 @@ function armTrapClassicUI(sort, trap, name) {
       if (objTrapList[trap][i].indexOf(name) === 0) {
         objTrapList[trap].splice(i, 1);
         setStorage(
-          "TrapList" + capitalizeFirstLetter(trap),
+          `TrapList${capitalizeFirstLetter(trap)}`,
           objTrapList[trap].join(",")
         );
         break;
@@ -6751,7 +6736,7 @@ function armTrapNewUI(sort, trap, name) {
   if (sort == "best" || sort == "any") name = name[0];
 
   if (itemEle.length > 0) {
-    console.plog("Trying to arm " + name);
+    console.plog(`Trying to arm ${name}`);
     for (var i = 0; i < itemEle.length; i++) {
       nameElement = itemEle[i].getElementsByClassName(
         "campPage-trap-itemBrowser-item-name"
@@ -6768,11 +6753,11 @@ function armTrapNewUI(sort, trap, name) {
         if (objTrapList[trap].indexOf(nameElement) < 0) {
           objTrapList[trap].unshift(nameElement);
           setStorage(
-            "TrapList" + capitalizeFirstLetter(trap),
+            `TrapList${capitalizeFirstLetter(trap)}`,
             objTrapList[trap].join(",")
           );
         }
-        console.plog(name + " armed");
+        console.plog(`${name} armed`);
         return ARMED;
       }
     }
@@ -6782,7 +6767,7 @@ function armTrapNewUI(sort, trap, name) {
       if (objTrapList[trap][i].indexOf(name) === 0) {
         objTrapList[trap].splice(i, 1);
         setStorage(
-          "TrapList" + capitalizeFirstLetter(trap),
+          `TrapList${capitalizeFirstLetter(trap)}`,
           objTrapList[trap].join(",")
         );
         break;
@@ -6801,7 +6786,7 @@ function clickTrapSelector(strSelect, bForceClick) {
   if (isNullOrUndefined(bForceClick)) bForceClick = false;
   if (isNewUI) {
     var armedItem = document.getElementsByClassName(
-      "campPage-trap-armedItem " + strSelect
+      `campPage-trap-armedItem ${strSelect}`
     )[0];
     var arrTemp = armedItem.getAttribute("class").split(" ");
     if (bForceClick !== true && arrTemp[arrTemp.length - 1] == "active") {
@@ -6813,7 +6798,7 @@ function clickTrapSelector(strSelect, bForceClick) {
   } else {
     if (
       bForceClick !== true &&
-      document.getElementsByClassName("showComponents " + strSelect).length > 0
+      document.getElementsByClassName(`showComponents ${strSelect}`).length > 0
     ) {
       // trap selector opened
       arming = true;
@@ -6848,7 +6833,7 @@ function clickTrapSelector(strSelect, bForceClick) {
 function closeTrapSelector(category) {
   if (isNewUI) {
     var armedItem = document.getElementsByClassName(
-      "campPage-trap-armedItem " + category
+      `campPage-trap-armedItem ${category}`
     )[0];
     if (
       !isNullOrUndefined(armedItem) &&
@@ -6860,7 +6845,7 @@ function closeTrapSelector(category) {
     }
   } else {
     if (
-      document.getElementsByClassName("showComponents " + category).length > 0
+      document.getElementsByClassName(`showComponents ${category}`).length > 0
     ) {
       fireEvent(document.getElementById("trapSelectorBrowserClose"), "click");
       console.plog("Trap selector", category, "closed");
@@ -6900,10 +6885,9 @@ function retrieveDataFirst() {
           nextActiveTime = parseInt(hornTimerString);
           if (debug)
             console.log(
-              "From substr: " +
-                nextActiveTime +
-                ", from page var: " +
-                getPageVariable("user.next_activeturn_seconds")
+              `From substr: ${nextActiveTime}, from page var: ${getPageVariable(
+                "user.next_activeturn_seconds"
+              )}`
             );
 
           hornTimeDelay =
@@ -6945,7 +6929,7 @@ function retrieveDataFirst() {
           );
           isKingReward = hasPuzzleString != "false";
 
-          if (debug) console.log("Fetched isKingReward: " + isKingReward);
+          if (debug) console.log(`Fetched isKingReward: ${isKingReward}`);
 
           gotPuzzle = true;
 
@@ -6968,7 +6952,7 @@ function retrieveDataFirst() {
           );
           baitQuantity = parseInt(baitQuantityString);
 
-          if (debug) console.log("Fetched baitQuantity: " + baitQuantity);
+          if (debug) console.log(`Fetched baitQuantity: ${baitQuantity}`);
 
           gotBaitQuantity = true;
 
@@ -6989,7 +6973,7 @@ function retrieveDataFirst() {
           );
           currentLocation = locationString;
 
-          if (debug) console.log("Fetched currentLocation: " + currentLocation);
+          if (debug) console.log(`Fetched currentLocation: ${currentLocation}`);
 
           locationStartIndex = undefined;
           locationEndIndex = undefined;
@@ -7038,7 +7022,7 @@ function retrieveDataFirst() {
     gotPuzzle = undefined;
     gotBaitQuantity = undefined;
 
-    if (debug) console.log("END retrieveDataFirst with " + retrieveSuccess);
+    if (debug) console.log(`END retrieveDataFirst with ${retrieveSuccess}`);
 
     return retrieveSuccess;
   } catch (e) {
@@ -7153,11 +7137,7 @@ function retrieveData() {
 
       // calculation base on the js in Mousehunt
       var additionalDelayTime = Math.ceil(nextActiveTime * 0.1);
-      if (
-        timerInterval != "" &&
-        !isNaN(timerInterval) &&
-        timerInterval == 1
-      ) {
+      if (timerInterval != "" && !isNaN(timerInterval) && timerInterval == 1) {
         additionalDelayTime = 2;
       }
 
@@ -7175,7 +7155,7 @@ function retrieveData() {
     eventLocationCheck("retrieveData()");
     mapHunting();
   } catch (e) {
-    if (debug) console.log("retrieveData() ERROR - " + e);
+    if (debug) console.log(`retrieveData() ERROR - ${e}`);
   }
 }
 
@@ -7235,7 +7215,7 @@ function action() {
     if (isKingReward) {
       kingRewardAction();
       notifyMe(
-        "KR NOW - " + getPageVariable("user.username"),
+        `KR NOW - ${getPageVariable("user.username")}`,
         "http://3.bp.blogspot.com/_O2yZIhpq9E8/TBoAMw0fMNI/AAAAAAAAAxo/1ytaIxQQz4o/s1600/Subliminal+Message.JPG",
         "Kings Reward NOW"
       );
@@ -7250,43 +7230,31 @@ function action() {
       if (fbPlatform) {
         if (secureConnection) {
           displayLocation(
-            "<span style='color: red; '>" +
-              currentLocation +
-              "</span> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='https://www.mousehuntgame.com/canvas/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+            `<span style="color: red; ">${currentLocation}</span> [<a onclick='window.localStorage.removeItem("huntLocation");' href="https://www.mousehuntgame.com/canvas/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
           );
         } else {
           displayLocation(
-            "<span style='color: red; '>" +
-              currentLocation +
-              "</span> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='http://www.mousehuntgame.com/canvas/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+            `<span style="color: red; ">${currentLocation}</span> [<a onclick='window.localStorage.removeItem("huntLocation");' href="http://www.mousehuntgame.com/canvas/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
           );
         }
       } else if (hiFivePlatform) {
         if (secureConnection) {
           displayLocation(
-            "<span style='color: red; '>" +
-              currentLocation +
-              "</span> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='https://mousehunt.hi5.hitgrab.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+            `<span style="color: red; ">${currentLocation}</span> [<a onclick='window.localStorage.removeItem("huntLocation");' href="https://mousehunt.hi5.hitgrab.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
           );
         } else {
           displayLocation(
-            "<span style='color: red; '>" +
-              currentLocation +
-              "</span> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='http://mousehunt.hi5.hitgrab.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+            `<span style="color: red; ">${currentLocation}</span> [<a onclick='window.localStorage.removeItem("huntLocation");' href="http://mousehunt.hi5.hitgrab.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
           );
         }
       } else if (mhPlatform) {
         if (secureConnection) {
           displayLocation(
-            "<span style='color: red; '>" +
-              currentLocation +
-              "</span> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='https://www.mousehuntgame.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+            `<span style="color: red; ">${currentLocation}</span> [<a onclick='window.localStorage.removeItem("huntLocation");' href="https://www.mousehuntgame.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
           );
         } else {
           displayLocation(
-            "<span style='color: red; '>" +
-              currentLocation +
-              "</span> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='http://www.mousehuntgame.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+            `<span style="color: red; ">${currentLocation}</span> [<a onclick='window.localStorage.removeItem("huntLocation");' href="http://www.mousehuntgame.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
           );
         }
       }
@@ -7348,7 +7316,7 @@ function action() {
       }, 1000);
     }
   } catch (e) {
-    console.log("action() ERROR - " + e);
+    console.log(`action() ERROR - ${e}`);
   }
 }
 
@@ -7382,43 +7350,31 @@ function countdownTimer() {
     if (fbPlatform) {
       if (secureConnection) {
         displayLocation(
-          "<font color='red'>" +
-            currentLocation +
-            "</font> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='https://www.mousehuntgame.com/canvas/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+          `<font color="red">${currentLocation}</font> [<a onclick='window.localStorage.removeItem("huntLocation");' href="https://www.mousehuntgame.com/canvas/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
         );
       } else {
         displayLocation(
-          "<font color='red'>" +
-            currentLocation +
-            "</font> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='http://www.mousehuntgame.com/canvas/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+          `<font color="red">${currentLocation}</font> [<a onclick='window.localStorage.removeItem("huntLocation");' href="http://www.mousehuntgame.com/canvas/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
         );
       }
     } else if (hiFivePlatform) {
       if (secureConnection) {
         displayLocation(
-          "<font color='red'>" +
-            currentLocation +
-            "</font> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='https://mousehunt.hi5.hitgrab.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+          `<font color="red">${currentLocation}</font> [<a onclick='window.localStorage.removeItem("huntLocation");' href="https://mousehunt.hi5.hitgrab.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
         );
       } else {
         displayLocation(
-          "<font color='red'>" +
-            currentLocation +
-            "</font> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='http://mousehunt.hi5.hitgrab.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+          `<font color="red">${currentLocation}</font> [<a onclick='window.localStorage.removeItem("huntLocation");' href="http://mousehunt.hi5.hitgrab.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
         );
       }
     } else if (mhPlatform) {
       if (secureConnection) {
         displayLocation(
-          "<font color='red'>" +
-            currentLocation +
-            "</font> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='https://www.mousehuntgame.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+          `<font color="red">${currentLocation}</font> [<a onclick='window.localStorage.removeItem("huntLocation");' href="https://www.mousehuntgame.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
         );
       } else {
         displayLocation(
-          "<font color='red'>" +
-            currentLocation +
-            "</font> [<a onclick='window.localStorage.removeItem(\"huntLocation\");' href='http://www.mousehuntgame.com/'>Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>"
+          `<font color="red">${currentLocation}</font> [<a onclick='window.localStorage.removeItem("huntLocation");' href="http://www.mousehuntgame.com/">Hunt Here</a>] - <i>Script pause because you had move to a different location recently, click hunt here to continue hunt at this location.</i>`
         );
       }
     }
@@ -7469,18 +7425,13 @@ function countdownTimer() {
       if (enableTrapCheck) {
         // update timer
         displayTimer(
-          "Horn: " +
-            timeFormat(hornTime) +
-            " | Check: " +
-            timeFormat(checkTime),
-          timeFormat(hornTime) +
-            "  <i>(included extra " +
-            timeFormat(hornTimeDelay) +
-            " delay & +/- 5 seconds different from MouseHunt timer)</i>",
-          timeFormat(checkTime) +
-            "  <i>(included extra " +
-            timeFormat(checkTimeDelay) +
-            " delay)</i>"
+          `Horn: ${timeFormat(hornTime)} | Check: ${timeFormat(checkTime)}`,
+          `${timeFormat(hornTime)}  <i>(included extra ${timeFormat(
+            hornTimeDelay
+          )} delay & +/- 5 seconds different from MouseHunt timer)</i>`,
+          `${timeFormat(checkTime)}  <i>(included extra ${timeFormat(
+            checkTimeDelay
+          )} delay)</i>`
         );
 
         // check if user manaually sounded the horn
@@ -7502,11 +7453,10 @@ function countdownTimer() {
       } else {
         // update timer
         displayTimer(
-          "Horn: " + timeFormat(hornTime),
-          timeFormat(hornTime) +
-            "  <i>(included extra " +
-            timeFormat(hornTimeDelay) +
-            " delay & +/- 5 seconds different from MouseHunt timer)</i>",
+          `Horn: ${timeFormat(hornTime)}`,
+          `${timeFormat(hornTime)}  <i>(included extra ${timeFormat(
+            hornTimeDelay
+          )} delay & +/- 5 seconds different from MouseHunt timer)</i>`,
           "-"
         );
 
@@ -7626,7 +7576,9 @@ function embedTimer(targetPage) {
         // show bot title and version
         var titleElement = document.createElement("div");
         titleElement.setAttribute("id", "titleElement");
-        titleElement.innerHTML = `<b>MouseHunt AutoBot (version ${scriptVersion})${isNewUI ? " ~ Beta UI" : ""}</b>`;
+        titleElement.innerHTML = `<b>MouseHunt AutoBot (version ${scriptVersion})${
+          isNewUI ? " ~ Beta UI" : ""
+        }</b>`;
         timerDivElement.appendChild(titleElement);
         titleElement = null;
 
@@ -7662,17 +7614,15 @@ function embedTimer(targetPage) {
             lastDateStr = "-";
           } else {
             var lastDate = new Date(lastKingRewardDate);
-            lastDateStr =
-              lastDate.toDateString() +
-              " " +
-              lastDate.toTimeString().substring(0, 8);
+            lastDateStr = `${lastDate.toDateString()} ${lastDate
+              .toTimeString()
+              .substring(0, 8)}`;
             lastDate = null;
           }
 
           kingTimeElement = document.createElement("div");
           kingTimeElement.setAttribute("id", "kingTimeElement");
-          kingTimeElement.innerHTML =
-            "<b>Last King's Reward:</b> " + lastDateStr + " ";
+          kingTimeElement.innerHTML = `<b>Last King's Reward:</b> ${lastDateStr} `;
           timerDivElement.appendChild(kingTimeElement);
 
           lastKingRewardSumTimeElement = document.createElement("font");
@@ -7859,2621 +7809,2076 @@ function embedTimer(targetPage) {
         showPreferenceSpan = null;
         showPreferenceLinkDiv = null;
 
-        var preferenceHTMLStr = '<table border="0" width="100%">';
-
-        preferenceHTMLStr +=
-          '<tr><td colspan="2" style="padding: 2px 0; border-bottom: 1px solid orange;"></td></tr>';
-        preferenceHTMLStr +=
-          '<tr><td colspan="2" style="height: 5px;"></td></tr>';
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Extra delay time before sounding the horn (in seconds)">';
-        preferenceHTMLStr += "<b>Horn Time Delay</b>";
-        preferenceHTMLStr += "</a>";
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<input type="text" id="HornTimeDelayMinInput" name="HornTimeDelayMinInput" value="' +
-          hornTimeDelayMin.toString() +
-          '"/> seconds';
-        preferenceHTMLStr += " ~ ";
-        preferenceHTMLStr +=
-          '<input type="text" id="HornTimeDelayMaxInput" name="HornTimeDelayMaxInput" value="' +
-          hornTimeDelayMax.toString() +
-          '"/> seconds';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Enable trap check once an hour"><b>Trap Check</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          "<select id=\"TrapCheckInput\" onchange=\"var isDisable = (value == 'false') ? 'disabled' : ''; document.getElementById('TrapCheckTimeDelayMinInput').disabled=isDisable; document.getElementById('TrapCheckTimeDelayMaxInput').disabled=isDisable;\">";
-        if (enableTrapCheck) {
-          preferenceHTMLStr += '<option value="false">False</option>';
-          preferenceHTMLStr += '<option value="true" selected>True</option>';
-          temp = "";
-        } else {
-          preferenceHTMLStr += '<option value="false" selected>False</option>';
-          preferenceHTMLStr += '<option value="true">True</option>';
-          temp = "disabled";
-        }
-        preferenceHTMLStr +=
-          '</select>&nbsp;&nbsp;<a title="Extra delay time to trap check (in seconds)"><b>Delay:</b></a>&emsp;';
-        preferenceHTMLStr +=
-          '<input type="number" id="TrapCheckTimeDelayMinInput" min="0" max="360" size="5" value="' +
-          checkTimeDelayMin.toString() +
-          '" ' +
-          temp +
-          "> seconds ~ ";
-        preferenceHTMLStr +=
-          '<input type="number" id="TrapCheckTimeDelayMaxInput" min="1" max="361" size="5" value="' +
-          checkTimeDelayMax.toString() +
-          '" ' +
-          temp +
-          "> seconds";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Play sound when encounter king\'s reward"><b>Play King Reward Sound</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr += '<select id="PlayKingRewardSoundInput" >';
-        preferenceHTMLStr +=
-          '<option value="false"' +
-          (!isKingWarningSound ? " selected" : "") +
-          ">False</option>";
-        preferenceHTMLStr +=
-          '<option value="true"' +
-          (isKingWarningSound ? " selected" : "") +
-          ">True</option>";
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;";
-        preferenceHTMLStr +=
-          '<a title="Link to MP3 sound to play, defaults NobodyRandom\'s awesome song if left blank"><b>Sound Link:</b></a>&emsp;';
-        preferenceHTMLStr +=
-          '<input type="text" id="kingWarningSoundInput" value="' +
-          kingWarningSound +
-          '">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Auto Popup on KR"><b>Auto KR Popup</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height: 24px">';
-        preferenceHTMLStr += '<select id="autoPopKR">';
-        preferenceHTMLStr +=
-          '<option value="false"' +
-          (!autoPopupKR ? " selected" : "") +
-          ">False</option>";
-        preferenceHTMLStr +=
-          '<option value="true"' +
-          (autoPopupKR ? " selected" : "") +
-          ">True</option>";
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Solve King Reward automatically"><b>Auto Solve King Reward</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          "<select id=\"AutoSolveKRInput\" onchange=\"var isDisable = (value == 'false') ? 'disabled' : ''; document.getElementById('AutoSolveKRDelayMinInput').disabled=isDisable; document.getElementById('AutoSolveKRDelayMaxInput').disabled=isDisable;\">";
-        if (isAutoSolve) {
-          preferenceHTMLStr += '<option value="false">False</option>';
-          preferenceHTMLStr += '<option value="true" selected>True</option>';
-          temp = "";
-        } else {
-          preferenceHTMLStr += '<option value="false" selected>False</option>';
-          preferenceHTMLStr += '<option value="true">True</option>';
-          temp = "disabled";
-        }
-        preferenceHTMLStr +=
-          '</select>&nbsp;&nbsp;<a title="Extra delay time to solve King Reward (in seconds)"><b>Delay:</b></a>&emsp;';
-        preferenceHTMLStr +=
-          '<input type="number" id="AutoSolveKRDelayMinInput" min="0" max="360" size="5" value="' +
-          krDelayMin.toString() +
-          '" ' +
-          temp +
-          "> seconds ~ ";
-        preferenceHTMLStr +=
-          '<input type="number" id="AutoSolveKRDelayMaxInput" min="1" max="361" size="5" value="' +
-          krDelayMax.toString() +
-          '" ' +
-          temp +
-          "> seconds";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        /*
-                preferenceHTMLStr += '<tr>';
-                preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                preferenceHTMLStr += '<a title="Save King Reward image into localStorage"><b>Save King Reward Image</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '<td style="height:24px">';
-                preferenceHTMLStr += '<select id="SaveKRImageInput" >';
-                if (saveKRImage) {
-                    preferenceHTMLStr += '<option value="false">False</option>';
-                    preferenceHTMLStr += '<option value="true" selected>True</option>';
-                }
-                else {
-                    preferenceHTMLStr += '<option value="false" selected>False</option>';
-                    preferenceHTMLStr += '<option value="true">True</option>';
-                }
-                preferenceHTMLStr += '</select>';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '</tr>';
-                */
-
-        /*
-                preferenceHTMLStr += '<tr>';
-                preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                preferenceHTMLStr += '<a title="View Saved King Reward Image from localStorage"><b>View King Reward Image</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '<td style="height:24px">';
-                preferenceHTMLStr += '<select id="viewKR">';
-                preferenceHTMLStr += '</select>';
-                preferenceHTMLStr += '<input type="button" id="buttonViewKR" value="View" onclick="var keyValue = document.getElementById(\'viewKR\').value;var value = window.localStorage.getItem(keyValue);if(value.indexOf(\'data:image/png;base64,\') > -1){var pom = document.createElement(\'a\');pom.setAttribute(\'href\', value);pom.setAttribute(\'download\', keyValue.split(\'~\')[2]+\'.png\');if(document.createEvent){var event = document.createEvent(\'MouseEvents\');event.initEvent(\'click\', true, true);pom.dispatchEvent(event);}else pom.click();}else if(value.indexOf(\'i.imgur.com\') > -1){var win = window.open(value, \'_blank\');if(win)win.focus();else alert(\'Please allow popups for this site\');}">';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '</tr>';
-                */
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="The script will pause if player at different location that hunt location set before"><b>Remember Location</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr += '<select id="PauseLocationInput" >';
-        if (pauseAtInvalidLocation) {
-          preferenceHTMLStr += '<option value="false">False</option>';
-          preferenceHTMLStr += '<option value="true" selected>True</option>';
-        } else {
-          preferenceHTMLStr += '<option value="false" selected>False</option>';
-          preferenceHTMLStr += '<option value="true">True</option>';
-        }
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Best Weapon for </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectBestTrapPowerType" style="width:75px;" onchange="initControlsBestTrap();">';
-        preferenceHTMLStr += '<option value="arcane">Arcane</option>';
-        preferenceHTMLStr += '<option value="draconic">Draconic</option>';
-        preferenceHTMLStr += '<option value="forgotten">Forgotten</option>';
-        preferenceHTMLStr += '<option value="hydro">Hydro</option>';
-        preferenceHTMLStr += '<option value="law">Law</option>';
-        preferenceHTMLStr += '<option value="physical">Physical</option>';
-        preferenceHTMLStr += '<option value="rift">Rift</option>';
-        preferenceHTMLStr += '<option value="shadow">Shadow</option>';
-        preferenceHTMLStr += '<option value="tactical">Tactical</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBestTrapWeapon" style="width: 300px" onchange="saveBestTrap();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Best Base for </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectBestTrapBaseType" style="width:75px;" onchange="initControlsBestTrap();">';
-        preferenceHTMLStr += '<option value="luck">Luck</option>';
-        preferenceHTMLStr += '<option value="power">Power</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBestTrapBase" onchange="saveBestTrap();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        /*
-                preferenceHTMLStr += '<tr>';
-                preferenceHTMLStr += '<td style="height:24px; text-align:right;"><a><b>Support Me</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-                preferenceHTMLStr += '<td style="height:24px">';
-                preferenceHTMLStr += '<input type="button" id="inputShowAds" value="Click to Show Ads" onclick="onIdAdsClicked()">';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '</tr>';
-                */
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;" colspan="2">';
-        preferenceHTMLStr +=
-          "(Changes above this line only take place after user save the preference) ";
-        preferenceHTMLStr +=
-          "<input type=\"button\" id=\"PreferenceSaveInput\" value=\"Save\" onclick=\"\
-				try {\
-				window.localStorage.setItem('HornTimeDelayMin', 		document.getElementById('HornTimeDelayMinInput').value);\
-				window.localStorage.setItem('HornTimeDelayMax', 		document.getElementById('HornTimeDelayMaxInput').value);\
-				window.localStorage.setItem('TrapCheck', 				document.getElementById('TrapCheckInput').value);\
-				window.localStorage.setItem('TrapCheckTimeDelayMin',	document.getElementById('TrapCheckTimeDelayMinInput').value);\
-				window.localStorage.setItem('TrapCheckTimeDelayMax', 	document.getElementById('TrapCheckTimeDelayMaxInput').value);\
-				window.localStorage.setItem('AutoSolveKR',            document.getElementById('AutoSolveKRInput').value);\
-				window.localStorage.setItem('AutoSolveKR', 			document.getElementById('AutoSolveKRInput').value);\
-				window.localStorage.setItem('AutoSolveKR', 			document.getElementById('AutoSolveKRInput').value);\
-				window.localStorage.setItem('AutoSolveKRDelayMin', 	document.getElementById('AutoSolveKRDelayMinInput').value);\
-				window.localStorage.setItem('AutoSolveKRDelayMax', 	document.getElementById('AutoSolveKRDelayMaxInput').value);\
-				window.localStorage.setItem('PauseLocation', 			document.getElementById('PauseLocationInput').value);\
-				window.localStorage.setItem('autoPopupKR',            document.getElementById('autoPopKR').value);\
-				setSessionToLocal();\
-				} catch(e) {console.log(e);}\
-				";
-
-        //window.localStorage.setItem('PlayKingRewardSound', 	document.getElementById('PlayKingRewardSoundInput').value);
-        //window.localStorage.setItem('SaveKRImage', 			document.getElementById('SaveKRImageInput').value);
-
-        if (fbPlatform)
-          temp =
-            "window.location.href='" +
-            g_strHTTP +
-            "://www.mousehuntgame.com/canvas/';";
-        else if (hiFivePlatform)
-          temp =
-            "window.location.href='" +
-            g_strHTTP +
-            "://www.mousehunt.hi5.hitgrab.com/';";
-        else if (mhPlatform)
-          temp =
-            "window.location.href='" +
-            g_strHTTP +
-            "://www.mousehuntgame.com/';";
-
-        preferenceHTMLStr += temp + '"/>&nbsp;&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px" colspan="2">';
-        preferenceHTMLStr +=
-          '<div style="width: 100%; height: 1px; background: #000000; overflow: hidden;">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        /*
-                preferenceHTMLStr += '<tr id="trSpecialFeature" style="display:none;">';
-                preferenceHTMLStr += '<td style="height:24px; text-align:right;"><a title="Select special feature"><b>Special Feature</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-                preferenceHTMLStr += '<td style="height:24px">';
-                preferenceHTMLStr += '<select id="selectSpecialFeature" onchange="onSelectSpecialFeature();">';
-                preferenceHTMLStr += '<option value="None">None</option>';
-                preferenceHTMLStr += '<option value="PILLOWCASE">Open Magical Pillowcase</option>';
-                preferenceHTMLStr += '</select>';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '</tr>';
-                */
-
-        /*
-                preferenceHTMLStr += '<tr>';
-                preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                preferenceHTMLStr += '<a title="Which email to send king\'s reward to"><b>Email to send King Reward</b></a>';
-                preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '<td style="height:24px;">';
-                preferenceHTMLStr += '<input type="text" id="KingRewardEmail" name="KingRewardEmail" value="' + kingRewardEmail + '" />';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '</tr>';
-                */
-
-        // Map Hunting Features
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Turn on/off Map Hunting feature"><b>Season 4 Map Hunting</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectMapHunting" onChange="onSelectMapHuntingChanged();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trUncaughtMouse" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Click button Get to retrieve all uncaught mouse"><b>Uncaught Mouse</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr += '<select id="selectMouseList"></select>';
-        preferenceHTMLStr +=
-          '<input type="button" id="inputSelectMouse" title="Click to select the mouse from the left dropdown list" value="Select This Mouse" onclick="onInputSelectMouse();" disabled>&nbsp;&nbsp;';
-        preferenceHTMLStr +=
-          '<input type="button" id="inputGetMouse" title="Click to Get all uncaught mouse from treasure map" value="Refresh Uncaught Mouse List" onclick="onInputGetMouse();">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trSelectedUncaughtMouse" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select desired uncaught mouse"><b>Selected Mouse</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<input type="text" id="inputUncaughtMouse" value="" disabled>&nbsp;&nbsp;';
-        preferenceHTMLStr +=
-          '<input type="button" id="inputClearUncaughtMouse" title="Click to clear the selected mouse" value="Clear" onclick="onInputClearUncaughtMouse();">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trCatchLogic" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select desired catch logic"><b>Catch Logic</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectCatchLogic" onchange="saveMapHunting();">';
-        preferenceHTMLStr +=
-          '<option value="OR">When either one of the Selected Mouse was caught</option>';
-        preferenceHTMLStr +=
-          '<option value="AND">When all of the Selected Mouse were caught</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trMapHuntingTrapSetup" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select trap setup after catch logic is fulfilled"><b>After Caught</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectWeapon" style="width: 75px" onchange="saveMapHunting();">';
-        preferenceHTMLStr += '<option value="Remain">Remain</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBase" style="width: 75px" onchange="saveMapHunting();">';
-        preferenceHTMLStr += '<option value="Remain">Remain</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectTrinket" style="width: 75px" onchange="saveMapHunting();">';
-        preferenceHTMLStr += '<option value="Remain">Remain</option>';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBait" style="width: 75px" onchange="saveMapHunting();">';
-        preferenceHTMLStr += '<option value="Remain">Remain</option>';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trMapHuntingLeave" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to leave map after catch logic is fulfilled"><b>Leave Map After Caught</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLeaveMap" onchange="saveMapHunting();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        /*preferenceHTMLStr += '<tr>';
-                 preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                 preferenceHTMLStr += '<a title="Which phone number to send king\'s reward to"><b>SMS number to send King Reward</b></a>';
-                 preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                 preferenceHTMLStr += '</td>';
-                 preferenceHTMLStr += '<td style="height:24px;">';
-                 preferenceHTMLStr += '<input type="text" id="KingRewardPhoneNumber" name="KingRewardPhoneNumber" value="' + kingRewardPhone + '" />';
-                 preferenceHTMLStr += '</td>';
-                 preferenceHTMLStr += '</tr>';
-
-                 preferenceHTMLStr += '<tr>';
-                 preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                 preferenceHTMLStr += '<a title="What was the verification key sent to this number?"><b>Verification key from SMS</b></a>';
-                 preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                 preferenceHTMLStr += '</td>';
-                 preferenceHTMLStr += '<td style="height:24px;">';
-                 preferenceHTMLStr += '<input type="text" id="KingRewardPhoneNumberVerify" name="KingRewardPhoneNumberVerify" value="' + kingRewardPhoneVerify + '" />';
-                 preferenceHTMLStr += '</td>';
-                 preferenceHTMLStr += '</tr>';*/
-
-        /*if (reloadKingReward) {
-                    preferenceHTMLStr += '<tr>';
-                    preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                    preferenceHTMLStr += '<a title="Reload the the page according to King Reward Resume Time when encount King Reward"><b>King Reward Resume</b></a>';
-                    preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '<td style="height:24px">';
-                    preferenceHTMLStr += '<input type="radio" id="KingRewardResumeInputTrue" name="KingRewardResumeInput" value="true" onchange="if (document.getElementById(\'KingRewardResumeInputTrue\').checked == true) { document.getElementById(\'KingRewardResumeTimeInput\').disabled=\'\'; }" checked="checked"/> True';
-                    preferenceHTMLStr += '   ';
-                    preferenceHTMLStr += '<input type="radio" id="KingRewardResumeInputFalse" name="KingRewardResumeInput" value="false" onchange="if (document.getElementById(\'KingRewardResumeInputFalse\').checked == true) { document.getElementById(\'KingRewardResumeTimeInput\').disabled=\'disabled\'; }"/> False';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '</tr>';
-                    preferenceHTMLStr += '<tr>';
-                    preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                    preferenceHTMLStr += '<a title="Duration of pausing the script before reload the King\'s Reward page (in seconds)"><b>King Reward Resume Time</b></a>';
-                    preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '<td style="height:24px">';
-                    preferenceHTMLStr += '<input type="text" id="KingRewardResumeTimeInput" name="KingRewardResumeTimeInput" value="' + kingPauseTimeMax.toString() + '"/> seconds';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '</tr>';
-                } else {
-                    preferenceHTMLStr += '<tr>';
-                    preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                    preferenceHTMLStr += '<a title="Reload the the page according to King Reward Resume Time when encounter King Reward"><b>King Reward Resume</b></a>';
-                    preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '<td style="height:24px">';
-                    preferenceHTMLStr += '<input type="radio" id="KingRewardResumeInputTrue" name="KingRewardResumeInput" value="true" onchange="if (document.getElementById(\'KingRewardResumeInputTrue\').checked == true) { document.getElementById(\'KingRewardResumeTimeInput\').disabled=\'\'; }"/> True';
-                    preferenceHTMLStr += '   ';
-                    preferenceHTMLStr += '<input type="radio" id="KingRewardResumeInputFalse" name="KingRewardResumeInput" value="false" onchange="if (document.getElementById(\'KingRewardResumeInputFalse\').checked == true) { document.getElementById(\'KingRewardResumeTimeInput\').disabled=\'disabled\'; }" checked="checked"/> False';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '</tr>';
-                    preferenceHTMLStr += '<tr>';
-                    preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                    preferenceHTMLStr += '<a title="Duration of pausing the script before reload the King\'s Reward page (in seconds)"><b>King Reward Resume Time</b></a>';
-                    preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '<td style="height:24px">';
-                    preferenceHTMLStr += '<input type="text" id="KingRewardResumeTimeInput" name="KingRewardResumeTimeInput" disabled="disabled" value="' + kingPauseTimeMax.toString() + '"/> seconds';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '</tr>';
-                }*/
-
-        /*if (pauseAtInvalidLocation) {
-                    preferenceHTMLStr += '<tr>';
-                    preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                    preferenceHTMLStr += '<a title="The script will pause if player at different location that hunt location set before"><b>Remember Location</b></a>';
-                    preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '<td style="height:24px">';
-                    preferenceHTMLStr += '<input type="radio" id="PauseLocationInputTrue" name="PauseLocationInput" value="true" checked="checked"/> True';
-                    preferenceHTMLStr += '   ';
-                    preferenceHTMLStr += '<input type="radio" id="PauseLocationInputFalse" name="PauseLocationInput" value="false" /> False';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '</tr>';
-                } else {
-                    preferenceHTMLStr += '<tr>';
-                    preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                    preferenceHTMLStr += '<a title="The script will pause if player at different location that hunt location set before"><b>Remember Location</b></a>';
-                    preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '<td style="height:24px">';
-                    preferenceHTMLStr += '<input type="radio" id="PauseLocationInputTrue" name="PauseLocationInput" value="true"/> True';
-                    preferenceHTMLStr += '   ';
-                    preferenceHTMLStr += '<input type="radio" id="PauseLocationInputFalse" name="PauseLocationInput" value="false" checked="checked"/> False';
-                    preferenceHTMLStr += '</td>';
-                    preferenceHTMLStr += '</tr>';
-                }*/
-
-        /*
-                preferenceHTMLStr += '<tr>';
-                preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-                preferenceHTMLStr += '<a title="Select the script algorithm based on certain event / location"><b>Event or Location</b></a>';
-                preferenceHTMLStr += '&nbsp;&nbsp;:&nbsp;&nbsp;';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '<td style="height:24px">';
-                preferenceHTMLStr += '<select name="eventAlgo" onChange="window.localStorage.setItem(\'eventLocation\', value); document.getElementById(\'event\').value=window.localStorage.getItem(\'eventLocation\');">';
-                preferenceHTMLStr += '<option value=""> </option>';
-                preferenceHTMLStr += '<option value="None" selected>None</option>';
-                preferenceHTMLStr += '<option value="Hunt For">Hunt for ' + NOBhuntsLeft + ' hunts</option>';
-                preferenceHTMLStr += '<option value="" disabled>--==Normal Bots==--</option>';
-                preferenceHTMLStr += '<option value="FG/AR">FG => AR</option>';
-                preferenceHTMLStr += '<option value="Zugzwang\'s Tower">Zugzwang\'s Tower</option>';
-                preferenceHTMLStr += '<option value="BC/JOD">BC => JOD</option>';
-                preferenceHTMLStr += '<option value="Fiery Warpath">Fiery Warpath</option>';
-                preferenceHTMLStr += '<option value="Fiery Warpath Super">Fiery Warpath (Super charms)</option>';
-                preferenceHTMLStr += '<option value="Iceberg (Wax)">Iceberg (Wax)</option>';
-                preferenceHTMLStr += '<option value="Iceberg (Sticky)">Iceberg (Sticky)</option>';
-                preferenceHTMLStr += '<option value="All LG Area">All LG Area</option>';
-                preferenceHTMLStr += '<option value="Gnawnian Express(Empty)">Gnawnian Express(Empty)</option>';
-                preferenceHTMLStr += '<option value="Gnawnian Express(Full)">Gnawnian Express(Full)</option>';
-                preferenceHTMLStr += '<option value="Bristle Woods Rift">Bristle Woods Rift</option>';
-                preferenceHTMLStr += '<option value="Burroughs Rift(Yellow)">Burroughs Rift(Yellow)</option>';
-                preferenceHTMLStr += '<option value="Burroughs Rift(Green)">Burroughs Rift(Green)</option>';
-                preferenceHTMLStr += '<option value="Burroughs Rift(Red)">Burroughs Rift(Red)</option>';
-                preferenceHTMLStr += '<option value="WWRift">Whisker Woods Rift</option>';
-                preferenceHTMLStr += '<option value="Furoma Rift">Furoma Rift</option>';
-                preferenceHTMLStr += '<option value="Sunken City">Sunken City</option>';
-                preferenceHTMLStr += '<option value="Labyrinth">Labyrinth</option>';
-                preferenceHTMLStr += '<option value="Zokor">Zokor</option>';
-                preferenceHTMLStr += '<option value="Fort Rox">Fort Rox</option>';
-                //preferenceHTMLStr += '<option value="Labyrinth">Labyrinth</option>';
-                preferenceHTMLStr += '<option value="" disabled>--==Event Bots==--</option>';
-                preferenceHTMLStr += '<option value="Charge Egg 2016">Charge Egg 2016</option>';
-                preferenceHTMLStr += '<option value="Charge Egg 2016(17)">Charge Egg 2016(17)</option>';
-                preferenceHTMLStr += '<option value="Charge Egg 2014">Charge Egg 2014</option>';
-                preferenceHTMLStr += '<option value="Charge Egg 2014(17)">Charge Egg 2014(17)</option>';
-                preferenceHTMLStr += '<option value="Halloween 2014">Halloween 2014</option>';
-                preferenceHTMLStr += '<option value="Halloween 2015">Halloween 2015</option>';
-                preferenceHTMLStr += '<option value="Winter 2015">Winter 2015</option>';
-                preferenceHTMLStr += '</select> Current Selection : ';
-                preferenceHTMLStr += '<input type="text" id="event" name="event" value="' + eventLocation + '"/>';
-                preferenceHTMLStr += '</td>';
-                preferenceHTMLStr += '</tr>';
-                */
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select the script algorithm based on certain event / location"><b>Event or Location</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="eventAlgo" style="width:150px" onChange="window.sessionStorage.setItem(\'eventLocation\', value); showOrHideTr(value);">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="All LG Area">All LG Area</option>';
-        preferenceHTMLStr += '<option value="BC/JOD">BC => JOD</option>';
-        preferenceHTMLStr +=
-          '<option value="Bristle Woods Rift">Bristle Woods Rift</option>';
-        preferenceHTMLStr +=
-          '<option value="Burroughs Rift(Red)">Burroughs Rift(Red)</option>';
-        preferenceHTMLStr +=
-          '<option value="Burroughs Rift(Green)">Burroughs Rift(Green)</option>';
-        preferenceHTMLStr +=
-          '<option value="Burroughs Rift(Yellow)">Burroughs Rift(Yellow)</option>';
-        preferenceHTMLStr +=
-          '<option value="Burroughs Rift Custom">Burroughs Rift Custom</option>';
-        preferenceHTMLStr +=
-          '<option value="Charge Egg 2016 Medium + High">Charge Egg 2016 Medium + High</option>';
-        preferenceHTMLStr +=
-          '<option value="Charge Egg 2016 High">Charge Egg 2016 High</option>';
-        preferenceHTMLStr += '<option value="FG/AR">FG => AR</option>';
-        preferenceHTMLStr +=
-          '<option value="Fiery Warpath">Fiery Warpath</option>';
-        preferenceHTMLStr += '<option value="Fort Rox">Fort Rox</option>';
-        preferenceHTMLStr += '<option value="Furoma Rift">Furoma Rift</option>';
-        preferenceHTMLStr +=
-          '<option value="GES">Gnawnian Express Station</option>';
-        //preferenceHTMLStr += '<option value="GWH2016R">GWH 2016</option>';
-        preferenceHTMLStr += '<option value="Iceberg">Iceberg</option>';
-        preferenceHTMLStr += '<option value="Labyrinth">Labyrinth</option>';
-        preferenceHTMLStr += '<option value="SG">Seasonal Garden</option>';
-        preferenceHTMLStr += '<option value="Sunken City">Sunken City</option>';
-        preferenceHTMLStr +=
-          '<option value="Sunken City Custom">Sunken City Custom</option>';
-        preferenceHTMLStr += '<option value="Test">Test</option>';
-        preferenceHTMLStr += '<option value="WWRift">WWRift</option>';
-        preferenceHTMLStr += '<option value="Zokor">Zokor</option>';
-        preferenceHTMLStr += '<option value="ZT">Zugzwang\'s Tower</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<input type="button" id="inputResetReload" title="Reset setting of current selected algo" value="Reset & Reload" onclick="onInputResetReload();' +
-          temp +
-          '">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBCJODSubLocation" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Sub-Location</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBCJODSublocation" onchange="initControlsBCJOD();">';
-        preferenceHTMLStr += '<option value="JOD">Jungle of Dread</option>';
-        preferenceHTMLStr += '<option value="LOW">BC Low Tide</option>';
-        preferenceHTMLStr += '<option value="MID">BC Mid Tide</option>';
-        preferenceHTMLStr += '<option value="HIGH">BC High Tide</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trBCJODTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on current sub-location"><b>Trap Setup </b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBCJODWeapon" style="width: 75px;" onchange="saveBCJOD();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBCJODBase" style="width: 75px;" onchange="saveBCJOD();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBCJODTrinket" style="width: 75px;" onchange="saveBCJOD();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBCJODBait" style="width: 75px;" onchange="saveBCJOD();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="Vanilla Stilton Cheese">Vanilla Stilton Cheese</option>';
-        preferenceHTMLStr +=
-          '<option value="Vengeful Vanilla Stilton Cheese">Vengeful Vanilla Stilton Cheese</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trFGARSubLocation" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Sub-Location</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFGARSublocation" onchange="initControlsFGAR();">';
-        preferenceHTMLStr += '<option value="FG">Forbidden Grove</option>';
-        preferenceHTMLStr += '<option value="AR">Acolyte Realm</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFGARTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on current sub-location"><b>Trap Setup </b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFGARWeapon" style="width: 75px;" onchange="saveFGAR();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFGARBase" style="width: 75px;" onchange="saveFGAR();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFGARTrinket" style="width: 75px;" onchange="saveFGAR();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFGARBait" style="width: 75px;" onchange="saveFGAR();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="Runic Cheese">Runic Cheese</option>';
-        preferenceHTMLStr +=
-          '<option value="Ancient Cheese">Ancient Cheese</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftAutoChoosePortal" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Choose portal automatically"><b>Auto Choose Portal</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftChoosePortal" style="width: 75px;" onchange="onSelectBWRiftChoosePortal();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftChoosePortalAfterCC" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Choose portal after Chamber Cleaver has been caught"><b>Choose Portal</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftChoosePortalAfterCC" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;After Chamber Cleaver Caught";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftPortalPriority" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select portal priority"><b>Portal Priority </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftPriority" style="width: 75px;" onchange="initControlsBWRift();">';
-        for (i = 1; i <= 13; i++) {
-          if (i == 1)
-            preferenceHTMLStr +=
-              '<option value="' + i + '">' + i + " (Highest)</option>";
-          else if (i == 13)
-            preferenceHTMLStr +=
-              '<option value="' + i + '">' + i + " (Lowest)</option>";
-          else
-            preferenceHTMLStr += '<option value="' + i + '">' + i + "</option>";
-        }
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftPortal" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="GEARWORKS">Gearworks</option>';
-        preferenceHTMLStr += '<option value="ANCIENT">Ancient Lab</option>';
-        preferenceHTMLStr += '<option value="RUNIC">Runic Laboratory</option>';
-        preferenceHTMLStr += '<option value="AL/RL_MSC">AL/RL (MSC)</option>';
-        preferenceHTMLStr += '<option value="AL/RL_BSC">AL/RL (BSC)</option>';
-        preferenceHTMLStr +=
-          '<option value="TIMEWARP">Timewarp Chamber</option>';
-        preferenceHTMLStr += '<option value="LUCKY">Lucky Tower</option>';
-        preferenceHTMLStr += '<option value="HIDDEN">Hidden Treasury</option>';
-        preferenceHTMLStr += '<option value="GUARD">Guard Barracks</option>';
-        preferenceHTMLStr +=
-          '<option value="SECURITY">Security Chamber</option>';
-        preferenceHTMLStr += '<option value="FROZEN">Frozen Alcove</option>';
-        preferenceHTMLStr += '<option value="FURNACE">Furnace Room</option>';
-        preferenceHTMLStr += '<option value="INGRESS">Ingress Chamber</option>';
-        preferenceHTMLStr +=
-          '<option value="PURSUER">Pursuer Mousoleum</option>';
-        preferenceHTMLStr += '<option value="ACOLYTE">Acolyte Chamber</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftPortalPriorityCursed" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select portal priority when get cursed"><b>Portal Priority - Cursed </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftPriorityCursed" style="width: 75px;" onchange="initControlsBWRift();">';
-        for (i = 1; i <= 13; i++) {
-          if (i == 1)
-            preferenceHTMLStr +=
-              '<option value="' + i + '">' + i + " (Highest)</option>";
-          else if (i == 13)
-            preferenceHTMLStr +=
-              '<option value="' + i + '">' + i + " (Lowest)</option>";
-          else
-            preferenceHTMLStr += '<option value="' + i + '">' + i + "</option>";
-        }
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftPortalCursed" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="GEARWORKS">Gearworks</option>';
-        preferenceHTMLStr += '<option value="ANCIENT">Ancient Lab</option>';
-        preferenceHTMLStr += '<option value="RUNIC">Runic Laboratory</option>';
-        preferenceHTMLStr += '<option value="AL/RL_MSC">AL/RL (MSC)</option>';
-        preferenceHTMLStr += '<option value="AL/RL_BSC">AL/RL (BSC)</option>';
-        preferenceHTMLStr +=
-          '<option value="TIMEWARP">Timewarp Chamber</option>';
-        preferenceHTMLStr += '<option value="LUCKY">Lucky Tower</option>';
-        preferenceHTMLStr += '<option value="HIDDEN">Hidden Treasury</option>';
-        preferenceHTMLStr += '<option value="GUARD">Guard Barracks</option>';
-        preferenceHTMLStr +=
-          '<option value="SECURITY">Security Chamber</option>';
-        preferenceHTMLStr += '<option value="FROZEN">Frozen Alcove</option>';
-        preferenceHTMLStr += '<option value="FURNACE">Furnace Room</option>';
-        preferenceHTMLStr += '<option value="INGRESS">Ingress Chamber</option>';
-        preferenceHTMLStr +=
-          '<option value="PURSUER">Pursuer Mousoleum</option>';
-        preferenceHTMLStr += '<option value="ACOLYTE">Acolyte Chamber</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftMinTimeSand" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select minimum time sand before entering Acolyte Chamber (AC)"><b>Min Time Sand </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftBuffCurse" style="width: 75px;" onchange="initControlsBWRift();">';
-        preferenceHTMLStr += '<option value="0">No Buff & No Curse</option>';
-        preferenceHTMLStr +=
-          '<option value="1">Fourth Portal & No Curse</option>';
-        preferenceHTMLStr +=
-          '<option value="2">Acolyte Influence & No Curse</option>';
-        preferenceHTMLStr +=
-          '<option value="3">Acolyte Influence + Fourth Portal & No Curse</option>';
-        preferenceHTMLStr +=
-          '<option value="4">Paladin\'s Bane & No Curse</option>';
-        preferenceHTMLStr +=
-          '<option value="5">Paladin\'s Bane + Fourth Portal & No Curse</option>';
-        preferenceHTMLStr +=
-          '<option value="6">Paladin\'s Bane + Acolyte Influence & No Curse</option>';
-        preferenceHTMLStr += '<option value="7">All Buffs & No Curse</option>';
-        preferenceHTMLStr += '<option value="8">Buff(s) & Curse(s)</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinTimeSand" min="0" max="99999" style="width:75px" value="50" onchange="onInputMinTimeSandChanged(this);">&nbsp;&nbsp;Before Enter AC';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trBWRiftMinRSC" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select minimum Runic String Cheese before entering Acolyte Chamber (AC)&#13;Note 1: Total RSC = 2*RSC Pot + RSC"><b>Min Runic String Cheese</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftMinRSCType" style="width: 75px;" onchange="onSelectBWRiftMinRSCType();">';
-        preferenceHTMLStr += '<option value="NUMBER">Number</option>';
-        preferenceHTMLStr +=
-          '<option value="GEQ">Greater or Equal to Min Time Sand</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinRSC" min="0" max="99999" style="width:75px" value="50" onchange="onInputMinRSCChanged(this);">&nbsp;&nbsp;Before Enter AC';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftEnterMinigame" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to enter minigame with curse(s)"><b>Enter Minigame with Curse(s)</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftEnterWCurse" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftSubLocation" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Chamber in Bristle Woods Rift"><b>Sub-Location</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftChamber" onchange="initControlsBWRift();">';
-        preferenceHTMLStr += '<option value="NONE">Non-Chamber</option>';
-        preferenceHTMLStr += '<option value="GEARWORKS">Gearworks</option>';
-        preferenceHTMLStr += '<option value="ANCIENT">Ancient Lab</option>';
-        preferenceHTMLStr += '<option value="RUNIC">Runic Laboratory</option>';
-        preferenceHTMLStr +=
-          '<option value="TIMEWARP">Timewarp Chamber</option>';
-        preferenceHTMLStr += '<option value="LUCKY">Lucky Tower</option>';
-        preferenceHTMLStr += '<option value="HIDDEN">Hidden Treasury</option>';
-        preferenceHTMLStr += '<option value="GUARD">Guard Barracks</option>';
-        preferenceHTMLStr +=
-          '<option value="SECURITY">Security Chamber</option>';
-        preferenceHTMLStr += '<option value="FROZEN">Frozen Alcove</option>';
-        preferenceHTMLStr += '<option value="FURNACE">Furnace Room</option>';
-        preferenceHTMLStr += '<option value="INGRESS">Ingress Chamber</option>';
-        preferenceHTMLStr +=
-          '<option value="PURSUER">Pursuer Mousoleum</option>';
-        preferenceHTMLStr +=
-          '<option value="ACOLYTE_CHARGING">Acolyte Chamber Charging</option>';
-        preferenceHTMLStr +=
-          '<option value="ACOLYTE_DRAINING">Acolyte Chamber Draining</option>';
-        preferenceHTMLStr +=
-          '<option value="ACOLYTE_DRAINED">Acolyte Chamber Drained</option>';
-        preferenceHTMLStr +=
-          '<option value="SEPARATOR" disabled>========= Separator =========</option>';
-        preferenceHTMLStr +=
-          '<option value="NONE_CURSED">Non-Chamber Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="GEARWORKS_CURSED">Gearworks Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="ANCIENT_CURSED">Ancient Lab Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="RUNIC_CURSED">Runic Laboratory Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="TIMEWARP_CURSED">Timewarp Chamber Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="LUCKY_CURSED">Lucky Tower Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="HIDDEN_CURSED">Hidden Treasury Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="GUARD_CURSED">Guard Barracks Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="SECURITY_CURSED">Security Chamber Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="FROZEN_CURSED">Frozen Alcove Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="FURNACE_CURSED">Furnace Room Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="INGRESS_CURSED">Ingress Chamber Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="PURSUER_CURSED">Pursuer Mousoleum Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="ACOLYTE_CHARGING_CURSED">Acolyte Chamber Charging Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="ACOLYTE_DRAINING_CURSED">Acolyte Chamber Draining Cursed</option>';
-        preferenceHTMLStr +=
-          '<option value="ACOLYTE_DRAINED_CURSED">Acolyte Chamber Drained Cursed</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftMasterTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on current chamber"><b>Master Trap Setup</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftWeapon" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr +=
-          '<option value="Chrome Celestial Dissonance">Chrome CD</option>';
-        preferenceHTMLStr +=
-          '<option value="Celestial Dissonance Trap">CDT</option>';
-        preferenceHTMLStr +=
-          '<option value="Timesplit Dissonance Weapon">TDW</option>';
-        preferenceHTMLStr +=
-          '<option value="Mysteriously unYielding">MYNORCA</option>';
-        preferenceHTMLStr +=
-          '<option value="Focused Crystal Laser">FCL</option>';
-        preferenceHTMLStr += '<option value="Multi-Crystal Laser">MCL</option>';
-        preferenceHTMLStr +=
-          '<option value="Biomolecular Re-atomizer Trap">BRT</option>';
-        preferenceHTMLStr +=
-          '<option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>';
-        preferenceHTMLStr += '<option value="Crystal Tower">CT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftBase" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="Prestige Base">Prestige</option>';
-        preferenceHTMLStr +=
-          '<option value="Clockwork Base">Clockwork</option>';
-        preferenceHTMLStr += '<option value="Fissure Base">Fissure</option>';
-        preferenceHTMLStr += '<option value="Rift Base">Rift</option>';
-        preferenceHTMLStr += '<option value="Fracture Base">Fracture</option>';
-        preferenceHTMLStr +=
-          '<option value="Enerchi Induction Base">Enerchi</option>';
-        preferenceHTMLStr +=
-          '<option value="Attuned Enerchi Induction Base">A. Enerchi</option>';
-        preferenceHTMLStr += '<option value="Minotaur Base">Minotaur</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftTrinket" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftBait" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Runic String">Runic</option>';
-        preferenceHTMLStr += '<option value="Ancient String">Ancient</option>';
-        preferenceHTMLStr +=
-          '<option value="Runic/Ancient">Runic/Ancient</option>';
-        preferenceHTMLStr +=
-          '<option value="Runic=>Ancient">Runic=>Ancient</option>';
-        preferenceHTMLStr += '<option value="Magical String">Magical</option>';
-        preferenceHTMLStr += '<option value="Brie String">Brie</option>';
-        preferenceHTMLStr += '<option value="Swiss String">Swiss</option>';
-        preferenceHTMLStr += '<option value="Marble String">Marble</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftActivatePocketWatch" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr +=
-          '<option value="false">Deactivate Quantum Pocketwatch</option>';
-        preferenceHTMLStr +=
-          '<option value="true">Activate Quantum Pocketwatch</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftTrapSetupSpecial" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on current chamber"><b>Conditional Trap Setup </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftCleaverStatus" style="width:75px;display:none" onchange="initControlsBWRift();">';
-        preferenceHTMLStr += '<option value="0">Cleaver Not Available</option>';
-        preferenceHTMLStr += '<option value="1">Cleaver Available</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftAlertLvl" style="width:75px;display:none" onchange="initControlsBWRift();">';
-        for (i = 0; i <= 6; i++)
-          preferenceHTMLStr +=
-            '<option value="' + i + '">Alert Lvl ' + i + "</option>";
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftFTC" style="width:75px;display:none" onchange="initControlsBWRift();">';
-        for (i = 0; i <= 3; i++)
-          preferenceHTMLStr +=
-            '<option value="' + i + '">FTC ' + i + "</option>";
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftHunt" style="width:75px;display:none" onchange="initControlsBWRift();">';
-        for (i = 0; i <= 15; i++)
-          preferenceHTMLStr +=
-            '<option value="' + i + '">Hunt ' + i + "</option>";
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftWeaponSpecial" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr +=
-          '<option value="Chrome Celestial Dissonance">Chrome CD</option>';
-        preferenceHTMLStr +=
-          '<option value="Celestial Dissonance Trap">CDT</option>';
-        preferenceHTMLStr +=
-          '<option value="Timesplit Dissonance Weapon">TDW</option>';
-        preferenceHTMLStr +=
-          '<option value="Mysteriously unYielding">MYNORCA</option>';
-        preferenceHTMLStr +=
-          '<option value="Focused Crystal Laser">FCL</option>';
-        preferenceHTMLStr += '<option value="Multi-Crystal Laser">MCL</option>';
-        preferenceHTMLStr +=
-          '<option value="Biomolecular Re-atomizer Trap">BRT</option>';
-        preferenceHTMLStr +=
-          '<option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>';
-        preferenceHTMLStr += '<option value="Crystal Tower">CT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftBaseSpecial" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr += '<option value="Prestige Base">Prestige</option>';
-        preferenceHTMLStr +=
-          '<option value="Clockwork Base">Clockwork</option>';
-        preferenceHTMLStr += '<option value="Fissure Base">Fissure</option>';
-        preferenceHTMLStr += '<option value="Rift Base">Rift</option>';
-        preferenceHTMLStr += '<option value="Fracture Base">Fracture</option>';
-        preferenceHTMLStr +=
-          '<option value="Enerchi Induction Base">Enerchi</option>';
-        preferenceHTMLStr +=
-          '<option value="Attuned Enerchi Induction Base">A. Enerchi</option>';
-        preferenceHTMLStr += '<option value="Minotaur Base">Minotaur</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftTrinketSpecial" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftBaitSpecial" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Runic String">Runic</option>';
-        preferenceHTMLStr += '<option value="Ancient String">Ancient</option>';
-        preferenceHTMLStr +=
-          '<option value="Runic/Ancient">Runic/Ancient</option>';
-        preferenceHTMLStr +=
-          '<option value="Runic=>Ancient">Runic=>Ancient</option>';
-        preferenceHTMLStr += '<option value="Magical String">Magical</option>';
-        preferenceHTMLStr += '<option value="Brie String">Brie</option>';
-        preferenceHTMLStr += '<option value="Swiss String">Swiss</option>';
-        preferenceHTMLStr += '<option value="Marble String">Marble</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftActivatePocketWatchSpecial" style="width: 75px;" onchange="saveBWRift();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr +=
-          '<option value="false">Deactivate Quantum Pocketwatch</option>';
-        preferenceHTMLStr +=
-          '<option value="true">Activate Quantum Pocketwatch</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftActivatePocketWatch" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Activate Quantum Pocketwatch forcibly"><b>Force Activate Quantum</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftForceActiveQuantum" style="width: 75px;" onchange="onSelectBWRiftForceActiveQuantum();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;If Remaining Loot/Obelisk Charge &le;&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputRemainingLootA" min="1" max="100" size="5" value="1" onchange="onInputRemaininigLootAChanged(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trBWRiftDeactivatePocketWatch" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Deactivate Quantum Pocketwatch forcibly"><b>Force Deactivate Quantum</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectBWRiftForceDeactiveQuantum" style="width: 75px;" onchange="onSelectBWRiftForceDeactiveQuantum();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;If Remaining Loot/Obelisk Charge &le;&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputRemainingLootD" min="1" max="100" size="5" value="1" onchange="onInputRemaininigLootDChanged(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFRoxTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on current stage"><b>Trap Setup for </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectFRoxStage" onchange="initControlsFRox();">';
-        preferenceHTMLStr += '<option value="DAY">Day</option>';
-        preferenceHTMLStr += '<option value="TWILIGHT">Twilight</option>';
-        preferenceHTMLStr += '<option value="MIDNIGHT">Midnight</option>';
-        preferenceHTMLStr += '<option value="PITCH">Pitch</option>';
-        preferenceHTMLStr += '<option value="UTTER">Utter Darkness</option>';
-        preferenceHTMLStr += '<option value="FIRST">First Light</option>';
-        preferenceHTMLStr += '<option value="DAWN">Dawn</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFRoxWeapon" style="width: 75px;" onchange="saveFRox();"></select>';
-        preferenceHTMLStr +=
-          '<select id="selectFRoxBase" style="width: 75px;" onchange="saveFRox();"></select>';
-        preferenceHTMLStr +=
-          '<select id="selectFRoxTrinket" style="width: 75px;" onchange="saveFRox();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFRoxBait" style="width: 75px;" onchange="saveFRox();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr += '<option value="Crescent">Crescent</option>';
-        preferenceHTMLStr += '<option value="Moon">Moon</option>';
-        preferenceHTMLStr += '<option value="ANY_LUNAR">Moon/Crescent</option>';
-        preferenceHTMLStr +=
-          '<option value="Moon=>Crescent">Moon=>Crescent</option>';
-        preferenceHTMLStr +=
-          '<option value="Crescent=>Moon">Crescent=>Moon</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFRoxActivateTower" style="width: 75px;" onchange="saveFRox();">';
-        preferenceHTMLStr += '<option value="false">Deactivate Tower</option>';
-        preferenceHTMLStr += '<option value="true">Activate Tower</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trFRoxDeactiveTower" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to deactivate tower when full HP"><b>Deactivate Tower When HP Full</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFRoxFullHPDeactivate" onchange="saveFRox();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trGESTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Trap Setup at </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectGESStage" style="width: 75px;" onchange="initControlsGES();">';
-        preferenceHTMLStr +=
-          '<option value="SD_BEFORE">Supply Depot (No Supply Rush)</option>';
-        preferenceHTMLStr +=
-          '<option value="SD_AFTER">Supply Depot (Supply Rush)</option>';
-        preferenceHTMLStr += '<option value="RR">Raider River</option>';
-        preferenceHTMLStr += '<option value="DC">Daredevil Canyon</option>';
-        preferenceHTMLStr += '<option value="WAITING">Waiting</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectGESTrapWeapon" style="width: 75px;" onchange="saveGES();">';
-        preferenceHTMLStr += '<option value="S.L.A.C.">S.L.A.C.</option>';
-        preferenceHTMLStr += '<option value="S.L.A.C. II">S.L.A.C. II</option>';
-        preferenceHTMLStr +=
-          '<option value="Supply Grabber">Supply Grabber</option>';
-        preferenceHTMLStr +=
-          '<option value="Bandit Deflector">Bandit Deflector</option>';
-        preferenceHTMLStr +=
-          '<option value="Engine Doubler">Engine Doubler</option>';
-        preferenceHTMLStr +=
-          '<option value="The Law Draw">The Law Draw</option>';
-        preferenceHTMLStr +=
-          '<option value="Law Laser Trap">Law Laser Trap</option>';
-        preferenceHTMLStr +=
-          '<option value="Christmas Cactus Trap">Christmas Cactus Trap</option>';
-        preferenceHTMLStr +=
-          '<option value="Meteor Prison Core Trap">Meteor Prison Core Trap</option>';
-        preferenceHTMLStr +=
-          '<option value="S.T.I.N.G. Trap">S.T.I.N.G. Trap</option>';
-        preferenceHTMLStr +=
-          '<option value="S.T.I.N.G.E.R. Trap">S.T.I.N.G.E.R. Trap</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGESTrapBase" style="width: 75px" onchange="saveGES();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGESTrapTrinket" style="width: 75px;" onchange="saveGES();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGESRRTrapTrinket" style="width: 75px;display:none" onchange="saveGES();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="AUTO">Roof Rack/Door Guard/Greasy Glob</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGESDCTrapTrinket" style="width: 75px;display:none" onchange="saveGES();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="AUTO">Magmatic Crystal/Black Powder/Dusty Coal</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGESTrapBait" style="width: 75px" onchange="saveGES();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trGESSDLoadCrate" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Load Crate</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectGESSDLoadCrate" onchange="onSelectGESSDLoadCrate();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;<a><b>When Crate &ge; :</b></a>&nbsp;";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinCrate" min="1" max="50" size="5" value="11" onchange="saveGES(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trGESRRRepellent" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Use Repellent</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectGESRRRepellent" onchange="onSelectGESRRRepellent();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;<a><b>When Repellent &ge; :</b></a>&nbsp;";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinRepellent" min="1" max="50" size="5" value="11" onchange="saveGES(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trGESDCStokeEngine" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Stoke Engine</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectGESDCStokeEngine" onchange="onSelectGESDCStokeEngine();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;<a><b>When Fuel Nuggests &ge;:</b></a>&nbsp;";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinFuelNugget" min="1" max="20" size="5" value="20" onchange="saveGES(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trWWRiftFactionFocus" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select a faction to focus on"><b>Faction to Focus</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftFaction" onchange="onSelectWWRiftFaction();">';
-        preferenceHTMLStr += '<option value="CC">Crazed Clearing</option>';
-        preferenceHTMLStr +=
-          '<option value="GGT">Gigantic Gnarled Tree</option>';
-        preferenceHTMLStr += '<option value="DL">Deep Lagoon</option>';
-        preferenceHTMLStr +=
-          '<option value="MBW_40_44">MBW 40 &le; Rage &le; 44</option>';
-        preferenceHTMLStr +=
-          '<option value="MBW_45_48">MBW 45 &le; Rage &le; 48</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trWWRiftFactionFocusNext" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select next faction to focus on"><b>Next Faction to Focus</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftFactionNext" onchange="saveWWRift();">';
-        preferenceHTMLStr += '<option value="Remain">Remain</option>';
-        preferenceHTMLStr += '<option value="CC">Crazed Clearing</option>';
-        preferenceHTMLStr +=
-          '<option value="GGT">Gigantic Gnarled Tree</option>';
-        preferenceHTMLStr += '<option value="DL">Deep Lagoon</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trWWRiftTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to trap setup based on certain range of rage"><b>Trap Setup for Rage</b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftRage" onchange="initControlsWWRift();">';
-        preferenceHTMLStr += '<option value="0">0-24</option>';
-        preferenceHTMLStr += '<option value="25">25-49</option>';
-        preferenceHTMLStr += '<option value="50">50</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftTrapWeapon" onchange="saveWWRift();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr +=
-          '<option value="Chrome Celestial Dissonance">Chrome CD</option>';
-        preferenceHTMLStr +=
-          '<option value="Celestial Dissonance Trap">CDT</option>';
-        preferenceHTMLStr +=
-          '<option value="Timesplit Dissonance Weapon">TDW</option>';
-        preferenceHTMLStr +=
-          '<option value="Mysteriously unYielding">MYNORCA</option>';
-        preferenceHTMLStr +=
-          '<option value="Focused Crystal Laser">FCL</option>';
-        preferenceHTMLStr += '<option value="Multi-Crystal Laser">MCL</option>';
-        preferenceHTMLStr +=
-          '<option value="Biomolecular Re-atomizer Trap">BRT</option>';
-        preferenceHTMLStr +=
-          '<option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>';
-        preferenceHTMLStr += '<option value="Crystal Tower">CT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftTrapBase" style="width: 75px" onchange="saveWWRift();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftTrapTrinket" style="width: 75px" onchange="saveWWRift();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="FSC">Faction Specific Charm</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftTrapBait" onchange="saveWWRift();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Magical String">Magical</option>';
-        preferenceHTMLStr += '<option value="Brie String">Brie</option>';
-        preferenceHTMLStr += '<option value="Swiss String">Swiss</option>';
-        preferenceHTMLStr += '<option value="Marble String">Marble</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trWWRiftMBWMinRage" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select minimum rage to hunt MBW"><b>Min Rage to Hunt MBW</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinRage" min="40" max="48" size="5" value="40" onchange="onInputMinRageChanged(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trWWRiftMBWTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Trap Setup When </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftMBWBar4044" style="width: 75px; display:none" onchange="initControlsWWRift();">';
-        preferenceHTMLStr += '<option value="25_0">0 Bar &ge; 25 Rage</option>';
-        preferenceHTMLStr += '<option value="25_1">1 Bar &ge; 25 Rage</option>';
-        preferenceHTMLStr +=
-          '<option value="25_2">2 Bars &ge; 25 Rage</option>';
-        preferenceHTMLStr +=
-          '<option value="MIN_RAGE_0">3 Bars &ge; 25 Rage / 0 Bar &ge; Min Rage to Hunt MBW</option>';
-        preferenceHTMLStr +=
-          '<option value="MIN_RAGE_1">1 Bar &ge; Min Rage to Hunt MBW</option>';
-        preferenceHTMLStr +=
-          '<option value="MIN_RAGE_2">2 Bars &ge; Min Rage to Hunt MBW</option>';
-        preferenceHTMLStr +=
-          '<option value="MIN_RAGE_3">3 Bars &ge; Min Rage to Hunt MBW</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftMBWBar4548" style="width: 75px; display:none" onchange="initControlsWWRift();">';
-        preferenceHTMLStr += '<option value="25_0">0 Bar &ge; 25 Rage</option>';
-        preferenceHTMLStr += '<option value="25_1">1 Bar &ge; 25 Rage</option>';
-        preferenceHTMLStr +=
-          '<option value="25_2">2 Bars &ge; 25 Rage</option>';
-        preferenceHTMLStr +=
-          '<option value="44_0">3 Bars &ge; 25 Rage / 0 Bar &ge; 44 Rage</option>';
-        preferenceHTMLStr += '<option value="44_1">1 Bar &ge; 44 Rage</option>';
-        preferenceHTMLStr +=
-          '<option value="44_2">2 Bars &ge; 44 Rage</option>';
-        preferenceHTMLStr +=
-          '<option value="44_3">3 Bars &ge; 44 Rage / 0 Bar &ge; Min Rage to Hunt MBW</option>';
-        preferenceHTMLStr +=
-          '<option value="MIN_RAGE_1">1 Bar &ge; Min Rage to Hunt MBW</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftMBWTrapWeapon" onchange="saveWWRift();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr +=
-          '<option value="Chrome Celestial Dissonance">Chrome CD</option>';
-        preferenceHTMLStr +=
-          '<option value="Celestial Dissonance Trap">CDT</option>';
-        preferenceHTMLStr +=
-          '<option value="Timesplit Dissonance Weapon">TDW</option>';
-        preferenceHTMLStr +=
-          '<option value="Mysteriously unYielding">MYNORCA</option>';
-        preferenceHTMLStr +=
-          '<option value="Focused Crystal Laser">FCL</option>';
-        preferenceHTMLStr += '<option value="Multi-Crystal Laser">MCL</option>';
-        preferenceHTMLStr +=
-          '<option value="Biomolecular Re-atomizer Trap">BRT</option>';
-        preferenceHTMLStr +=
-          '<option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>';
-        preferenceHTMLStr += '<option value="Crystal Tower">CT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftMBWTrapBase" style="width: 75px" onchange="saveWWRift();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftMBWTrapTrinket" style="width: 75px" onchange="saveWWRift();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="FSCLR">Faction Specific Charm (Lowest Rage)</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectWWRiftMBWTrapBait" onchange="saveWWRift();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="Lactrodectus Lancashire">LLC</option>';
-        preferenceHTMLStr += '<option value="Magical String">Magical</option>';
-        preferenceHTMLStr += '<option value="Brie String">Brie</option>';
-        preferenceHTMLStr += '<option value="Swiss String">Swiss</option>';
-        preferenceHTMLStr += '<option value="Marble String">Marble</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFREnterBattery" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select which battery level to enter Pagoda"><b>Enter at Battery</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectEnterAtBattery" onchange="saveFR();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        for (i = 1; i <= 10; i++)
-          preferenceHTMLStr += '<option value="' + i + '">' + i + "</option>";
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trFRRetreatBattery" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select which battery level to retreat from  Pagoda"><b>Retreat at Battery</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectRetreatAtBattery" onchange="saveFR();">';
-        for (i = 0; i <= 10; i++)
-          preferenceHTMLStr += '<option value="' + i + '">' + i + "</option>";
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trFRTrapSetupAtBattery" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup for each battery"><b>Trap Setup at Battery</b></a>&nbsp;&nbsp;';
-        preferenceHTMLStr +=
-          '<select id="selectTrapSetupAtBattery" onchange="initControlsFR();">';
-        for (i = 0; i <= 10; i++)
-          preferenceHTMLStr += '<option value="' + i + '">' + i + "</option>";
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFRTrapWeapon" onchange="saveFR();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr +=
-          '<option value="Chrome Celestial Dissonance">Chrome CD</option>';
-        preferenceHTMLStr +=
-          '<option value="Celestial Dissonance Trap">CDT</option>';
-        preferenceHTMLStr +=
-          '<option value="Timesplit Dissonance Weapon">TDW</option>';
-        preferenceHTMLStr +=
-          '<option value="Mysteriously unYielding">MYNORCA</option>';
-        preferenceHTMLStr +=
-          '<option value="Focused Crystal Laser">FCL</option>';
-        preferenceHTMLStr += '<option value="Multi-Crystal Laser">MCL</option>';
-        preferenceHTMLStr +=
-          '<option value="Biomolecular Re-atomizer Trap">BRT</option>';
-        preferenceHTMLStr +=
-          '<option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>';
-        preferenceHTMLStr += '<option value="Crystal Tower">CT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFRTrapBase" onchange="saveFR();">';
-        preferenceHTMLStr += '<option value="Prestige Base">Prestige</option>';
-        preferenceHTMLStr +=
-          '<option value="Clockwork Base">Clockwork</option>';
-        preferenceHTMLStr += '<option value="Fissure Base">Fissure</option>';
-        preferenceHTMLStr += '<option value="Rift Base">Rift</option>';
-        preferenceHTMLStr += '<option value="Fracture Base">Fracture</option>';
-        preferenceHTMLStr +=
-          '<option value="Enerchi Induction Base">Enerchi</option>';
-        preferenceHTMLStr +=
-          '<option value="Attuned Enerchi Induction Base">A. Enerchi</option>';
-        preferenceHTMLStr += '<option value="Minotaur Base">Minotaur</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFRTrapTrinket" style="width: 75px" onchange="saveFR();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFRTrapBait" style="width: 75px" onchange="onSelectFRTrapBait();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Ascended">Ascended</option>';
-        preferenceHTMLStr +=
-          '<option value="Null Onyx Gorgonzola">Null Onyx Gorgonzola</option>';
-        preferenceHTMLStr += '<option value="Rift Rumble">Rift Rumble</option>';
-        preferenceHTMLStr +=
-          '<option value="Rift Glutter">Rift Glutter</option>';
-        preferenceHTMLStr +=
-          '<option value="Rift Susheese">Rift Susheese</option>';
-        preferenceHTMLStr += '<option value="Rift Combat">Rift Combat</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_MASTER">Glutter/Combat/Susheese</option>';
-        preferenceHTMLStr +=
-          '<option value="BALANCE_MASTER">Balance Heirloom</option>';
-        preferenceHTMLStr +=
-          '<option value="ORDER_MASTER">Master Cheese in Order</option>';
-        preferenceHTMLStr +=
-          '<option value="Master Fusion">Master Fusion</option>';
-        preferenceHTMLStr += '<option value="Maki String">Maki</option>';
-        preferenceHTMLStr += '<option value="Magical String">Magical</option>';
-        preferenceHTMLStr += '<option value="Brie String">Brie</option>';
-        preferenceHTMLStr += '<option value="Swiss String">Swiss</option>';
-        preferenceHTMLStr += '<option value="Marble String">Marble</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFRTrapBaitMasterOrder" style="width: 75px;display:none" onchange="saveFR();">';
-        preferenceHTMLStr +=
-          '<option value="Glutter=>Combat=>Susheese">Glutter=>Combat=>Susheese</option>';
-        preferenceHTMLStr +=
-          '<option value="Glutter=>Susheese=>Combat">Glutter=>Susheese=>Combat</option>';
-        preferenceHTMLStr +=
-          '<option value="Combat=>Glutter=>Susheese">Combat=>Glutter=>Susheese</option>';
-        preferenceHTMLStr +=
-          '<option value="Combat=>Susheese=>Glutter">Combat=>Susheese=>Glutter</option>';
-        preferenceHTMLStr +=
-          '<option value="Susheese=>Glutter=>Combat">Susheese=>Glutter=>Combat</option>';
-        preferenceHTMLStr +=
-          '<option value="Susheese=>Combat=>Glutter">Susheese=>Combat=>Glutter</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trIceberg" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to trap setup based on current phase"><b>Trap Setup for</b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectIcebergPhase" style="width: 75px" onchange="initControlsIceberg();">';
-        preferenceHTMLStr += '<option value="GENERAL">Iceberg General</option>';
-        preferenceHTMLStr +=
-          '<option value="TREACHEROUS">Treacherous Tunnels</option>';
-        preferenceHTMLStr += '<option value="BRUTAL">Brutal Bulwark</option>';
-        preferenceHTMLStr += '<option value="BOMBING">Bombing Run</option>';
-        preferenceHTMLStr += '<option value="MAD">Mad Depths</option>';
-        preferenceHTMLStr += '<option value="ICEWING">Icewing\'s Lair</option>';
-        preferenceHTMLStr += '<option value="HIDDEN">Hidden Depths</option>';
-        preferenceHTMLStr += '<option value="DEEP">The Deep Lair</option>';
-        preferenceHTMLStr += '<option value="SLUSHY">Slushy Shoreline</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectIcebergBase" style="width: 75px" onchange="saveIceberg();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectIcebergTrinket" style="width: 75px" onchange="saveIceberg();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectIcebergBait" style="width: 75px" onchange="saveIceberg();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trZTFocus" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to chesspiece side to focus"><b>Side to Focus</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr += '<select id="selectZTFocus" onchange="saveZT();">';
-        preferenceHTMLStr += '<option value="MYSTIC">Mystic Only</option>';
-        preferenceHTMLStr += '<option value="TECHNIC">Technic Only</option>';
-        preferenceHTMLStr +=
-          '<option value="MYSTIC=>TECHNIC">Mystic First Technic Second</option>';
-        preferenceHTMLStr +=
-          '<option value="TECHNIC=>MYSTIC">Technic First Mystic Second</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += '<tr id="trZTTrapSetup1st" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on first focus-side chesspiece order"><b>First Side Trap Setup for </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectZTMouseOrder1st" onchange="initControlsZT();">';
-        preferenceHTMLStr += '<option value="PAWN">Pawn</option>';
-        preferenceHTMLStr += '<option value="KNIGHT">Knight</option>';
-        preferenceHTMLStr += '<option value="BISHOP">Bishop</option>';
-        preferenceHTMLStr += '<option value="ROOK">Rook</option>';
-        preferenceHTMLStr += '<option value="QUEEN">Queen</option>';
-        preferenceHTMLStr += '<option value="KING">King</option>';
-        preferenceHTMLStr += '<option value="CHESSMASTER">Chessmaster</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectZTWeapon1st" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr +=
-          '<option value="MPP/TPP">Focused-Side Pawn Pincher</option>';
-        preferenceHTMLStr +=
-          '<option value="BPT/OAT">Focused-Side Trap BPT/OAT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectZTBase1st" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectZTTrinket1st" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectZTBait1st" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += '<option value="Checkmate">Checkmate</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += '<tr id="trZTTrapSetup2nd" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on second focus-side chesspiece order"><b>Second Side Trap Setup for </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectZTMouseOrder2nd" onchange="initControlsZT();">';
-        preferenceHTMLStr += '<option value="PAWN">Pawn</option>';
-        preferenceHTMLStr += '<option value="KNIGHT">Knight</option>';
-        preferenceHTMLStr += '<option value="BISHOP">Bishop</option>';
-        preferenceHTMLStr += '<option value="ROOK">Rook</option>';
-        preferenceHTMLStr += '<option value="QUEEN">Queen</option>';
-        preferenceHTMLStr += '<option value="KING">King</option>';
-        preferenceHTMLStr += '<option value="CHESSMASTER">Chessmaster</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectZTWeapon2nd" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr +=
-          '<option value="MPP/TPP">Focused-Side Pawn Pincher</option>';
-        preferenceHTMLStr +=
-          '<option value="BPT/OAT">Focused-Side Trap BPT/OAT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectZTBase2nd" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectZTTrinket2nd" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectZTBait2nd" style="width: 75px" onchange="saveZT();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += '<option value="Checkmate">Checkmate</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trSGTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to trap setup based on certain season"><b>Trap Setup For </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectSGSeason" onchange="initControlsSG();">';
-        preferenceHTMLStr += '<option value="SPRING">Spring</option>';
-        preferenceHTMLStr += '<option value="SUMMER">Summer</option>';
-        preferenceHTMLStr += '<option value="FALL">Fall</option>';
-        preferenceHTMLStr += '<option value="WINTER">Winter</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectSGTrapWeapon" style="width: 75px" onchange="saveSG();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectSGTrapBase" style="width: 75px" onchange="saveSG();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectSGTrapTrinket" style="width: 75px" onchange="saveSG();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectSGTrapBait" style="width: 75px" onchange="saveSG();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trSGDisarmBait" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to disarm bait when amplifier is fully charged"><b>Disarm Bait</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectSGDisarmBait" onchange="saveSG();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;After Amplifier Fully Charged";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trLGTGAutoFill" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Auto Fill in </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectLGTGAutoFillSide" onchange="initControlsLG();">';
-        preferenceHTMLStr += '<option value="LG">Living Garden</option>';
-        preferenceHTMLStr += '<option value="TG">Twisted Garden</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLGTGAutoFillState" onchange="saveLG();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += '<tr id="trLGTGAutoPour" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Auto Pour in </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectLGTGAutoPourSide" onchange="initControlsLG();">';
-        preferenceHTMLStr += '<option value="LG">Living Garden</option>';
-        preferenceHTMLStr += '<option value="TG">Twisted Garden</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLGTGAutoPourState" onchange="saveLG();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += '<tr id="trPourTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>After Poured in </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectLGTGSide" onchange="initControlsLG();">';
-        preferenceHTMLStr += '<option value="LG">Living Garden</option>';
-        preferenceHTMLStr += '<option value="TG">Twisted Garden</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLGTGBase" style="width: 75px" onchange="saveLG();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectLGTGTrinket" style="width: 75px" onchange="saveLG();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectLGTGBait" style="width: 75px" onchange="saveLG();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Duskshade Camembert">Duskshade Camembert</option>';
-        preferenceHTMLStr +=
-          '<option value="Lunaria Camembert">Lunaria Camembert</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr +=
-          '<tr id="trCurseLiftedTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>After Curse Lifted in </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectLCCCSide" onchange="initControlsLG();">';
-        preferenceHTMLStr += '<option value="LC">Lost City</option>';
-        preferenceHTMLStr += '<option value="CC">Cursed City</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLCCCBase" style="width: 75px" onchange="saveLG();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectLCCCTrinket" style="width: 75px" onchange="saveLG();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr +=
-          '<tr id="trSaltedTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Trap Setup </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectSaltedStatus" onchange="initControlsLG();">';
-        preferenceHTMLStr += '<option value="before">During</option>';
-        preferenceHTMLStr += '<option value="after">After</option>';
-        preferenceHTMLStr +=
-          "</select><a><b> Salt Charging</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectSCBase" style="width: 75px" onchange="saveLG();">';
-        preferenceHTMLStr +=
-          '</select>&nbsp;&nbsp;<a title="Max number of salt before hunting King Grub"><b>Salt Charge : </b></a>';
-        preferenceHTMLStr +=
-          '<input type="number" id="inputKGSalt" min="1" max="50" size="5" value="25" onchange="saveLG();">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trGWHTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on anchor/boost status"><b>Trap Setup When </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectGWHZone" style="width: 75px" onchange="initControlsGWH2016();">';
-        preferenceHTMLStr +=
-          '<option value="ORDER1">Simple Zone With Order</option>';
-        preferenceHTMLStr +=
-          '<option value="ORDER2">Deluxe Zone With Order</option>';
-        preferenceHTMLStr +=
-          '<option value="NONORDER1">Simple Zone W/O Order</option>';
-        preferenceHTMLStr +=
-          '<option value="NONORDER2">Deluxe Zone W/O Order</option>';
-        preferenceHTMLStr +=
-          '<option value="WINTER_WASTELAND">Winter Wasteland</option>';
-        preferenceHTMLStr +=
-          '<option value="SNOWBALL_STORM">Snowball Storm</option>';
-        preferenceHTMLStr += '<option value="FLYING">Flying</option>';
-        preferenceHTMLStr +=
-          "<option value=\"NEW_YEAR'S_PARTY\">New Year's Party</option>";
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectGWHWeapon" style="width: 75px" onchange="saveGWH2016();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGWHBase" style="width: 75px" onchange="saveGWH2016();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGWHTrinket" style="width: 75px;" onchange="onSelectGWHTrinketChanged();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="ANCHOR_FAC/EAC">FAC/EAC</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGWHBait" style="width: 75px" onchange="saveGWH2016();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_FESTIVE_BRIE">AA/Festive Cheese/Brie</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_FESTIVE_GOUDA">AA/Festive Cheese/Gouda</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_FESTIVE_SB">AA/Festive Cheese/SUPER|brie+</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectGWHBoost" style="width: 75px" onchange="saveGWH2016();">';
-        preferenceHTMLStr += '<option value="false">Not Boost</option>';
-        preferenceHTMLStr += '<option value="true">Boost</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += '<tr id="trGWHTurboBoost" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to always Turbo boost (500m)"><b>Always Turbo Boost</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectGWHUseTurboBoost" onchange="saveGWH2016();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += '<tr id="trGWHFlying" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select minimum AA to take flight"><b>Min AA to Fly (&ge;)</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinAA" min="0" max="9007199254740991" style="width:50px" value="20" onchange="onInputMinAAChanged(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr +=
-          '<tr id="trGWHFlyingFirework" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select minimum firework to take flight"><b>Min Firework to Fly (&ge;)</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<input type="number" id="inputMinFirework" min="0" max="9007199254740991" style="width:50px" value="20" onchange="onInputMinWorkChanged(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-        preferenceHTMLStr += '<tr id="trGWHFlyingLand" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select whether land after firework run out"><b>Land after Firework Run Out</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectGWHLandAfterRunOutFirework" onchange="saveGWH2016();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trSCCustom" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select custom algorithm"><b>SC Custom Algorithm</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectSCHuntZone" style="width:75px" onChange="initControlsSCCustom();">';
-        preferenceHTMLStr += '<option value="ZONE_NOT_DIVE">Surface</option>';
-        preferenceHTMLStr += '<option value="ZONE_DEFAULT">Default</option>';
-        preferenceHTMLStr += '<option value="ZONE_CORAL">Coral</option>';
-        preferenceHTMLStr += '<option value="ZONE_SCALE">Scale</option>';
-        preferenceHTMLStr += '<option value="ZONE_BARNACLE">Barnacle</option>';
-        preferenceHTMLStr += '<option value="ZONE_TREASURE">Treasure</option>';
-        preferenceHTMLStr += '<option value="ZONE_DANGER">Danger</option>';
-        preferenceHTMLStr +=
-          '<option value="ZONE_DANGER_PP">Danger PP MT</option>';
-        preferenceHTMLStr +=
-          '<option value="ZONE_DANGER_PP_LOTA">Danger PP LOTA</option>';
-        preferenceHTMLStr += '<option value="ZONE_OXYGEN">Oxygen</option>';
-        preferenceHTMLStr += '<option value="ZONE_BONUS">Bonus</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectSCHuntZoneEnable" style="width:75px;display:none" onChange="saveSCCustomAlgo();">';
-        preferenceHTMLStr += '<option value="true">Hunt</option>';
-        preferenceHTMLStr += '<option value="false">Jet Through</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectSCHuntBait" style="width: 75px" onchange="saveSCCustomAlgo();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="Fishy Fromage">Fishy Fromage</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectSCHuntTrinket" style="width: 75px" onchange="saveSCCustomAlgo();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Empowered Anchor">EAC</option>';
-        preferenceHTMLStr += '<option value="GAC_EAC">GAC, EAC</option>';
-        preferenceHTMLStr += '<option value="SAC_EAC">SAC, EAC</option>';
-        preferenceHTMLStr += '<option value="UAC_EAC">UAC, EAC</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trSCCustomUseSmartJet" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to always use Smart Water Jet Charm"><b>Use Smart Jet</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectSCUseSmartJet" onchange="saveSCCustomAlgo();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trLabyrinth" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select a district to focus on"><b>District to Focus</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLabyrinthDistrict" onChange="onSelectLabyrinthDistrict();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="FEALTY">Fealty</option>';
-        preferenceHTMLStr += '<option value="TECH">Tech</option>';
-        preferenceHTMLStr += '<option value="SCHOLAR">Scholar</option>';
-        preferenceHTMLStr += '<option value="TREASURY">Treasury</option>';
-        preferenceHTMLStr += '<option value="FARMING">Farming</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trLabyrinthDisarm" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select to disarm cheese at X last hunt in hallway when total clues near 100"><b>Security Disarm</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLabyrinthDisarm" onChange="onSelectLabyrinthDisarm();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;At Last&nbsp;";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputLabyrinthLastHunt" min="2" max="10" style="width:40px" value="2" onchange="onInputLabyrinthLastHuntChanged(this);">&nbsp;Hunt(s) in Hallway Near 100 Total Clues';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trLabyrinthArmOtherBase" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select to arm other base if Compass Magnet Charm is currently armed"><b>Arm Other Base</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLabyrinthOtherBase" style="width: 75px" onchange="saveLaby();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;If Compass Magnet Charm is armed";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trLabyrinthDisarmCompass" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a><b>Disarm Compass Magnet</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLabyrinthDisarmCompass" onchange="onSelectLabyrinthDisarmCompass();">';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr +=
-          "</select>&nbsp;&nbsp;If Dead End Clue &le; :&nbsp;";
-        preferenceHTMLStr +=
-          '<input type="number" id="inputLabyrinthDEC" min="0" max="20" style="width:40px" value="0" onchange="onInputLabyrinthDECChanged(this);">';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trPriorities15" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select hallway priorities when focus-district clues less than 15"><b>Priorities (Focus-District Clues < 15)</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectHallway15Plain" onChange="saveLaby();">';
-        preferenceHTMLStr +=
-          '<option value="lp">Long Plain Hallway First</option>';
-        preferenceHTMLStr +=
-          '<option value="sp">Short Plain Hallway First</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trPriorities1560" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select hallway priorities when focus-district clues within 15 and 60"><b>Priorities (15 < Focus-District Clues < 60)</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectHallway1560Superior" onchange="saveLaby();">';
-        preferenceHTMLStr +=
-          '<option value="ls">Long Superior Hallway First</option>';
-        preferenceHTMLStr +=
-          '<option value="ss">Short Superior Hallway First</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectHallway1560Plain" onchange="saveLaby();">';
-        preferenceHTMLStr +=
-          '<option value="lp">Long Plain Hallway First</option>';
-        preferenceHTMLStr +=
-          '<option value="sp">Short Plain Hallway First</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trPriorities60" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select hallway priorities when focus-district clues more than 60"><b>Priorities (Focus-District Clues > 60)</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectHallway60Epic" onchange="saveLaby();">';
-        preferenceHTMLStr +=
-          '<option value="le">Long Epic Hallway First</option>';
-        preferenceHTMLStr +=
-          '<option value="se">Short Epic Hallway First</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectHallway60Superior" onchange="saveLaby();">';
-        preferenceHTMLStr +=
-          '<option value="ls">Long Superior Hallway First</option>';
-        preferenceHTMLStr +=
-          '<option value="ss">Short Superior Hallway First</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectHallway60Plain" onchange="saveLaby();">';
-        preferenceHTMLStr +=
-          '<option value="lp">Long Plain Hallway First</option>';
-        preferenceHTMLStr +=
-          '<option value="sp">Short Plain Hallway First</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trLabyrinthOtherHallway" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Choose doors other than focused door when there is no available focused door to be choosen"><b>Open Non-Focus Door</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          "<select id=\"chooseOtherDoors\" onChange=\"\
-				saveLaby();\
-				document.getElementById('typeOtherDoors').disabled = (value == 'false') ? 'disabled' : ''; \">";
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr +=
-          '</select>&nbsp;&nbsp;<a title="Select a choosing type for non-focused doors"><b>Choosing Type:</b></a>&emsp;';
-        preferenceHTMLStr +=
-          '<select id="typeOtherDoors" onChange="saveLaby();">';
-        preferenceHTMLStr +=
-          '<option value="SHORTEST_ONLY">Shortest Length Only</option>';
-        preferenceHTMLStr +=
-          '<option value="FEWEST_ONLY">Fewest Clue Only</option>';
-        preferenceHTMLStr +=
-          '<option value="SHORTEST_FEWEST">Shortest Length => Fewest Clue</option>';
-        preferenceHTMLStr +=
-          '<option value="FEWEST_SHORTEST">Fewest Clue => Shortest Length </option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trLabyrinthWeaponFarming" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select weapon type in farming hallways"><b>Weapon Type in Farming</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectLabyrinthWeaponType" onchange="saveLaby();">';
-        preferenceHTMLStr += '<option value="Forgotten">Forgotten</option>';
-        preferenceHTMLStr += '<option value="Arcane">Arcane</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trZokorTrapSetup" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select trap setup under different boss status"><b>Trap Setup When</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectZokorBossStatus" onChange="initControlsZokor();">';
-        preferenceHTMLStr += '<option value="INCOMING">Boss Incoming</option>';
-        preferenceHTMLStr += '<option value="ACTIVE">Boss Active</option>';
-        preferenceHTMLStr += '<option value="DEFEATED">Boss Defeated</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;";
-        preferenceHTMLStr +=
-          '<select id="selectZokorBait" style="width: 75px" onChange="saveZokor();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += '<option value="Glowing Gruyere">GG</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;";
-        preferenceHTMLStr +=
-          '<select id="selectZokorTrinket" style="width: 75px" onChange="saveZokor();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFWWave" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr += '<a title="Select FW wave"><b>Wave</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFWWave" onChange="initControlsFW();">';
-        preferenceHTMLStr += '<option value="1">1</option>';
-        preferenceHTMLStr += '<option value="2">2</option>';
-        preferenceHTMLStr += '<option value="3">3</option>';
-        preferenceHTMLStr += '<option value="4">4</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFWTrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on certain FW wave"><b>Physical Trap Setup</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFWTrapSetupWeapon" style="width: 75px" onchange="saveFW();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFWTrapSetupBase" style="width: 75px" onchange="saveFW();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFW4TrapSetup" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select trap setup based on warden status"><b>Trap Setup </b></a>';
-        preferenceHTMLStr +=
-          '<select id="selectFW4WardenStatus" onchange="initControlsFW();">';
-        preferenceHTMLStr += '<option value="before">Before</option>';
-        preferenceHTMLStr += '<option value="after">After</option>';
-        preferenceHTMLStr +=
-          "</select><a><b> Clear Warden</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFW4TrapSetupWeapon" style="width: 75px" onchange="saveFW();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFW4TrapSetupBase" style="width: 75px" onchange="saveFW();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFW4TrapSetupTrinket" style="width: 75px" onchange="saveFW();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFW4TrapSetupBait" style="width: 75px" onchange="saveFW();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFWFocusType" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select either Normal (Warrior, Scout, Archer) or Special (Cavalry, Mage)"><b>Soldier Type to Focus</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFWFocusType" onChange="saveFW();">';
-        preferenceHTMLStr += '<option value="NORMAL">Normal</option>';
-        preferenceHTMLStr += '<option value="SPECIAL">Special</option>';
-        preferenceHTMLStr +=
-          '</select>&nbsp;&nbsp;<a title="Select which soldier type comes first based on population"><b>Priorities:</b></a>&emsp;';
-        preferenceHTMLStr +=
-          '<select id="selectFWPriorities" onChange="saveFW();">';
-        preferenceHTMLStr +=
-          '<option value="HIGHEST">Highest Population First</option>';
-        preferenceHTMLStr +=
-          '<option value="LOWEST">Lowest Population First</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFWStreak" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr += '<a title="Select streak"><b>Streak</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFWStreak" onChange="initControlsFW();">';
-        preferenceHTMLStr += '<option value="0">0</option>';
-        preferenceHTMLStr += '<option value="1">1</option>';
-        preferenceHTMLStr += '<option value="2">2</option>';
-        preferenceHTMLStr += '<option value="3">3</option>';
-        preferenceHTMLStr += '<option value="4">4</option>';
-        preferenceHTMLStr += '<option value="5">5</option>';
-        preferenceHTMLStr += '<option value="6">6</option>';
-        preferenceHTMLStr += '<option value="7">7</option>';
-        preferenceHTMLStr += '<option value="8">8</option>';
-        preferenceHTMLStr += '<option value="9">9</option>';
-        preferenceHTMLStr += '<option value="10">10</option>';
-        preferenceHTMLStr += '<option value="11">11</option>';
-        preferenceHTMLStr += '<option value="12">12</option>';
-        preferenceHTMLStr += '<option value="13">13</option>';
-        preferenceHTMLStr += '<option value="14">14</option>';
-        preferenceHTMLStr += '<option value="15">15</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFWCheese" style="width: 75px" onChange="saveFW();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Brie Cheese">Brie</option>';
-        preferenceHTMLStr += '<option value="Toxic Brie">Toxic Brie</option>';
-        preferenceHTMLStr += '<option value="Gouda">Gouda</option>';
-        preferenceHTMLStr += '<option value="SUPER">SB+</option>';
-        preferenceHTMLStr += '<option value="Toxic SUPER">Toxic SB+</option>';
-        preferenceHTMLStr +=
-          '<option value="Ghoulgonzola">Ghoulgonzola</option>';
-        preferenceHTMLStr += '<option value="Candy Corn">Candy Corn</option>';
-        preferenceHTMLStr +=
-          '<option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFWCharmType" style="width: 75px" onChange="saveFW();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Warpath">Warpath</option>';
-        preferenceHTMLStr +=
-          '<option value="Super Warpath">Super Warpath</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectFWSpecial" style="width: 75px" onChange="saveFW();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="COMMANDER">Commander</option>';
-        preferenceHTMLStr += '<option value="GARGANTUA">Gargantua</option>';
-        preferenceHTMLStr +=
-          '<option value="GARGANTUA_GGC" disabled="disabled">Gargantua GGC</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trFWLastType" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select config when there is only one soldier type left"><b>Last Soldier Type</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px;">';
-        preferenceHTMLStr +=
-          '<select id="selectFWLastTypeConfig" onChange="saveFW();">';
-        preferenceHTMLStr +=
-          '<option value="CONFIG_STREAK">Follow Streak Config</option>';
-        preferenceHTMLStr +=
-          '<option value="CONFIG_GOUDA">Gouda & No Warpath Charm</option>';
-        preferenceHTMLStr +=
-          '<option value="NO_WARPATH">No Warpath Charm Only</option>';
-        preferenceHTMLStr +=
-          '<option value="CONFIG_UNCHANGED">Trap Setup Unchanged</option>';
-        preferenceHTMLStr +=
-          '</select>&nbsp;&nbsp;<a title="Select whether to include Artillery in checking of Last Soldier"><b>Include Artillery:</b></a>&emsp;';
-        preferenceHTMLStr +=
-          '<select id="selectFWLastTypeConfigIncludeArtillery" onchange="saveFW();">';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr +=
-          '<tr id="trFWSupportConfig" style="display:none;">';
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;"><a title="Select whether to disarm any Warpath Charm when supports are gone"><b>Disarm Warpath Charm</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>';
-        preferenceHTMLStr += '<td style="height:24px">';
-        preferenceHTMLStr +=
-          '<select id="selectFWSupportConfig" onchange="saveFW();">';
-        preferenceHTMLStr += '<option value="false">False</option>';
-        preferenceHTMLStr += '<option value="true">True</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;When Support Retreated";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trBRConfig" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select the mist tier to hunt"><b>Hunt At</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px;">';
-        preferenceHTMLStr +=
-          '<select id="selectBRHuntMistTier" onChange="onSelectBRHuntMistTierChanged();">';
-        preferenceHTMLStr += '<option value="Red">Red</option>';
-        preferenceHTMLStr += '<option value="Green">Green</option>';
-        preferenceHTMLStr += '<option value="Yellow">Yellow</option>';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>&nbsp;&nbsp;Mist Tier";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trBRToggle" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select the amount of hunt to toggle canister"><b>Toggle Canister Every</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px;">';
-        preferenceHTMLStr +=
-          '<input type="number" id="inputToggleCanister" min="1" max="999" value="1" onchange="onInputToggleCanisterChanged(this);">&nbsp;&nbsp;Hunt(s)';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += '<tr id="trBRTrapSetup" style="display:none;">';
-        preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-        preferenceHTMLStr +=
-          '<a title="Select trap setup combination for respective mist tier"><b>Trap Setup</b></a>';
-        preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += '<td style="height:24px;">';
-        preferenceHTMLStr +=
-          '<select id="selectBRTrapWeapon" onchange="saveBR();">';
-        preferenceHTMLStr += '<option value="MASTER">Master</option>';
-        preferenceHTMLStr +=
-          '<option value="Chrome Celestial Dissonance">Chrome CD</option>';
-        preferenceHTMLStr +=
-          '<option value="Celestial Dissonance Trap">CDT</option>';
-        preferenceHTMLStr +=
-          '<option value="Timesplit Dissonance Weapon">TDW</option>';
-        preferenceHTMLStr +=
-          '<option value="Mysteriously unYielding">MYNORCA</option>';
-        preferenceHTMLStr +=
-          '<option value="Focused Crystal Laser">FCL</option>';
-        preferenceHTMLStr += '<option value="Multi-Crystal Laser">MCL</option>';
-        preferenceHTMLStr +=
-          '<option value="Biomolecular Re-atomizer Trap">BRT</option>';
-        preferenceHTMLStr +=
-          '<option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>';
-        preferenceHTMLStr += '<option value="Crystal Tower">CT</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBRTrapBase" style="width: 75px" onchange="saveBR();">';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBRTrapTrinket" style="width: 75px" onchange="saveBR();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr +=
-          '<select id="selectBRTrapBait" onchange="saveBR();">';
-        preferenceHTMLStr += '<option value="None">None</option>';
-        preferenceHTMLStr += '<option value="Polluted Parmesan">PP</option>';
-        preferenceHTMLStr += '<option value="Terre Ricotta">Terre</option>';
-        preferenceHTMLStr += '<option value="Magical String">Magical</option>';
-        preferenceHTMLStr += '<option value="Brie String">Brie</option>';
-        preferenceHTMLStr += '<option value="Swiss String">Swiss</option>';
-        preferenceHTMLStr += '<option value="Marble String">Marble</option>';
-        preferenceHTMLStr +=
-          '<option value="Undead String Emmental">USE</option>';
-        preferenceHTMLStr += "</select>";
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        preferenceHTMLStr += "<tr>";
-        preferenceHTMLStr +=
-          '<td style="height:24px; text-align:right;" colspan="2">';
-        preferenceHTMLStr +=
-          '<input type="button" id="AlgoConfigSaveInput" title="Save changes of Event or Location without reload, take effect after current hunt" value="Apply" onclick="setSessionToLocal();">&nbsp;&nbsp;&nbsp;';
-        preferenceHTMLStr +=
-          '<input type="button" id="AlgoConfigSaveReloadInput" title="Save changes of Event or Location with reload, take effect immediately" value="Apply & Reload" onclick="setSessionToLocal();' +
-          temp +
-          '">&nbsp;&nbsp;&nbsp;';
-        preferenceHTMLStr += "</td>";
-        preferenceHTMLStr += "</tr>";
-
-        if (eventLocation == "Hunt For") {
-          preferenceHTMLStr += "<tr>";
-          preferenceHTMLStr += '<td style="height:24px; text-align:right;">';
-          preferenceHTMLStr +=
-            '<a title="Type in how many hunts you want to hunt for"><b>How many hunts?</b></a>';
-          preferenceHTMLStr += "&nbsp;&nbsp;:&nbsp;&nbsp;";
-          preferenceHTMLStr += "</td>";
-          preferenceHTMLStr += '<td style="height:24px">';
-          preferenceHTMLStr +=
-            '<input type="number" id="nobHuntsLeftInput" name="nobHuntsLeftInput" value="' +
-            NOBhuntsLeft +
-            '" />';
-          preferenceHTMLStr += "</td>";
-          preferenceHTMLStr += "</tr>";
-        }
-
-        preferenceHTMLStr += "</table>";
-
-        /*
-                preferenceHTMLStr += '<tr>';
-                preferenceHTMLStr += '<td style="height:24px; text-align:right;" colspan="2">';
-                preferenceHTMLStr += '(Changes only take place after user save the preference) ';
-                preferenceHTMLStr += '<input type="button" id="PreferenceSaveInput" value="Save" onclick="	\
-if (document.getElementById(\'AggressiveModeInputTrue\').checked == true) { window.localStorage.setItem(\'AggressiveMode\', \'true\'); } else { window.localStorage.setItem(\'AggressiveMode\', \'false\'); }	\
-window.localStorage.setItem(\'HornTimeDelayMin\', document.getElementById(\'HornTimeDelayMinInput\').value); window.localStorage.setItem(\'HornTimeDelayMax\', document.getElementById(\'HornTimeDelayMaxInput\').value);	\
-if (document.getElementById(\'TrapCheckInputTrue\').checked == true) { window.localStorage.setItem(\'TrapCheck\', \'true\'); } else { window.localStorage.setItem(\'TrapCheck\', \'false\'); }	\
-window.localStorage.setItem(\'TrapCheckTimeOffset\', document.getElementById(\'TrapCheckTimeOffsetInput\').value);	\
-window.localStorage.setItem(\'TrapCheckTimeDelayMin\', document.getElementById(\'TrapCheckTimeDelayMinInput\').value); window.localStorage.setItem(\'TrapCheckTimeDelayMax\', document.getElementById(\'TrapCheckTimeDelayMaxInput\').value);	\
-if (document.getElementById(\'PlayKingRewardSoundInputTrue\').checked == true) { window.localStorage.setItem(\'PlayKingRewardSound\', \'true\'); } else { window.localStorage.setItem(\'PlayKingRewardSound\', \'false\'); }	\
-if (document.getElementById(\'AutoSolveKRInputTrue\').checked == true) { window.localStorage.setItem(\'AutoSolveKR\', \'true\'); } else { window.localStorage.setItem(\'AutoSolveKR\', \'false\'); }	\
-				window.localStorage.setItem(\'AutoSolveKRDelayMin\', document.getElementById(\'AutoSolveKRDelayMinInput\').value); window.localStorage.setItem(\'AutoSolveKRDelayMax\', document.getElementById(\'AutoSolveKRDelayMaxInput\').value);	\
-window.localStorage.setItem(\'KingRewardSoundInput\', document.getElementById(\'KingRewardSoundInput\').value);	\
-window.localStorage.setItem(\'KingRewardEmail\', document.getElementById(\'KingRewardEmail\').value);	\
-if (document.getElementById(\'KingRewardResumeInputTrue\').checked == true) { window.localStorage.setItem(\'KingRewardResume\', \'true\'); } else { window.localStorage.setItem(\'KingRewardResume\', \'false\'); }	\
-window.localStorage.setItem(\'KingRewardResumeTime\', document.getElementById(\'KingRewardResumeTimeInput\').value);	\
-if (document.getElementById(\'PauseLocationInputTrue\').checked == true) { window.localStorage.setItem(\'PauseLocation\', \'true\'); } else { window.localStorage.setItem(\'PauseLocation\', \'false\'); }	\
-if (document.getElementById(\'autopopkrTrue\').checked == true) { window.localStorage.setItem(\'autoPopupKR\', \'true\'); } else { window.localStorage.setItem(\'autoPopupKR\', \'false\'); }	\
-if (document.getElementById(\'nobHuntsLeftInput\')) { window.localStorage.setItem(\'NOB-huntsLeft\', document.getElementById(\'nobHuntsLeftInput\').value); } \
-window.localStorage.setItem(\'addonCode\', document.getElementById(\'addonCode\').value);\
-';
-                if (fbPlatform) {
-                    if (secureConnection)
-                        preferenceHTMLStr += 'window.location.href=\'https://www.mousehuntgame.com/canvas/\';"/>';
-                    else
-                        preferenceHTMLStr += 'window.location.href=\'http://www.mousehuntgame.com/canvas/\';"/>';
-                } else if (hiFivePlatform) {
-                    if (secureConnection)
-                        preferenceHTMLStr += 'window.location.href=\'https://mousehunt.hi5.hitgrab.com/\';"/>';
-                    else
-                        preferenceHTMLStr += 'window.location.href=\'http://mousehunt.hi5.hitgrab.com/\';"/>';
-                } else if (mhPlatform) {
-                    if (secureConnection)
-                        preferenceHTMLStr += 'window.location.href=\'https://www.mousehuntgame.com/\';"/>';
-                    else
-                        preferenceHTMLStr += 'window.location.href=\'http://www.mousehuntgame.com/\';"/>';
-                }
-                preferenceHTMLStr += '&nbsp;&nbsp;&nbsp;</td>';
-                preferenceHTMLStr += '</tr>';
-                preferenceHTMLStr += '</table>';
-                */
+        var preferenceHTMLStr = `
+<table border="0" width="100%">
+<tr>
+  <td colspan="2" style="padding: 2px 0; border-bottom: 1px solid orange;"></td>
+</tr>
+<tr>
+  <td colspan="2" style="height: 5px;"></td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="Extra delay time before sounding the horn (in seconds)">
+      <b>Horn Time Delay</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <input type="text" id="HornTimeDelayMinInput" name="HornTimeDelayMinInput" value="${hornTimeDelayMin.toString()}"/> seconds
+    ~
+    <input type="text" id="HornTimeDelayMaxInput" name="HornTimeDelayMaxInput" value="${hornTimeDelayMax.toString()}"/> seconds
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="Enable trap check once an hour">
+      <b>Trap Check</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="TrapCheckInput" onchange="var isDisable = (value == 'false') ? 'disabled' : ''; document.getElementById('TrapCheckTimeDelayMinInput').disabled=isDisable; document.getElementById('TrapCheckTimeDelayMaxInput').disabled=isDisable;">
+      <option value="false" ${enableTrapCheck ? "" : "selected"}>False</option>
+      <option value="true" ${enableTrapCheck ? "selected" : ""}>True</option>
+    </select>
+    &nbsp;&nbsp;
+    <a title="Extra delay time to trap check (in seconds)">
+      <b>Delay:</b>
+    </a>
+    &emsp;
+    <input type="number" id="TrapCheckTimeDelayMinInput" min="0" max="360" size="5" value="${checkTimeDelayMin.toString()}" ${
+          enableTrapCheck ? "" : "disabled"
+        }> seconds
+    ~
+    <input type="number" id="TrapCheckTimeDelayMaxInput" min="1" max="361" size="5" value="${checkTimeDelayMax.toString()}" ${
+          enableTrapCheck ? "" : "disabled"
+        }> seconds
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="Play sound when encounter king's reward"><b>Play King Reward Sound</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="PlayKingRewardSoundInput">
+      <option value="false"${
+        !isKingWarningSound ? " selected" : ""
+      }>False</option>
+      <option value="true"${isKingWarningSound ? " selected" : ""}>True</option>
+    </select>
+    &nbsp;&nbsp;
+    <a title="Link to MP3 sound to play, defaults NobodyRandom's awesome song if left blank">
+      <b>Sound Link:</b>
+    </a>
+    &emsp;
+    <input type="text" id="kingWarningSoundInput" value="${kingWarningSound}">
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="Auto Popup on KR">
+      <b>Auto KR Popup</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height: 24px">
+    <select id="autoPopKR">
+      <option value="false"${!autoPopupKR ? " selected" : ""}>False</option>
+      <option value="true"${autoPopupKR ? " selected" : ""}>True</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="Solve King Reward automatically">
+      <b>Auto Solve King Reward</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="AutoSolveKRInput" onchange="var isDisable = (value == 'false') ? 'disabled' : ''; document.getElementById('AutoSolveKRDelayMinInput').disabled=isDisable; document.getElementById('AutoSolveKRDelayMaxInput').disabled=isDisable;">
+      <option value="false" ${isAutoSolve ? "" : "selected"}>False</option>
+      <option value="true" ${isAutoSolve ? "selected" : ""}>True</option>
+    </select>
+    &nbsp;&nbsp;
+    <a title="Extra delay time to solve King Reward (in seconds)">
+      <b>Delay:</b>
+    </a>
+    &emsp;
+    <input type="number" id="AutoSolveKRDelayMinInput" min="0" max="360" size="5" value="${krDelayMin.toString()}" ${
+          isAutoSolve ? "" : "disabled"
+        }> seconds
+    ~
+    <input type="number" id="AutoSolveKRDelayMaxInput" min="1" max="361" size="5" value="${krDelayMax.toString()}" ${
+          isAutoSolve ? "" : "disabled"
+        }> seconds
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="The script will pause if player at different location that hunt location set before">
+      <b>Remember Location</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="PauseLocationInput" >
+      <option value="false" ${
+        pauseAtInvalidLocation ? "" : "selected"
+      }>False</option>
+      <option value="true" ${
+        pauseAtInvalidLocation ? "selected" : ""
+      }>True</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Best Weapon for </b>
+    </a>
+    <select id="selectBestTrapPowerType" style="width:75px;" onchange="initControlsBestTrap();">
+      <option value="arcane">Arcane</option>
+      <option value="draconic">Draconic</option>
+      <option value="forgotten">Forgotten</option>
+      <option value="hydro">Hydro</option>
+      <option value="law">Law</option>
+      <option value="physical">Physical</option>
+      <option value="rift">Rift</option>
+      <option value="shadow">Shadow</option>
+      <option value="tactical">Tactical</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBestTrapWeapon" style="width: 300px" onchange="saveBestTrap();"></select>
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Best Base for </b>
+    </a>
+    <select id="selectBestTrapBaseType" style="width:75px;" onchange="initControlsBestTrap();">
+      <option value="luck">Luck</option>
+      <option value="power">Power</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBestTrapBase" onchange="saveBestTrap();"></select>
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;" colspan="2">
+    (Changes above this line only take place after user save the preference)
+    <input type="button" id="PreferenceSaveInput" value="Save" onclick="
+      try {
+      window.localStorage.setItem('HornTimeDelayMin', document.getElementById('HornTimeDelayMinInput').value);
+      window.localStorage.setItem('HornTimeDelayMax', document.getElementById('HornTimeDelayMaxInput').value);
+      window.localStorage.setItem('TrapCheck', document.getElementById('TrapCheckInput').value);
+      window.localStorage.setItem('TrapCheckTimeDelayMin', document.getElementById('TrapCheckTimeDelayMinInput').value);
+      window.localStorage.setItem('TrapCheckTimeDelayMax', document.getElementById('TrapCheckTimeDelayMaxInput').value);
+      window.localStorage.setItem('AutoSolveKR',            document.getElementById('AutoSolveKRInput').value);
+      window.localStorage.setItem('AutoSolveKR', document.getElementById('AutoSolveKRInput').value);
+      window.localStorage.setItem('AutoSolveKR', document.getElementById('AutoSolveKRInput').value);
+      window.localStorage.setItem('AutoSolveKRDelayMin', document.getElementById('AutoSolveKRDelayMinInput').value);
+      window.localStorage.setItem('AutoSolveKRDelayMax', document.getElementById('AutoSolveKRDelayMaxInput').value);
+      window.localStorage.setItem('PauseLocation', document.getElementById('PauseLocationInput').value);
+      window.localStorage.setItem('autoPopupKR',            document.getElementById('autoPopKR').value);
+      window.localStorage.setItem('PlayKingRewardSound', document.getElementById('PlayKingRewardSoundInput').value);
+      setSessionToLocal();
+      } catch(e) {
+        console.log(e);
+      }
+
+      if (${fbPlatform})
+        window.location.href='${g_strHTTP}://www.mousehuntgame.com/canvas/';
+      else if (${hiFivePlatform})
+        window.location.href='${g_strHTTP}://www.mousehunt.hi5.hitgrab.com/';
+      else if (${mhPlatform})
+        window.location.href='${g_strHTTP}://www.mousehuntgame.com/';">
+    &nbsp;&nbsp;&nbsp;
+  </td>
+</tr>
+
+<tr>
+  <td style="height:24px" colspan="2">
+    <div style="width: 100%; height: 1px; background: #000000; overflow: hidden;"></div>
+  </td>
+</tr>
+
+<!-- Map Hunting Features -->
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="Turn on/off Map Hunting feature">
+      <b>Season 4 Map Hunting</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectMapHunting" onChange="onSelectMapHuntingChanged();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+<tr id="trUncaughtMouse" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Click button Get to retrieve all uncaught mouse">
+      <b>Uncaught Mouse</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectMouseList"></select>
+    <input type="button" id="inputSelectMouse" title="Click to select the mouse from the left dropdown list" value="Select This Mouse" onclick="onInputSelectMouse();" disabled>&nbsp;&nbsp;
+    <input type="button" id="inputGetMouse" title="Click to Get all uncaught mouse from treasure map" value="Refresh Uncaught Mouse List" onclick="onInputGetMouse();">
+  </td>
+</tr>
+<tr id="trSelectedUncaughtMouse" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select desired uncaught mouse">
+      <b>Selected Mouse</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <input type="text" id="inputUncaughtMouse" value="" disabled>
+    &nbsp;&nbsp;
+    <input type="button" id="inputClearUncaughtMouse" title="Click to clear the selected mouse" value="Clear" onclick="onInputClearUncaughtMouse();">
+  </td>
+</tr>
+<tr id="trCatchLogic" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select desired catch logic">
+      <b>Catch Logic</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectCatchLogic" onchange="saveMapHunting();">
+      <option value="OR">When either one of the Selected Mouse was caught</option>
+      <option value="AND">When all of the Selected Mouse were caught</option>
+    </select>
+  </td>
+</tr>
+<tr id="trMapHuntingTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup after catch logic is fulfilled">
+      <b>After Caught</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectWeapon" style="width: 75px" onchange="saveMapHunting();">
+      <option value="Remain">Remain</option>
+    </select>
+    <select id="selectBase" style="width: 75px" onchange="saveMapHunting();">
+      <option value="Remain">Remain</option>
+    </select>
+    <select id="selectTrinket" style="width: 75px" onchange="saveMapHunting();">
+      <option value="Remain">Remain</option>
+      <option value="None">None</option>
+    </select>
+    <select id="selectBait" style="width: 75px" onchange="saveMapHunting();">
+      <option value="Remain">Remain</option>
+      <option value="None">None</option>
+    </select>
+  </td>
+</tr>
+<tr id="trMapHuntingLeave" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to leave map after catch logic is fulfilled">
+      <b>Leave Map After Caught</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLeaveMap" onchange="saveMapHunting();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td style="height:24px; text-align:right;">
+    <a title="Select the script algorithm based on certain event / location">
+      <b>Event or Location</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="eventAlgo" style="width:150px" onChange="window.sessionStorage.setItem(\'eventLocation\', value); showOrHideTr(value);">
+      <option value="None">None</option>
+      <option value="All LG Area">All LG Area</option>
+      <option value="BC/JOD">BC => JOD</option>
+      <option value="Bristle Woods Rift">Bristle Woods Rift</option>
+      <option value="Burroughs Rift(Red)">Burroughs Rift(Red)</option>
+      <option value="Burroughs Rift(Green)">Burroughs Rift(Green)</option>
+      <option value="Burroughs Rift(Yellow)">Burroughs Rift(Yellow)</option>
+      <option value="Burroughs Rift Custom">Burroughs Rift Custom</option>
+      <option value="Charge Egg 2016 Medium + High">Charge Egg 2016 Medium + High</option>
+      <option value="Charge Egg 2016 High">Charge Egg 2016 High</option>
+      <option value="FG/AR">FG => AR</option>
+      <option value="Fiery Warpath">Fiery Warpath</option>
+      <option value="Fort Rox">Fort Rox</option>
+      <option value="Furoma Rift">Furoma Rift</option>
+      <option value="GES">Gnawnian Express Station</option>
+      <option value="Iceberg">Iceberg</option>
+      <option value="Labyrinth">Labyrinth</option>
+      <option value="SG">Seasonal Garden</option>
+      <option value="Sunken City">Sunken City</option>
+      <option value="Sunken City Custom">Sunken City Custom</option>
+      <option value="Test">Test</option>
+      <option value="WWRift">WWRift</option>
+      <option value="Zokor">Zokor</option>
+      <option value="ZT">Zugzwang's Tower</option>
+    </select>
+    <input type="button" id="inputResetReload" title="Reset setting of current selected algo" value="Reset & Reload" onclick="onInputResetReload();">
+  </td>
+</tr>
+<tr id="trBCJODSubLocation" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Sub-Location</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBCJODSublocation" onchange="initControlsBCJOD();">
+      <option value="JOD">Jungle of Dread</option>
+      <option value="LOW">BC Low Tide</option>
+      <option value="MID">BC Mid Tide</option>
+      <option value="HIGH">BC High Tide</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBCJODTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup based on current sub-location">
+      <b>Trap Setup </b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBCJODWeapon" style="width: 75px;" onchange="saveBCJOD();"></select>
+    <select id="selectBCJODBase" style="width: 75px;" onchange="saveBCJOD();"></select>
+    <select id="selectBCJODTrinket" style="width: 75px;" onchange="saveBCJOD();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectBCJODBait" style="width: 75px;" onchange="saveBCJOD();">
+      <option value="None">None</option>
+      <option value="Vanilla Stilton Cheese">Vanilla Stilton Cheese</option>
+      <option value="Vengeful Vanilla Stilton Cheese">Vengeful Vanilla Stilton Cheese</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+    </select>
+  </td>
+</tr>
+<tr id="trFGARSubLocation" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Sub-Location</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFGARSublocation" onchange="initControlsFGAR();">
+      <option value="FG">Forbidden Grove</option>
+      <option value="AR">Acolyte Realm</option>
+    </select>
+  </td>
+</tr>
+<tr id="trFGARTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup based on current sub-location">
+      <b>Trap Setup </b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFGARWeapon" style="width: 75px;" onchange="saveFGAR();"></select>
+    <select id="selectFGARBase" style="width: 75px;" onchange="saveFGAR();"></select>
+    <select id="selectFGARTrinket" style="width: 75px;" onchange="saveFGAR();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectFGARBait" style="width: 75px;" onchange="saveFGAR();">
+      <option value="None">None</option>
+      <option value="Runic Cheese">Runic Cheese</option>
+      <option value="Ancient Cheese">Ancient Cheese</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftAutoChoosePortal" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Choose portal automatically">
+      <b>Auto Choose Portal</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftChoosePortal" style="width: 75px;" onchange="onSelectBWRiftChoosePortal();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftChoosePortalAfterCC" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Choose portal after Chamber Cleaver has been caught">
+      <b>Choose Portal</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftChoosePortalAfterCC" style="width: 75px;" onchange="saveBWRift();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;After Chamber Cleaver Caught
+  </td>
+</tr>
+<tr id="trBWRiftPortalPriority" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select portal priority">
+      <b>Portal Priority </b>
+    </a>
+    <select id="selectBWRiftPriority" style="width: 75px;" onchange="initControlsBWRift();">
+      ${[...Array(13).keys()]
+        .map(
+          (i) =>
+            `<option value="${i + 1}">${i + 1} ${
+              i === 0 ? "(Highest)" : i === 12 ? "(Lowest)" : ""
+            }</option>`
+        )
+        .join("")}
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftPortal" onchange="saveBWRift();">
+      <option value="GEARWORKS">Gearworks</option>
+      <option value="ANCIENT">Ancient Lab</option>
+      <option value="RUNIC">Runic Laboratory</option>
+      <option value="AL/RL_MSC">AL/RL (MSC)</option>
+      <option value="AL/RL_BSC">AL/RL (BSC)</option>
+      <option value="TIMEWARP">Timewarp Chamber</option>
+      <option value="LUCKY">Lucky Tower</option>
+      <option value="HIDDEN">Hidden Treasury</option>
+      <option value="GUARD">Guard Barracks</option>
+      <option value="SECURITY">Security Chamber</option>
+      <option value="FROZEN">Frozen Alcove</option>
+      <option value="FURNACE">Furnace Room</option>
+      <option value="INGRESS">Ingress Chamber</option>
+      <option value="PURSUER">Pursuer Mousoleum</option>
+      <option value="ACOLYTE">Acolyte Chamber</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftPortalPriorityCursed" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select portal priority when get cursed">
+      <b>Portal Priority - Cursed </b>
+    </a>
+    <select id="selectBWRiftPriorityCursed" style="width: 75px;" onchange="initControlsBWRift();">
+      ${[...Array(13).keys()]
+        .map(
+          (i) =>
+            `<option value="${i + 1}">${i + 1} ${
+              i === 0 ? "(Highest)" : i === 12 ? "(Lowest)" : ""
+            }</option>`
+        )
+        .join("")}
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftPortalCursed" onchange="saveBWRift();">
+      <option value="GEARWORKS">Gearworks</option>
+      <option value="ANCIENT">Ancient Lab</option>
+      <option value="RUNIC">Runic Laboratory</option>
+      <option value="AL/RL_MSC">AL/RL (MSC)</option>
+      <option value="AL/RL_BSC">AL/RL (BSC)</option>
+      <option value="TIMEWARP">Timewarp Chamber</option>
+      <option value="LUCKY">Lucky Tower</option>
+      <option value="HIDDEN">Hidden Treasury</option>
+      <option value="GUARD">Guard Barracks</option>
+      <option value="SECURITY">Security Chamber</option>
+      <option value="FROZEN">Frozen Alcove</option>
+      <option value="FURNACE">Furnace Room</option>
+      <option value="INGRESS">Ingress Chamber</option>
+      <option value="PURSUER">Pursuer Mousoleum</option>
+      <option value="ACOLYTE">Acolyte Chamber</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftMinTimeSand" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select minimum time sand before entering Acolyte Chamber (AC)">
+      <b>Min Time Sand </b>
+    </a>
+    <select id="selectBWRiftBuffCurse" style="width: 75px;" onchange="initControlsBWRift();">
+      <option value="0">No Buff & No Curse</option>
+      <option value="1">Fourth Portal & No Curse</option>
+      <option value="2">Acolyte Influence & No Curse</option>
+      <option value="3">Acolyte Influence + Fourth Portal & No Curse</option>
+      <option value="4">Paladin's Bane & No Curse</option>
+      <option value="5">Paladin's Bane + Fourth Portal & No Curse</option>
+      <option value="6">Paladin's Bane + Acolyte Influence & No Curse</option>
+      <option value="7">All Buffs & No Curse</option>
+      <option value="8">Buff(s) & Curse(s)</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <input type="number" id="inputMinTimeSand" min="0" max="99999" style="width:75px" value="50" onchange="onInputMinTimeSandChanged(this);">
+    &nbsp;&nbsp;Before Enter AC
+  </td>
+</tr>
+<tr id="trBWRiftMinRSC" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select minimum Runic String Cheese before entering Acolyte Chamber (AC)&#13;Note 1: Total RSC = 2*RSC Pot + RSC">
+      <b>Min Runic String Cheese</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftMinRSCType" style="width: 75px;" onchange="onSelectBWRiftMinRSCType();">
+      <option value="NUMBER">Number</option>
+      <option value="GEQ">Greater or Equal to Min Time Sand</option>
+    </select>
+    <input type="number" id="inputMinRSC" min="0" max="99999" style="width:75px" value="50" onchange="onInputMinRSCChanged(this);">
+    &nbsp;&nbsp;Before Enter AC
+  </td>
+</tr>
+<tr id="trBWRiftEnterMinigame" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to enter minigame with curse(s)">
+      <b>Enter Minigame with Curse(s)</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftEnterWCurse" style="width: 75px;" onchange="saveBWRift();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftSubLocation" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Chamber in Bristle Woods Rift">
+      <b>Sub-Location</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftChamber" onchange="initControlsBWRift();">
+      <option value="NONE">Non-Chamber</option>
+      <option value="GEARWORKS">Gearworks</option>
+      <option value="ANCIENT">Ancient Lab</option>
+      <option value="RUNIC">Runic Laboratory</option>
+      <option value="TIMEWARP">Timewarp Chamber</option>
+      <option value="LUCKY">Lucky Tower</option>
+      <option value="HIDDEN">Hidden Treasury</option>
+      <option value="GUARD">Guard Barracks</option>
+      <option value="SECURITY">Security Chamber</option>
+      <option value="FROZEN">Frozen Alcove</option>
+      <option value="FURNACE">Furnace Room</option>
+      <option value="INGRESS">Ingress Chamber</option>
+      <option value="PURSUER">Pursuer Mousoleum</option>
+      <option value="ACOLYTE_CHARGING">Acolyte Chamber Charging</option>
+      <option value="ACOLYTE_DRAINING">Acolyte Chamber Draining</option>
+      <option value="ACOLYTE_DRAINED">Acolyte Chamber Drained</option>
+      <option value="SEPARATOR" disabled>========= Separator =========</option>
+      <option value="NONE_CURSED">Non-Chamber Cursed</option>
+      <option value="GEARWORKS_CURSED">Gearworks Cursed</option>
+      <option value="ANCIENT_CURSED">Ancient Lab Cursed</option>
+      <option value="RUNIC_CURSED">Runic Laboratory Cursed</option>
+      <option value="TIMEWARP_CURSED">Timewarp Chamber Cursed</option>
+      <option value="LUCKY_CURSED">Lucky Tower Cursed</option>
+      <option value="HIDDEN_CURSED">Hidden Treasury Cursed</option>
+      <option value="GUARD_CURSED">Guard Barracks Cursed</option>
+      <option value="SECURITY_CURSED">Security Chamber Cursed</option>
+      <option value="FROZEN_CURSED">Frozen Alcove Cursed</option>
+      <option value="FURNACE_CURSED">Furnace Room Cursed</option>
+      <option value="INGRESS_CURSED">Ingress Chamber Cursed</option>
+      <option value="PURSUER_CURSED">Pursuer Mousoleum Cursed</option>
+      <option value="ACOLYTE_CHARGING_CURSED">Acolyte Chamber Charging Cursed</option>
+      <option value="ACOLYTE_DRAINING_CURSED">Acolyte Chamber Draining Cursed</option>
+      <option value="ACOLYTE_DRAINED_CURSED">Acolyte Chamber Drained Cursed</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftMasterTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup based on current chamber">
+      <b>Master Trap Setup</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftWeapon" style="width: 75px;" onchange="saveBWRift();">
+      <option value="Chrome Celestial Dissonance">Chrome CD</option>
+      <option value="Celestial Dissonance Trap">CDT</option>
+      <option value="Timesplit Dissonance Weapon">TDW</option>
+      <option value="Mysteriously unYielding">MYNORCA</option>
+      <option value="Focused Crystal Laser">FCL</option>
+      <option value="Multi-Crystal Laser">MCL</option>
+      <option value="Biomolecular Re-atomizer Trap">BRT</option>
+      <option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>
+      <option value="Crystal Tower">CT</option>
+    </select>
+    <select id="selectBWRiftBase" style="width: 75px;" onchange="saveBWRift();">
+      <option value="Prestige Base">Prestige</option>
+      <option value="Clockwork Base">Clockwork</option>
+      <option value="Fissure Base">Fissure</option>
+      <option value="Rift Base">Rift</option>
+      <option value="Fracture Base">Fracture</option>
+      <option value="Enerchi Induction Base">Enerchi</option>
+      <option value="Attuned Enerchi Induction Base">A. Enerchi</option>
+      <option value="Minotaur Base">Minotaur</option>
+    </select>
+    <select id="selectBWRiftTrinket" style="width: 75px;" onchange="saveBWRift();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectBWRiftBait" style="width: 75px;" onchange="saveBWRift();">
+      <option value="None">None</option>
+      <option value="Runic String">Runic</option>
+      <option value="Ancient String">Ancient</option>
+      <option value="Runic/Ancient">Runic/Ancient</option>
+      <option value="Runic=>Ancient">Runic=>Ancient</option>
+      <option value="Magical String">Magical</option>
+      <option value="Brie String">Brie</option>
+      <option value="Swiss String">Swiss</option>
+      <option value="Marble String">Marble</option>
+    </select>
+    <select id="selectBWRiftActivatePocketWatch" style="width: 75px;" onchange="saveBWRift();">
+      <option value="false">Deactivate Quantum Pocketwatch</option>
+      <option value="true">Activate Quantum Pocketwatch</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftTrapSetupSpecial" style="display:none;">
+  <td style="height:24px; text-align:right;"><a title="Select trap setup based on current chamber"><b>Conditional Trap Setup </b></a>
+    <select id="selectBWRiftCleaverStatus" style="width:75px;display:none" onchange="initControlsBWRift();">
+      <option value="0">Cleaver Not Available</option>
+      <option value="1">Cleaver Available</option>
+    </select>
+    <select id="selectBWRiftAlertLvl" style="width:75px;display:none" onchange="initControlsBWRift();">
+      ${[...Array(7).keys()]
+        .map((i) => `<option value="${i}">Alert Lvl ${i}</option>`)
+        .join("")}
+    </select>
+    <select id="selectBWRiftFTC" style="width:75px;display:none" onchange="initControlsBWRift();">
+      ${[...Array(4).keys()]
+        .map((i) => `<option value="${i}">FTC ${i}</option>`)
+        .join("")}
+    </select>
+    <select id="selectBWRiftHunt" style="width:75px;display:none" onchange="initControlsBWRift();">
+      ${[...Array(16).keys()]
+        .map((i) => `<option value="${i}">Hunt ${i}</option>`)
+        .join("")}
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftWeaponSpecial" style="width: 75px;" onchange="saveBWRift();">
+      <option value="MASTER">Master</option>
+      <option value="Chrome Celestial Dissonance">Chrome CD</option>
+      <option value="Celestial Dissonance Trap">CDT</option>
+      <option value="Timesplit Dissonance Weapon">TDW</option>
+      <option value="Mysteriously unYielding">MYNORCA</option>
+      <option value="Focused Crystal Laser">FCL</option>
+      <option value="Multi-Crystal Laser">MCL</option>
+      <option value="Biomolecular Re-atomizer Trap">BRT</option>
+      <option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>
+      <option value="Crystal Tower">CT</option>
+    </select>
+    <select id="selectBWRiftBaseSpecial" style="width: 75px;" onchange="saveBWRift();">
+      <option value="MASTER">Master</option>
+      <option value="Prestige Base">Prestige</option>
+      <option value="Clockwork Base">Clockwork</option>
+      <option value="Fissure Base">Fissure</option>
+      <option value="Rift Base">Rift</option>
+      <option value="Fracture Base">Fracture</option>
+      <option value="Enerchi Induction Base">Enerchi</option>
+      <option value="Attuned Enerchi Induction Base">A. Enerchi</option>
+      <option value="Minotaur Base">Minotaur</option>
+    </select>
+    <select id="selectBWRiftTrinketSpecial" style="width: 75px;" onchange="saveBWRift();">
+      <option value="MASTER">Master</option>
+      <option value="None">None</option>
+    </select>
+    <select id="selectBWRiftBaitSpecial" style="width: 75px;" onchange="saveBWRift();">
+      <option value="MASTER">Master</option>
+      <option value="None">None</option>
+      <option value="Runic String">Runic</option>
+      <option value="Ancient String">Ancient</option>
+      <option value="Runic/Ancient">Runic/Ancient</option>
+      <option value="Runic=>Ancient">Runic=>Ancient</option>
+      <option value="Magical String">Magical</option>
+      <option value="Brie String">Brie</option>
+      <option value="Swiss String">Swiss</option>
+      <option value="Marble String">Marble</option>
+    </select>
+    <select id="selectBWRiftActivatePocketWatchSpecial" style="width: 75px;" onchange="saveBWRift();">
+      <option value="MASTER">Master</option>
+      <option value="false">Deactivate Quantum Pocketwatch</option>
+      <option value="true">Activate Quantum Pocketwatch</option>
+    </select>
+  </td>
+</tr>
+<tr id="trBWRiftActivatePocketWatch" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Activate Quantum Pocketwatch forcibly">
+      <b>Force Activate Quantum</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftForceActiveQuantum" style="width: 75px;" onchange="onSelectBWRiftForceActiveQuantum();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;If Remaining Loot/Obelisk Charge &le;&nbsp;&nbsp;:&nbsp;&nbsp;
+    <input type="number" id="inputRemainingLootA" min="1" max="100" size="5" value="1" onchange="onInputRemaininigLootAChanged(this);">
+  </td>
+</tr>
+<tr id="trBWRiftDeactivatePocketWatch" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Deactivate Quantum Pocketwatch forcibly">
+      <b>Force Deactivate Quantum</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectBWRiftForceDeactiveQuantum" style="width: 75px;" onchange="onSelectBWRiftForceDeactiveQuantum();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;If Remaining Loot/Obelisk Charge &le;&nbsp;&nbsp;:&nbsp;&nbsp;
+    <input type="number" id="inputRemainingLootD" min="1" max="100" size="5" value="1" onchange="onInputRemaininigLootDChanged(this);">
+  </td>
+</tr>
+<tr id="trFRoxTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;"><a title="Select trap setup based on current stage"><b>Trap Setup for </b></a>
+    <select id="selectFRoxStage" onchange="initControlsFRox();">
+      <option value="DAY">Day</option>
+      <option value="TWILIGHT">Twilight</option>
+      <option value="MIDNIGHT">Midnight</option>
+      <option value="PITCH">Pitch</option>
+      <option value="UTTER">Utter Darkness</option>
+      <option value="FIRST">First Light</option>
+      <option value="DAWN">Dawn</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFRoxWeapon" style="width: 75px;" onchange="saveFRox();"></select>
+    <select id="selectFRoxBase" style="width: 75px;" onchange="saveFRox();"></select>
+    <select id="selectFRoxTrinket" style="width: 75px;" onchange="saveFRox();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectFRoxBait" style="width: 75px;" onchange="saveFRox();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Crescent">Crescent</option>
+      <option value="Moon">Moon</option>
+      <option value="ANY_LUNAR">Moon/Crescent</option>
+      <option value="Moon=>Crescent">Moon=>Crescent</option>
+      <option value="Crescent=>Moon">Crescent=>Moon</option>
+    </select>
+    <select id="selectFRoxActivateTower" style="width: 75px;" onchange="saveFRox();">
+      <option value="false">Deactivate Tower</option>
+      <option value="true">Activate Tower</option>
+    </select>
+  </td>
+</tr>
+<tr id="trFRoxDeactiveTower" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to deactivate tower when full HP">
+      <b>Deactivate Tower When HP Full</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFRoxFullHPDeactivate" onchange="saveFRox();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+<tr id="trGESTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;"><a><b>Trap Setup at </b></a>
+    <select id="selectGESStage" style="width: 75px;" onchange="initControlsGES();">
+      <option value="SD_BEFORE">Supply Depot (No Supply Rush)</option>
+      <option value="SD_AFTER">Supply Depot (Supply Rush)</option>
+      <option value="RR">Raider River</option>
+      <option value="DC">Daredevil Canyon</option>
+      <option value="WAITING">Waiting</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectGESTrapWeapon" style="width: 75px;" onchange="saveGES();">
+      <option value="S.L.A.C.">S.L.A.C.</option>
+      <option value="S.L.A.C. II">S.L.A.C. II</option>
+      <option value="Supply Grabber">Supply Grabber</option>
+      <option value="Bandit Deflector">Bandit Deflector</option>
+      <option value="Engine Doubler">Engine Doubler</option>
+      <option value="The Law Draw">The Law Draw</option>
+      <option value="Law Laser Trap">Law Laser Trap</option>
+      <option value="Christmas Cactus Trap">Christmas Cactus Trap</option>
+      <option value="Meteor Prison Core Trap">Meteor Prison Core Trap</option>
+      <option value="S.T.I.N.G. Trap">S.T.I.N.G. Trap</option>
+      <option value="S.T.I.N.G.E.R. Trap">S.T.I.N.G.E.R. Trap</option>
+    </select>
+    <select id="selectGESTrapBase" style="width: 75px" onchange="saveGES();"></select>
+    <select id="selectGESTrapTrinket" style="width: 75px;" onchange="saveGES();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectGESRRTrapTrinket" style="width: 75px;display:none" onchange="saveGES();">
+      <option value="None">None</option>
+      <option value="AUTO">Roof Rack/Door Guard/Greasy Glob</option>
+    </select>
+    <select id="selectGESDCTrapTrinket" style="width: 75px;display:none" onchange="saveGES();">
+      <option value="None">None</option>
+      <option value="AUTO">Magmatic Crystal/Black Powder/Dusty Coal</option>
+    </select>
+    <select id="selectGESTrapBait" style="width: 75px" onchange="saveGES();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trGESSDLoadCrate" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Load Crate</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectGESSDLoadCrate" onchange="onSelectGESSDLoadCrate();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;
+    <a>
+      <b>When Crate &ge; :</b>
+    </a>
+    &nbsp;
+    <input type="number" id="inputMinCrate" min="1" max="50" size="5" value="11" onchange="saveGES(this);">
+  </td>
+</tr>
+
+<tr id="trGESRRRepellent" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Use Repellent</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectGESRRRepellent" onchange="onSelectGESRRRepellent();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;
+    <a>
+      <b>When Repellent &ge; :</b>
+    </a>
+    &nbsp;
+    <input type="number" id="inputMinRepellent" min="1" max="50" size="5" value="11" onchange="saveGES(this);">
+  </td>
+</tr>
+
+<tr id="trGESDCStokeEngine" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Stoke Engine</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectGESDCStokeEngine" onchange="onSelectGESDCStokeEngine();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;
+    <a>
+      <b>When Fuel Nuggests &ge;:</b>
+    </a>
+    &nbsp;
+    <input type="number" id="inputMinFuelNugget" min="1" max="20" size="5" value="20" onchange="saveGES(this);">
+  </td>
+</tr>
+
+<tr id="trWWRiftFactionFocus" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select a faction to focus on">
+      <b>Faction to Focus</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectWWRiftFaction" onchange="onSelectWWRiftFaction();">
+      <option value="CC">Crazed Clearing</option>
+      <option value="GGT">Gigantic Gnarled Tree</option>
+      <option value="DL">Deep Lagoon</option>
+      <option value="MBW_40_44">MBW 40 &le; Rage &le; 44</option>
+      <option value="MBW_45_48">MBW 45 &le; Rage &le; 48</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trWWRiftFactionFocusNext" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select next faction to focus on">
+      <b>Next Faction to Focus</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectWWRiftFactionNext" onchange="saveWWRift();">
+      <option value="Remain">Remain</option>
+      <option value="CC">Crazed Clearing</option>
+      <option value="GGT">Gigantic Gnarled Tree</option>
+      <option value="DL">Deep Lagoon</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trWWRiftTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to trap setup based on certain range of rage">
+      <b>Trap Setup for Rage</b>
+    </a>
+    <select id="selectWWRiftRage" onchange="initControlsWWRift();">
+      <option value="0">0-24</option>
+      <option value="25">25-49</option>
+      <option value="50">50</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectWWRiftTrapWeapon" onchange="saveWWRift();">
+      <option value="MASTER">Master</option>
+      <option value="Chrome Celestial Dissonance">Chrome CD</option>
+      <option value="Celestial Dissonance Trap">CDT</option>
+      <option value="Timesplit Dissonance Weapon">TDW</option>
+      <option value="Mysteriously unYielding">MYNORCA</option>
+      <option value="Focused Crystal Laser">FCL</option>
+      <option value="Multi-Crystal Laser">MCL</option>
+      <option value="Biomolecular Re-atomizer Trap">BRT</option>
+      <option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>
+      <option value="Crystal Tower">CT</option>
+    </select>
+    <select id="selectWWRiftTrapBase" style="width: 75px" onchange="saveWWRift();"></select>
+    <select id="selectWWRiftTrapTrinket" style="width: 75px" onchange="saveWWRift();">
+      <option value="None">None</option>
+      <option value="FSC">Faction Specific Charm</option>
+    </select>
+    <select id="selectWWRiftTrapBait" onchange="saveWWRift();">
+      <option value="None">None</option>
+      <option value="Magical String">Magical</option>
+      <option value="Brie String">Brie</option>
+      <option value="Swiss String">Swiss</option>
+      <option value="Marble String">Marble</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trWWRiftMBWMinRage" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select minimum rage to hunt MBW">
+      <b>Min Rage to Hunt MBW</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <input type="number" id="inputMinRage" min="40" max="48" size="5" value="40" onchange="onInputMinRageChanged(this);">
+  </td>
+</tr>
+
+<tr id="trWWRiftMBWTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;"><a><b>Trap Setup When </b></a>
+    <select id="selectWWRiftMBWBar4044" style="width: 75px; display:none" onchange="initControlsWWRift();">
+      <option value="25_0">0 Bar &ge; 25 Rage</option>
+      <option value="25_1">1 Bar &ge; 25 Rage</option>
+      <option value="25_2">2 Bars &ge; 25 Rage</option>
+      <option value="MIN_RAGE_0">3 Bars &ge; 25 Rage / 0 Bar &ge; Min Rage to Hunt MBW</option>
+      <option value="MIN_RAGE_1">1 Bar &ge; Min Rage to Hunt MBW</option>
+      <option value="MIN_RAGE_2">2 Bars &ge; Min Rage to Hunt MBW</option>
+      <option value="MIN_RAGE_3">3 Bars &ge; Min Rage to Hunt MBW</option>
+    </select>
+    <select id="selectWWRiftMBWBar4548" style="width: 75px; display:none" onchange="initControlsWWRift();">
+      <option value="25_0">0 Bar &ge; 25 Rage</option>
+      <option value="25_1">1 Bar &ge; 25 Rage</option>
+      <option value="25_2">2 Bars &ge; 25 Rage</option>
+      <option value="44_0">3 Bars &ge; 25 Rage / 0 Bar &ge; 44 Rage</option>
+      <option value="44_1">1 Bar &ge; 44 Rage</option>
+      <option value="44_2">2 Bars &ge; 44 Rage</option>
+      <option value="44_3">3 Bars &ge; 44 Rage / 0 Bar &ge; Min Rage to Hunt MBW</option>
+      <option value="MIN_RAGE_1">1 Bar &ge; Min Rage to Hunt MBW</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectWWRiftMBWTrapWeapon" onchange="saveWWRift();">
+      <option value="MASTER">Master</option>
+      <option value="Chrome Celestial Dissonance">Chrome CD</option>
+      <option value="Celestial Dissonance Trap">CDT</option>
+      <option value="Timesplit Dissonance Weapon">TDW</option>
+      <option value="Mysteriously unYielding">MYNORCA</option>
+      <option value="Focused Crystal Laser">FCL</option>
+      <option value="Multi-Crystal Laser">MCL</option>
+      <option value="Biomolecular Re-atomizer Trap">BRT</option>
+      <option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>
+      <option value="Crystal Tower">CT</option>
+    </select>
+    <select id="selectWWRiftMBWTrapBase" style="width: 75px" onchange="saveWWRift();"></select>
+    <select id="selectWWRiftMBWTrapTrinket" style="width: 75px" onchange="saveWWRift();">
+      <option value="None">None</option>
+      <option value="FSCLR">Faction Specific Charm (Lowest Rage)</option>
+    </select>
+    <select id="selectWWRiftMBWTrapBait" onchange="saveWWRift();">
+      <option value="None">None</option>
+      <option value="Lactrodectus Lancashire">LLC</option>
+      <option value="Magical String">Magical</option>
+      <option value="Brie String">Brie</option>
+      <option value="Swiss String">Swiss</option>
+      <option value="Marble String">Marble</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trFREnterBattery" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select which battery level to enter Pagoda">
+      <b>Enter at Battery</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectEnterAtBattery" onchange="saveFR();">
+      <option value="None">None</option>
+      ${[...Array(11).keys()]
+        .map((i) => `<option value="${i}">${i}</option>`)
+        .join("")}
+    </select>
+  </td>
+</tr>
+
+<tr id="trFRRetreatBattery" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select which battery level to retreat from  Pagoda">
+      <b>Retreat at Battery</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectRetreatAtBattery" onchange="saveFR();">
+      ${[...Array(11).keys()]
+        .map((i) => `<option value="${i}">${i}</option>`)
+        .join("")}
+    </select>
+  </td>
+</tr>
+
+<tr id="trFRTrapSetupAtBattery" style="display:none;">
+  <td style="height:24px; text-align:right;"><a title="Select trap setup for each battery"><b>Trap Setup at Battery</b></a>&nbsp;&nbsp;
+    <select id="selectTrapSetupAtBattery" onchange="initControlsFR();">
+      ${[...Array(11).keys()]
+        .map((i) => `<option value="${i}">${i}</option>`)
+        .join("")}
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFRTrapWeapon" onchange="saveFR();">
+      <option value="MASTER">Master</option>
+      <option value="Chrome Celestial Dissonance">Chrome CD</option>
+      <option value="Celestial Dissonance Trap">CDT</option>
+      <option value="Timesplit Dissonance Weapon">TDW</option>
+      <option value="Mysteriously unYielding">MYNORCA</option>
+      <option value="Focused Crystal Laser">FCL</option>
+      <option value="Multi-Crystal Laser">MCL</option>
+      <option value="Biomolecular Re-atomizer Trap">BRT</option>
+      <option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>
+      <option value="Crystal Tower">CT</option>
+    </select>
+    <select id="selectFRTrapBase" onchange="saveFR();">
+      <option value="Prestige Base">Prestige</option>
+      <option value="Clockwork Base">Clockwork</option>
+      <option value="Fissure Base">Fissure</option>
+      <option value="Rift Base">Rift</option>
+      <option value="Fracture Base">Fracture</option>
+      <option value="Enerchi Induction Base">Enerchi</option>
+      <option value="Attuned Enerchi Induction Base">A. Enerchi</option>
+      <option value="Minotaur Base">Minotaur</option>
+    </select>
+    <select id="selectFRTrapTrinket" style="width: 75px" onchange="saveFR();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectFRTrapBait" style="width: 75px" onchange="onSelectFRTrapBait();">
+      <option value="None">None</option>
+      <option value="Ascended">Ascended</option>
+      <option value="Null Onyx Gorgonzola">Null Onyx Gorgonzola</option>
+      <option value="Rift Rumble">Rift Rumble</option>
+      <option value="Rift Glutter">Rift Glutter</option>
+      <option value="Rift Susheese">Rift Susheese</option>
+      <option value="Rift Combat">Rift Combat</option>
+      <option value="ANY_MASTER">Glutter/Combat/Susheese</option>
+      <option value="BALANCE_MASTER">Balance Heirloom</option>
+      <option value="ORDER_MASTER">Master Cheese in Order</option>
+      <option value="Master Fusion">Master Fusion</option>
+      <option value="Maki String">Maki</option>
+      <option value="Magical String">Magical</option>
+      <option value="Brie String">Brie</option>
+      <option value="Swiss String">Swiss</option>
+      <option value="Marble String">Marble</option>
+    </select>
+    <select id="selectFRTrapBaitMasterOrder" style="width: 75px;display:none" onchange="saveFR();">
+      <option value="Glutter=>Combat=>Susheese">Glutter=>Combat=>Susheese</option>
+      <option value="Glutter=>Susheese=>Combat">Glutter=>Susheese=>Combat</option>
+      <option value="Combat=>Glutter=>Susheese">Combat=>Glutter=>Susheese</option>
+      <option value="Combat=>Susheese=>Glutter">Combat=>Susheese=>Glutter</option>
+      <option value="Susheese=>Glutter=>Combat">Susheese=>Glutter=>Combat</option>
+      <option value="Susheese=>Combat=>Glutter">Susheese=>Combat=>Glutter</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trIceberg" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to trap setup based on current phase">
+      <b>Trap Setup for</b>
+    </a>
+    <select id="selectIcebergPhase" style="width: 75px" onchange="initControlsIceberg();">
+      <option value="GENERAL">Iceberg General</option>
+      <option value="TREACHEROUS">Treacherous Tunnels</option>
+      <option value="BRUTAL">Brutal Bulwark</option>
+      <option value="BOMBING">Bombing Run</option>
+      <option value="MAD">Mad Depths</option>
+      <option value="ICEWING">Icewing\'s Lair</option>
+      <option value="HIDDEN">Hidden Depths</option>
+      <option value="DEEP">The Deep Lair</option>
+      <option value="SLUSHY">Slushy Shoreline</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectIcebergBase" style="width: 75px" onchange="saveIceberg();"></select>
+    <select id="selectIcebergTrinket" style="width: 75px" onchange="saveIceberg();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectIcebergBait" style="width: 75px" onchange="saveIceberg();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trZTFocus" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to chesspiece side to focus">
+      <b>Side to Focus</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectZTFocus" onchange="saveZT();">
+      <option value="MYSTIC">Mystic Only</option>
+      <option value="TECHNIC">Technic Only</option>
+      <option value="MYSTIC=>TECHNIC">Mystic First Technic Second</option>
+      <option value="TECHNIC=>MYSTIC">Technic First Mystic Second</option>
+    </select>
+  </td>
+</tr>
+<tr id="trZTTrapSetup1st" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup based on first focus-side chesspiece order">
+      <b>First Side Trap Setup for </b>
+    </a>
+    <select id="selectZTMouseOrder1st" onchange="initControlsZT();">
+      <option value="PAWN">Pawn</option>
+      <option value="KNIGHT">Knight</option>
+      <option value="BISHOP">Bishop</option>
+      <option value="ROOK">Rook</option>
+      <option value="QUEEN">Queen</option>
+      <option value="KING">King</option>
+      <option value="CHESSMASTER">Chessmaster</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectZTWeapon1st" style="width: 75px" onchange="saveZT();">
+      <option value="MPP/TPP">Focused-Side Pawn Pincher</option>
+      <option value="BPT/OAT">Focused-Side Trap BPT/OAT</option>
+    </select>
+    <select id="selectZTBase1st" style="width: 75px" onchange="saveZT();"></select>
+    <select id="selectZTTrinket1st" style="width: 75px" onchange="saveZT();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectZTBait1st" style="width: 75px" onchange="saveZT();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+      <option value="Checkmate">Checkmate</option>
+    </select>
+  </td>
+</tr>
+<tr id="trZTTrapSetup2nd" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup based on second focus-side chesspiece order">
+      <b>Second Side Trap Setup for </b>
+    </a>
+    <select id="selectZTMouseOrder2nd" onchange="initControlsZT();">
+      <option value="PAWN">Pawn</option>
+      <option value="KNIGHT">Knight</option>
+      <option value="BISHOP">Bishop</option>
+      <option value="ROOK">Rook</option>
+      <option value="QUEEN">Queen</option>
+      <option value="KING">King</option>
+      <option value="CHESSMASTER">Chessmaster</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectZTWeapon2nd" style="width: 75px" onchange="saveZT();">
+      <option value="MPP/TPP">Focused-Side Pawn Pincher</option>
+      <option value="BPT/OAT">Focused-Side Trap BPT/OAT</option>
+    </select>
+    <select id="selectZTBase2nd" style="width: 75px" onchange="saveZT();"></select>
+    <select id="selectZTTrinket2nd" style="width: 75px" onchange="saveZT();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectZTBait2nd" style="width: 75px" onchange="saveZT();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+      <option value="Checkmate">Checkmate</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trSGTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;"><a title="Select to trap setup based on certain season"><b>Trap Setup For </b></a>
+    <select id="selectSGSeason" onchange="initControlsSG();">
+      <option value="SPRING">Spring</option>
+      <option value="SUMMER">Summer</option>
+      <option value="FALL">Fall</option>
+      <option value="WINTER">Winter</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectSGTrapWeapon" style="width: 75px" onchange="saveSG();"></select>
+    <select id="selectSGTrapBase" style="width: 75px" onchange="saveSG();"></select>
+    <select id="selectSGTrapTrinket" style="width: 75px" onchange="saveSG();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectSGTrapBait" style="width: 75px" onchange="saveSG();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trSGDisarmBait" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to disarm bait when amplifier is fully charged">
+      <b>Disarm Bait</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectSGDisarmBait" onchange="saveSG();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;After Amplifier Fully Charged
+  </td>
+</tr>
+
+<tr id="trLGTGAutoFill" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Auto Fill in </b>
+    </a>
+    <select id="selectLGTGAutoFillSide" onchange="initControlsLG();">
+      <option value="LG">Living Garden</option>
+      <option value="TG">Twisted Garden</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLGTGAutoFillState" onchange="saveLG();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trLGTGAutoPour" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Auto Pour in </b>
+    </a>
+    <select id="selectLGTGAutoPourSide" onchange="initControlsLG();">
+      <option value="LG">Living Garden</option>
+      <option value="TG">Twisted Garden</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLGTGAutoPourState" onchange="saveLG();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trPourTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;"><a><b>After Poured in </b></a>
+    <select id="selectLGTGSide" onchange="initControlsLG();">
+      <option value="LG">Living Garden</option>
+      <option value="TG">Twisted Garden</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLGTGBase" style="width: 75px" onchange="saveLG();"></select>
+    <select id="selectLGTGTrinket" style="width: 75px" onchange="saveLG();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectLGTGBait" style="width: 75px" onchange="saveLG();">
+      <option value="None">None</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Duskshade Camembert">Duskshade Camembert</option>
+      <option value="Lunaria Camembert">Lunaria Camembert</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trCurseLiftedTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>After Curse Lifted in </b>
+    </a>
+    <select id="selectLCCCSide" onchange="initControlsLG();">
+      <option value="LC">Lost City</option>
+      <option value="CC">Cursed City</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLCCCBase" style="width: 75px" onchange="saveLG();"></select>
+    <select id="selectLCCCTrinket" style="width: 75px" onchange="saveLG();">
+      <option value="None">None</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trSaltedTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;"><a><b>Trap Setup </b></a>
+    <select id="selectSaltedStatus" onchange="initControlsLG();">
+      <option value="before">During</option>
+      <option value="after">After</option>
+    </select>
+    <a>
+      <b> Salt Charging</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectSCBase" style="width: 75px" onchange="saveLG();"></select>
+    &nbsp;&nbsp;
+    <a title="Max number of salt before hunting King Grub">
+      <b>Salt Charge : </b>
+    </a>
+    <input type="number" id="inputKGSalt" min="1" max="50" size="5" value="25" onchange="saveLG();">
+  </td>
+</tr>
+
+<tr id="trGWHTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;"><a title="Select trap setup based on anchor/boost status"><b>Trap Setup When </b></a>
+    <select id="selectGWHZone" style="width: 75px" onchange="initControlsGWH2016();">
+      <option value="ORDER1">Simple Zone With Order</option>
+      <option value="ORDER2">Deluxe Zone With Order</option>
+      <option value="NONORDER1">Simple Zone W/O Order</option>
+      <option value="NONORDER2">Deluxe Zone W/O Order</option>
+      <option value="WINTER_WASTELAND">Winter Wasteland</option>
+      <option value="SNOWBALL_STORM">Snowball Storm</option>
+      <option value="FLYING">Flying</option>
+      <option value=\"NEW_YEAR'S_PARTY\">New Year's Party</option>
+    </select>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectGWHWeapon" style="width: 75px" onchange="saveGWH2016();"></select>
+    <select id="selectGWHBase" style="width: 75px" onchange="saveGWH2016();"></select>
+    <select id="selectGWHTrinket" style="width: 75px;" onchange="onSelectGWHTrinketChanged();">
+      <option value="None">None</option>
+      <option value="ANCHOR_FAC/EAC">FAC/EAC</option>
+    </select>
+    <select id="selectGWHBait" style="width: 75px" onchange="saveGWH2016();">
+      <option value="None">None</option>
+      <option value="ANY_FESTIVE_BRIE">AA/Festive Cheese/Brie</option>
+      <option value="ANY_FESTIVE_GOUDA">AA/Festive Cheese/Gouda</option>
+      <option value="ANY_FESTIVE_SB">AA/Festive Cheese/SUPER|brie+</option>
+    </select>
+    <select id="selectGWHBoost" style="width: 75px" onchange="saveGWH2016();">
+      <option value="false">Not Boost</option>
+      <option value="true">Boost</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trGWHTurboBoost" style="display:none;">
+  <td style="height:24px; text-align:right;"><a title="Select to always Turbo boost (500m)"><b>Always Turbo Boost</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
+  <td style="height:24px">
+    <select id="selectGWHUseTurboBoost" onchange="saveGWH2016();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trGWHFlying" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select minimum AA to take flight">
+      <b>Min AA to Fly (&ge;)</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <input type="number" id="inputMinAA" min="0" max="9007199254740991" style="width:50px" value="20" onchange="onInputMinAAChanged(this);">
+  </td>
+</tr>
+
+<tr id="trGWHFlyingFirework" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select minimum firework to take flight">
+      <b>Min Firework to Fly (&ge;)</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <input type="number" id="inputMinFirework" min="0" max="9007199254740991" style="width:50px" value="20" onchange="onInputMinWorkChanged(this);">
+  </td>
+</tr>
+
+<tr id="trGWHFlyingLand" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select whether land after firework run out">
+      <b>Land after Firework Run Out</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+    </td>
+  <td style="height:24px">
+    <select id="selectGWHLandAfterRunOutFirework" onchange="saveGWH2016();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trSCCustom" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select custom algorithm">
+      <b>SC Custom Algorithm</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectSCHuntZone" style="width:75px" onChange="initControlsSCCustom();">
+      <option value="ZONE_NOT_DIVE">Surface</option>
+      <option value="ZONE_DEFAULT">Default</option>
+      <option value="ZONE_CORAL">Coral</option>
+      <option value="ZONE_SCALE">Scale</option>
+      <option value="ZONE_BARNACLE">Barnacle</option>
+      <option value="ZONE_TREASURE">Treasure</option>
+      <option value="ZONE_DANGER">Danger</option>
+      <option value="ZONE_DANGER_PP">Danger PP MT</option>
+      <option value="ZONE_DANGER_PP_LOTA">Danger PP LOTA</option>
+      <option value="ZONE_OXYGEN">Oxygen</option>
+      <option value="ZONE_BONUS">Bonus</option>
+    </select>
+    <select id="selectSCHuntZoneEnable" style="width:75px;display:none" onChange="saveSCCustomAlgo();">
+      <option value="true">Hunt</option>
+      <option value="false">Jet Through</option>
+    </select>
+    <select id="selectSCHuntBait" style="width: 75px" onchange="saveSCCustomAlgo();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+      <option value="Fishy Fromage">Fishy Fromage</option>
+    </select>
+    <select id="selectSCHuntTrinket" style="width: 75px" onchange="saveSCCustomAlgo();">
+      <option value="None">None</option>
+      <option value="Empowered Anchor">EAC</option>
+      <option value="GAC_EAC">GAC, EAC</option>
+      <option value="SAC_EAC">SAC, EAC</option>
+      <option value="UAC_EAC">UAC, EAC</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trSCCustomUseSmartJet" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to always use Smart Water Jet Charm">
+      <b>Use Smart Jet</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectSCUseSmartJet" onchange="saveSCCustomAlgo();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trLabyrinth" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select a district to focus on">
+      <b>District to Focus</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLabyrinthDistrict" onChange="onSelectLabyrinthDistrict();">
+      <option value="None">None</option>
+      <option value="FEALTY">Fealty</option>
+      <option value="TECH">Tech</option>
+      <option value="SCHOLAR">Scholar</option>
+      <option value="TREASURY">Treasury</option>
+      <option value="FARMING">Farming</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trLabyrinthDisarm" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to disarm cheese at X last hunt in hallway when total clues near 100">
+      <b>Security Disarm</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLabyrinthDisarm" onChange="onSelectLabyrinthDisarm();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;At Last&nbsp;
+    <input type="number" id="inputLabyrinthLastHunt" min="2" max="10" style="width:40px" value="2" onchange="onInputLabyrinthLastHuntChanged(this);">
+    &nbsp;Hunt(s) in Hallway Near 100 Total Clues
+  </td>
+</tr>
+
+<tr id="trLabyrinthArmOtherBase" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select to arm other base if Compass Magnet Charm is currently armed">
+      <b>Arm Other Base</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLabyrinthOtherBase" style="width: 75px" onchange="saveLaby();">
+      <option value="false">False</option>
+    </select>
+    &nbsp;&nbsp;If Compass Magnet Charm is armed
+  </td>
+</tr>
+
+<tr id="trLabyrinthDisarmCompass" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a>
+      <b>Disarm Compass Magnet</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLabyrinthDisarmCompass" onchange="onSelectLabyrinthDisarmCompass();">
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+    &nbsp;&nbsp;If Dead End Clue &le; :&nbsp;
+    <input type="number" id="inputLabyrinthDEC" min="0" max="20" style="width:40px" value="0" onchange="onInputLabyrinthDECChanged(this);">
+  </td>
+</tr>
+
+<tr id="trPriorities15" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select hallway priorities when focus-district clues less than 15">
+      <b>Priorities (Focus-District Clues < 15)</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectHallway15Plain" onChange="saveLaby();">
+      <option value="lp">Long Plain Hallway First</option>
+      <option value="sp">Short Plain Hallway First</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trPriorities1560" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select hallway priorities when focus-district clues within 15 and 60">
+      <b>Priorities (15 < Focus-District Clues < 60)</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectHallway1560Superior" onchange="saveLaby();">
+      <option value="ls">Long Superior Hallway First</option>
+      <option value="ss">Short Superior Hallway First</option>
+    </select>
+    <select id="selectHallway1560Plain" onchange="saveLaby();">
+      <option value="lp">Long Plain Hallway First</option>
+      <option value="sp">Short Plain Hallway First</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trPriorities60" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select hallway priorities when focus-district clues more than 60">
+      <b>Priorities (Focus-District Clues > 60)</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectHallway60Epic" onchange="saveLaby();">
+      <option value="le">Long Epic Hallway First</option>
+      <option value="se">Short Epic Hallway First</option>
+    </select>
+    <select id="selectHallway60Superior" onchange="saveLaby();">
+      <option value="ls">Long Superior Hallway First</option>
+      <option value="ss">Short Superior Hallway First</option>
+    </select>
+    <select id="selectHallway60Plain" onchange="saveLaby();">
+      <option value="lp">Long Plain Hallway First</option>
+      <option value="sp">Short Plain Hallway First</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trLabyrinthOtherHallway" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Choose doors other than focused door when there is no available focused door to be choosen">
+      <b>Open Non-Focus Door</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="chooseOtherDoors" onChange="
+      saveLaby();
+      document.getElementById('typeOtherDoors').disabled = (value == 'false') ? 'disabled' : ''; "
+    >
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;
+    <a title="Select a choosing type for non-focused doors">
+      <b>Choosing Type:</b>
+    </a>
+    &emsp;
+    <select id="typeOtherDoors" onChange="saveLaby();">
+      <option value="SHORTEST_ONLY">Shortest Length Only</option>
+      <option value="FEWEST_ONLY">Fewest Clue Only</option>
+      <option value="SHORTEST_FEWEST">Shortest Length => Fewest Clue</option>
+      <option value="FEWEST_SHORTEST">Fewest Clue => Shortest Length </option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trLabyrinthWeaponFarming" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select weapon type in farming hallways">
+      <b>Weapon Type in Farming</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectLabyrinthWeaponType" onchange="saveLaby();">
+      <option value="Forgotten">Forgotten</option>
+      <option value="Arcane">Arcane</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trZokorTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup under different boss status">
+      <b>Trap Setup When</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectZokorBossStatus" onChange="initControlsZokor();">
+      <option value="INCOMING">Boss Incoming</option>
+      <option value="ACTIVE">Boss Active</option>
+      <option value="DEFEATED">Boss Defeated</option>
+    </select>
+    &nbsp;&nbsp;
+    <select id="selectZokorBait" style="width: 75px" onChange="saveZokor();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+      <option value="Glowing Gruyere">GG</option>
+    </select>
+    &nbsp;&nbsp;
+    <select id="selectZokorTrinket" style="width: 75px" onChange="saveZokor();">
+      <option value="None">None</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trFWWave" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select FW wave">
+      <b>Wave</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFWWave" onChange="initControlsFW();">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trFWTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup based on certain FW wave">
+      <b>Physical Trap Setup</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFWTrapSetupWeapon" style="width: 75px" onchange="saveFW();"></select>
+    <select id="selectFWTrapSetupBase" style="width: 75px" onchange="saveFW();"></select>
+  </td>
+</tr>
+
+<tr id="trFW4TrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup based on warden status">
+      <b>Trap Setup </b>
+    </a>
+    <select id="selectFW4WardenStatus" onchange="initControlsFW();">
+      <option value="before">Before</option>
+      <option value="after">After</option>
+    </select><a><b> Clear Warden</b></a>&nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFW4TrapSetupWeapon" style="width: 75px" onchange="saveFW();"></select>
+    <select id="selectFW4TrapSetupBase" style="width: 75px" onchange="saveFW();"></select>
+    <select id="selectFW4TrapSetupTrinket" style="width: 75px" onchange="saveFW();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectFW4TrapSetupBait" style="width: 75px" onchange="saveFW();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trFWFocusType" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select either Normal (Warrior, Scout, Archer) or Special (Cavalry, Mage)">
+      <b>Soldier Type to Focus</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFWFocusType" onChange="saveFW();">
+      <option value="NORMAL">Normal</option>
+      <option value="SPECIAL">Special</option>
+    </select>
+    &nbsp;&nbsp;
+    <a title="Select which soldier type comes first based on population">
+      <b>Priorities:</b>
+    </a>
+    &emsp;
+    <select id="selectFWPriorities" onChange="saveFW();">
+      <option value="HIGHEST">Highest Population First</option>
+      <option value="LOWEST">Lowest Population First</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trFWStreak" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select streak">
+      <b>Streak</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFWStreak" onChange="initControlsFW();">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+    </select>
+    <select id="selectFWCheese" style="width: 75px" onChange="saveFW();">
+      <option value="None">None</option>
+      <option value="Brie Cheese">Brie</option>
+      <option value="Toxic Brie">Toxic Brie</option>
+      <option value="Gouda">Gouda</option>
+      <option value="SUPER">SB+</option>
+      <option value="Toxic SUPER">Toxic SB+</option>
+      <option value="Ghoulgonzola">Ghoulgonzola</option>
+      <option value="Candy Corn">Candy Corn</option>
+      <option value="ANY_HALLOWEEN">Ghoulgonzola/Candy Corn</option>
+    </select>
+    <select id="selectFWCharmType" style="width: 75px" onChange="saveFW();">
+      <option value="None">None</option>
+      <option value="Warpath">Warpath</option>
+      <option value="Super Warpath">Super Warpath</option>
+    </select>
+    <select id="selectFWSpecial" style="width: 75px" onChange="saveFW();">
+      <option value="None">None</option>
+      <option value="COMMANDER">Commander</option>
+      <option value="GARGANTUA">Gargantua</option>
+      <option value="GARGANTUA_GGC" disabled="disabled">Gargantua GGC</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trFWLastType" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select config when there is only one soldier type left">
+      <b>Last Soldier Type</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px;">
+    <select id="selectFWLastTypeConfig" onChange="saveFW();">
+      <option value="CONFIG_STREAK">Follow Streak Config</option>
+      <option value="CONFIG_GOUDA">Gouda & No Warpath Charm</option>
+      <option value="NO_WARPATH">No Warpath Charm Only</option>
+      <option value="CONFIG_UNCHANGED">Trap Setup Unchanged</option>
+    </select>
+    &nbsp;&nbsp;
+    <a title="Select whether to include Artillery in checking of Last Soldier">
+      <b>Include Artillery:</b>
+    </a>
+    &emsp;
+    <select id="selectFWLastTypeConfigIncludeArtillery" onchange="saveFW();">
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+  </td>
+</tr>
+
+<tr id="trFWSupportConfig" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select whether to disarm any Warpath Charm when supports are gone">
+      <b>Disarm Warpath Charm</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px">
+    <select id="selectFWSupportConfig" onchange="saveFW();">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+    &nbsp;&nbsp;When Support Retreated
+  </td>
+</tr>
+
+<tr id="trBRConfig" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select the mist tier to hunt">
+      <b>Hunt At</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px;">
+    <select id="selectBRHuntMistTier" onChange="onSelectBRHuntMistTierChanged();">
+      <option value="Red">Red</option>
+      <option value="Green">Green</option>
+      <option value="Yellow">Yellow</option>
+      <option value="None">None</option>
+    </select>
+    &nbsp;&nbsp;Mist Tier
+  </td>
+</tr>
+
+<tr id="trBRToggle" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select the amount of hunt to toggle canister">
+      <b>Toggle Canister Every</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px;">
+    <input type="number" id="inputToggleCanister" min="1" max="999" value="1" onchange="onInputToggleCanisterChanged(this);">&nbsp;&nbsp;Hunt(s)
+  </td>
+</tr>
+
+<tr id="trBRTrapSetup" style="display:none;">
+  <td style="height:24px; text-align:right;">
+    <a title="Select trap setup combination for respective mist tier">
+      <b>Trap Setup</b>
+    </a>
+    &nbsp;&nbsp;:&nbsp;&nbsp;
+  </td>
+  <td style="height:24px;">
+    <select id="selectBRTrapWeapon" onchange="saveBR();">
+      <option value="MASTER">Master</option>
+      <option value="Chrome Celestial Dissonance">Chrome CD</option>
+      <option value="Celestial Dissonance Trap">CDT</option>
+      <option value="Timesplit Dissonance Weapon">TDW</option>
+      <option value="Mysteriously unYielding">MYNORCA</option>
+      <option value="Focused Crystal Laser">FCL</option>
+      <option value="Multi-Crystal Laser">MCL</option>
+      <option value="Biomolecular Re-atomizer Trap">BRT</option>
+      <option value="Christmas Crystalabra Trap">Christmas Crystalabra Trap</option>
+      <option value="Crystal Tower">CT</option>
+    </select>
+    <select id="selectBRTrapBase" style="width: 75px" onchange="saveBR();"></select>
+    <select id="selectBRTrapTrinket" style="width: 75px" onchange="saveBR();">
+      <option value="None">None</option>
+    </select>
+    <select id="selectBRTrapBait" onchange="saveBR();">
+      <option value="None">None</option>
+      <option value="Polluted Parmesan">PP</option>
+      <option value="Terre Ricotta">Terre</option>
+      <option value="Magical String">Magical</option>
+      <option value="Brie String">Brie</option>
+      <option value="Swiss String">Swiss</option>
+      <option value="Marble String">Marble</option>
+      <option value="Undead String Emmental">USE</option>
+    </select>
+  </td>
+</tr>
+
+<tr>
+  <td style="height:24px; text-align:right;" colspan="2">
+    <input type="button" id="AlgoConfigSaveInput" title="Save changes of Event or Location without reload, take effect after current hunt" value="Apply" onclick="setSessionToLocal();">
+    &nbsp;&nbsp;&nbsp;
+    <input type="button" id="AlgoConfigSaveReloadInput" title="Save changes of Event or Location with reload, take effect immediately" value="Apply & Reload" onclick="setSessionToLocal();">
+    &nbsp;&nbsp;&nbsp;
+  </td>
+</tr>
+
+${
+  eventLocation == "Hunt For"
+    ? `
+  <tr>
+    <td style="height:24px; text-align:right;">
+      <a title="Type in how many hunts you want to hunt for">
+        <b>How many hunts?</b>
+      </a>
+      &nbsp;&nbsp;:&nbsp;&nbsp;
+    </td>
+    <td style="height:24px">
+      <input type="number" id="nobHuntsLeftInput" name="nobHuntsLeftInput" value="${NOBhuntsLeft}" />
+    </td>
+  </tr>
+`
+    : ""
+}
+</table>
+`;
 
         var NOBspecialMessageDiv = document.createElement("div");
         NOBspecialMessageDiv.setAttribute("id", "nobSpecialMessage");
@@ -10655,12 +10060,13 @@ window.localStorage.setItem(\'addonCode\', document.getElementById(\'addonCode\'
     if (debug) {
       for (var prop in e) {
         console.log(
-          "embedTimer error stack: " + prop + " value: [" + e[prop] + "]\n"
+          `embedTimer error stack: ${prop} value: [${e[prop]}]
+`
         );
       }
     }
 
-    if (debug) console.log("embedTimer error - " + e);
+    if (debug) console.log(`embedTimer error - ${e}`);
     if (debug) console.log(e);
   }
 }
@@ -10886,7 +10292,7 @@ function loadPreferenceSettingFromStorage() {
       if (keyName.indexOf("KR-") > -1) {
         // remove old KR entries
         keyRemove.push(keyName);
-      } else if (keyName.indexOf("KR" + separator) > -1) {
+      } else if (keyName.indexOf(`KR${separator}`) > -1) {
         keyKR.push(keyName);
       }
       value = getStorage(keyName); // remove entries of duplicate JSON.stringify
@@ -10928,7 +10334,7 @@ function loadPreferenceSettingFromStorage() {
     };
     for (var prop in objSCZone) {
       if (objSCZone.hasOwnProperty(prop)) {
-        keyName = "SCCustom_" + prop;
+        keyName = `SCCustom_${prop}`;
         keyValue = window.localStorage.getItem(keyName);
         if (!isNullOrUndefined(keyValue)) {
           keyValue = keyValue.split(",");
@@ -11109,14 +10515,14 @@ function loadPreferenceSettingFromStorage() {
     if (isNullOrUndefined(keyValue)) {
       obj = {};
       for (i = 1; i <= 4; i++) {
-        temp = "FW_Wave" + i;
+        temp = `FW_Wave${i}`;
         keyValue = getStorage(temp);
         if (!isNullOrUndefined(keyValue)) {
-          obj["wave" + i] = JSON.parse(keyValue);
+          obj[`wave${i}`] = JSON.parse(keyValue);
           removeStorage(temp);
           removeSessionStorage(temp);
         } else {
-          obj["wave" + i] = JSON.parse(JSON.stringify(objDefaultFW));
+          obj[`wave${i}`] = JSON.parse(JSON.stringify(objDefaultFW));
         }
       }
       setStorage("FW", JSON.stringify(obj));
@@ -11124,7 +10530,7 @@ function loadPreferenceSettingFromStorage() {
       obj = JSON.parse(keyValue);
       bResave = false;
       for (i = 1; i <= 4; i++) {
-        temp = "wave" + i;
+        temp = `wave${i}`;
         for (j = 0; j < obj[temp].cheese.length; j++) {
           if (obj[temp].cheese[j] == "Brie") {
             obj[temp].cheese[j] = "Brie Cheese";
@@ -11380,7 +10786,7 @@ function getTrapList(category) {
 
   for (var i = 0; i < arrObjList.length; i++) {
     temp = getStorageToVariableStr(
-      "TrapList" + capitalizeFirstLetter(arrObjList[i]),
+      `TrapList${capitalizeFirstLetter(arrObjList[i])}`,
       ""
     );
     if (temp === "") {
@@ -11402,7 +10808,7 @@ function clearTrapList(category) {
   else arrObjList = [category];
 
   for (var i = 0; i < arrObjList.length; i++) {
-    removeStorage("TrapList" + capitalizeFirstLetter(arrObjList[i]));
+    removeStorage(`TrapList${capitalizeFirstLetter(arrObjList[i])}`);
     objTrapList[arrObjList[i]] = [];
   }
 }
@@ -11432,7 +10838,7 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
         objTrapList[category].push(nameElement);
       }
       setStorage(
-        "TrapList" + capitalizeFirstLetter(category),
+        `TrapList${capitalizeFirstLetter(category)}`,
         objTrapList[category].join(",")
       );
       clearInterval(intervalGTLFTS);
@@ -11450,7 +10856,7 @@ function getTrapListFromTrapSelector(sort, category, name, isForcedRetry) {
         }
       }
       setStorage(
-        "TrapList" + capitalizeFirstLetter(category),
+        `TrapList${capitalizeFirstLetter(category)}`,
         objTrapList[category].join(",")
       );
       clearInterval(intervalGTLFTS);
@@ -11567,9 +10973,8 @@ function displayTimer(title, nextHornTime, checkTime) {
   }
 
   if (showTimerInPage) {
-    nextHornTimeElement.innerHTML =
-      "<b>Next Hunter Horn Time:</b> " + nextHornTime;
-    checkTimeElement.innerHTML = "<b>Next Trap Check Time:</b> " + checkTime;
+    nextHornTimeElement.innerHTML = `<b>Next Hunter Horn Time:</b> ${nextHornTime}`;
+    checkTimeElement.innerHTML = `<b>Next Trap Check Time:</b> ${checkTime}`;
   }
 
   title = null;
@@ -11579,7 +10984,7 @@ function displayTimer(title, nextHornTime, checkTime) {
 
 function displayLocation(locStr) {
   if (showTimerInPage && pauseAtInvalidLocation) {
-    travelElement.innerHTML = "<b>Hunt Location:</b> " + locStr;
+    travelElement.innerHTML = `<b>Hunt Location:</b> ${locStr}`;
   }
 
   locStr = null;
@@ -11588,7 +10993,7 @@ function displayLocation(locStr) {
 function displayKingRewardSumTime(timeStr) {
   if (showTimerInPage) {
     if (timeStr) {
-      lastKingRewardSumTimeElement.innerHTML = "(" + timeStr + ")";
+      lastKingRewardSumTimeElement.innerHTML = `(${timeStr})`;
     } else {
       lastKingRewardSumTimeElement.innerHTML = "";
     }
@@ -11643,7 +11048,7 @@ function addGoogleAd() {
       NOBadFree = NOBadFree == true || NOBadFree == "true";
     }
 
-    if (debug) console.log("addGoogleAd" + NOBadFree + allowAds);
+    if (debug) console.log(`addGoogleAd${NOBadFree}${allowAds}`);
     if (adFrame) {
       adFrame.removeChild(adFrame.firstChild);
       if (!NOBadFree && allowAds) {
@@ -11697,7 +11102,7 @@ function addGoogleAd() {
     adFrame = null;
     allowAds = null;
   } catch (e) {
-    console.log("Remove ad error: " + e);
+    console.log(`Remove ad error: ${e}`);
   }
 }
 
@@ -11711,7 +11116,7 @@ function addGoogleAd() {
 
 function soundHorn() {
   if (debug) console.log("RUN %csoundHorn()", "color: #FF7700");
-  if (debug) console.log("Time now is " + new Date());
+  if (debug) console.log(`Time now is ${new Date()}`);
   if (debug) {
     console.log(document.getElementById("mousehuntHud").cloneNode(true));
     console.log("huntTimer:");
@@ -11746,7 +11151,7 @@ function soundHorn() {
       if (headerStatus.indexOf(hornReady) !== -1) {
         // found the horn image, let's sound the horn!
         if (debug)
-          console.log("Header status prior to sounding horn: " + headerStatus);
+          console.log(`Header status prior to sounding horn: ${headerStatus}`);
 
         // update timer
         displayTimer(
@@ -11976,7 +11381,7 @@ function embedScript() {
     'function soundedHorn() {\
     var scriptNode = document.getElementById("scriptNode");\
     if (scriptNode) {\
-    	scriptNode.setAttribute("soundedHornAtt", "true");\
+      scriptNode.setAttribute("soundedHornAtt", "true");\
     }\
     scriptNode = null;\
     }';
@@ -11999,8 +11404,9 @@ function embedScript() {
     document.getElementsByClassName(hornButton)[0].firstChild;
   var oriStr = hornButtonLink.getAttribute("onclick").toString();
   var index = oriStr.indexOf("return false;");
-  var modStr =
-    oriStr.substring(0, index) + "soundedHorn();" + oriStr.substring(index);
+  var modStr = `${oriStr.substring(0, index)}soundedHorn();${oriStr.substring(
+    index
+  )}`;
   hornButtonLink.setAttribute("onclick", modStr);
 
   hornButtonLink = null;
@@ -12047,7 +11453,7 @@ function noCheeseAction() {
   notifyMe(
     "No more cheese!!!",
     "https://raw.githubusercontent.com/nobodyrandom/mhAutobot/master/resource/cheese.png",
-    getPageVariable("user.username") + " has no more cheese."
+    `${getPageVariable("user.username")} has no more cheese.`
   );
 
   playNoCheeseSound();
@@ -12065,7 +11471,7 @@ function noCheeseAction() {
         checkRearmInterval = null;
       }
     } catch (e) {
-      if (debug) console.log("noCheeseAction ERROR: " + e);
+      if (debug) console.log(`noCheeseAction ERROR: ${e}`);
       if (debug) console.log("Cancelling check rearm, just in case.");
 
       clearInterval(checkRearmInterval);
@@ -12461,7 +11867,7 @@ function CalculateNextTrapCheckInMinute() {
     checkTime = now.getMinutes() >= trapCheckTimeDiff ? 3600 + temp : temp;
     checkTime += checkTimeDelay;
 
-    if (debug) console.log("CalcNextTrapCheck: " + checkTime);
+    if (debug) console.log(`CalcNextTrapCheck: ${checkTime}`);
     now = undefined;
     temp = undefined;
   }
@@ -12794,7 +12200,7 @@ function getStorage(name) {
 
 function getCookie(c_name) {
   if (document.cookie.length > 0) {
-    var c_start = document.cookie.indexOf(c_name + "=");
+    var c_start = document.cookie.indexOf(`${c_name}=`);
     if (c_start != -1) {
       c_start = c_start + c_name.length + 1;
       var c_end = document.cookie.indexOf(";", c_start);
@@ -12875,9 +12281,7 @@ function getStorageToObject(keyName, objDefault) {
 function disarmTrap(trapSelector) {
   if (trapSelector == "weapon" || trapSelector == "base") return;
 
-  var nQuantity = parseInt(
-    getPageVariable("user." + trapSelector + "_quantity")
-  );
+  var nQuantity = parseInt(getPageVariable(`user.${trapSelector}_quantity`));
   if (nQuantity === 0) {
     deleteArmingFromList(trapSelector);
     if (isNewUI && !isArmingInList()) closeTrapSelector(trapSelector);
@@ -12907,7 +12311,7 @@ function disarmTrap(trapSelector) {
             return;
           }
         } else {
-          x = document.getElementsByClassName(trapSelector + " canDisarm");
+          x = document.getElementsByClassName(`${trapSelector} canDisarm`);
           if (x.length > 0) {
             for (var i = 0; i < x.length; ++i) {
               strTemp = x[i].getAttribute("title");
@@ -12956,7 +12360,7 @@ function fireEvent(element, event) {
     evt = document.createEventObject();
 
     try {
-      return element.fireEvent("on" + event, evt);
+      return element.fireEvent(`on${event}`, evt);
     } finally {
       element = null;
       event = null;
@@ -13006,15 +12410,15 @@ function getPageVariable(name) {
       } else if (name == "user.quests.QuestTrainStation.on_train") {
         return unsafeWindow.user.quests.QuestTrainStation.on_train;
       } else {
-        if (debug) console.log("GPV firefox: " + name + " not found.");
+        if (debug) console.log(`GPV firefox: ${name} not found.`);
       }
     } else {
-      if (debug) console.log("GPV other: " + name + "not found.");
+      if (debug) console.log(`GPV other: ${name}not found.`);
     }
 
     return "ERROR";
   } catch (e) {
-    if (debug) console.log("GPV ALL try block error: " + e);
+    if (debug) console.log(`GPV ALL try block error: ${e}`);
   } finally {
     name = undefined;
   }
@@ -13026,8 +12430,7 @@ function getPageVariableForChrome(variableName) {
   var scriptElement = document.createElement("script");
   scriptElement.setAttribute("id", "scriptElement");
   scriptElement.setAttribute("type", "text/javascript");
-  scriptElement.innerHTML =
-    "document.getElementById('scriptElement').innerText=" + variableName + ";";
+  scriptElement.innerHTML = `document.getElementById('scriptElement').innerText=${variableName};`;
   document.body.appendChild(scriptElement);
 
   var value = scriptElement.innerHTML;
@@ -13046,7 +12449,7 @@ function getPageText(idName) {
   try {
     return document.getElementById(idName).innerText;
   } catch (e) {
-    if (debug) console.log("getPageText(" + idName + ") ERROR: " + e);
+    if (debug) console.log(`getPageText(${idName}) ERROR: ${e}`);
     if (debug) console.log(e);
   }
 }
@@ -13091,17 +12494,11 @@ function timeFormat(time) {
   var sec = ((time % 3600) % 60) % 60;
 
   if (hr > 0) {
-    timeString =
-      hr.toString() +
-      " hr " +
-      min.toString() +
-      " min " +
-      sec.toString() +
-      " sec";
+    timeString = `${hr.toString()} hr ${min.toString()} min ${sec.toString()} sec`;
   } else if (min > 0) {
-    timeString = min.toString() + " min " + sec.toString() + " sec";
+    timeString = `${min.toString()} min ${sec.toString()} sec`;
   } else {
-    timeString = sec.toString() + " sec";
+    timeString = `${sec.toString()} sec`;
   }
 
   time = null;
@@ -13125,17 +12522,11 @@ function timeFormatLong(time) {
     var min = Math.floor((time % 3600) / 60);
 
     if (day > 0) {
-      timeString =
-        day.toString() +
-        " day " +
-        hr.toString() +
-        " hr " +
-        min.toString() +
-        " min ago";
+      timeString = `${day.toString()} day ${hr.toString()} hr ${min.toString()} min ago`;
     } else if (hr > 0) {
-      timeString = hr.toString() + " hr " + min.toString() + " min ago";
+      timeString = `${hr.toString()} hr ${min.toString()} min ago`;
     } else if (min > 0) {
-      timeString = min.toString() + " min ago";
+      timeString = `${min.toString()} min ago`;
     }
 
     day = null;
@@ -13206,7 +12597,7 @@ function nobInit() {
       }
     }
   } catch (e) {
-    console.log("nobInit() ERROR - " + e);
+    console.log(`nobInit() ERROR - ${e}`);
   }
 }
 
@@ -13218,7 +12609,7 @@ function nobAjaxGet(url, callback, throwError) {
       timeout: 5000,
       statusCode: {
         200: function () {
-          console.log("Success get - " + url);
+          console.log(`Success get - ${url}`);
           //Success Message
         },
       },
@@ -13244,7 +12635,7 @@ function nobAjaxPost(url, data, callback, throwError, dataType) {
       timeout: 10000,
       statusCode: {
         200: function () {
-          console.log("Success post - " + url);
+          console.log(`Success post - ${url}`);
           //Success Message
         },
       },
@@ -13272,10 +12663,10 @@ function updateTimer(timeleft, inhours) {
     }
 
     if (SecondPart < 10) {
-      SecondPart = "0" + SecondPart;
+      SecondPart = `0${SecondPart}`;
     }
 
-    ReturnValue = FirstPart + ":" + SecondPart + " " + Size;
+    ReturnValue = `${FirstPart}:${SecondPart} ${Size}`;
   } else {
     ReturnValue = "Soon...";
   }
@@ -13297,7 +12688,7 @@ function nobGDoc(items, type) {
       if (debug) console.log(data);
     },
     function (a, b, c) {
-      console.log("nobGDoc error (" + b + "): " + c);
+      console.log(`nobGDoc error (${b}): ${c}`);
     }
   );
 }
@@ -13322,12 +12713,12 @@ function nobHTMLFetch() {
 
 function nobStore(data, type) {
   data = JSON.stringify(data);
-  var name = "NOB-" + type;
+  var name = `NOB-${type}`;
   localStorage.setItem(name, data);
 }
 
 function nobGet(type) {
-  return localStorage.getItem("NOB-" + type);
+  return localStorage.getItem(`NOB-${type}`);
 }
 
 function nobMapRequest(handleData) {
@@ -13534,7 +12925,7 @@ function nobScript(qqEvent) {
               nobStore(output, "data");
               nobGDoc(JSON.stringify(output), "map");
             } else {
-              console.log("Map request failed: " + output);
+              console.log(`Map request failed: ${output}`);
               mapRequestFailed = true;
               nobHTMLFetch();
               output = nobGet("data");
@@ -13543,11 +12934,7 @@ function nobScript(qqEvent) {
           });
         } else {
           console.log(
-            "Map fetch failed, using USER data from html (" +
-              mapRequestFailed +
-              ", " +
-              mapThere +
-              ")"
+            `Map fetch failed, using USER data from html (${mapRequestFailed}, ${mapThere})`
           );
           nobHTMLFetch();
           var output = nobGet("data");
@@ -13558,7 +12945,7 @@ function nobScript(qqEvent) {
         nobHTMLFetch();
       }
     } catch (e) {
-      if (debug) console.log("nobScript error: " + e);
+      if (debug) console.log(`nobScript error: ${e}`);
     } finally {
       mapThere = null;
     }
@@ -13616,7 +13003,7 @@ function pingServer() {
           var createUser = new Parse.User();
           createUser.set("username", theUsername);
           createUser.set("password", thePassword);
-          createUser.set("email", thePassword + "@mh.com");
+          createUser.set("email", `${thePassword}@mh.com`);
 
           var usrACL = new Parse.ACL();
           usrACL.setPublicReadAccess(false);
@@ -13637,7 +13024,7 @@ function pingServer() {
               // Show the error message somewhere and let the user try again.
               if (debug)
                 console.log(
-                  "Parse Error: " + signupError.code + " " + signupError.message
+                  `Parse Error: ${signupError.code} ${signupError.message}`
                 );
               return Parse.Promise.error(
                 "Error in signup, giving up serverPing now."
@@ -13691,7 +13078,7 @@ function pingServer() {
       .then(
         function (message) {
           if (message != undefined || message != null)
-            console.log("Parse message: " + message);
+            console.log(`Parse message: ${message}`);
           if (Parse.User.current() != null) {
             Parse.User.logOut();
             //console.log("Parse logout");
@@ -13699,7 +13086,7 @@ function pingServer() {
         },
         function (error) {
           if (error != undefined || error != null) {
-            if (debug) console.log("Parse error: " + error);
+            if (debug) console.log(`Parse error: ${error}`);
           }
         }
       );
@@ -13825,11 +13212,9 @@ function nobRaffle() {
       }
     } catch (e) {
       console.log(
-        "Raffle interval error: " +
-          e +
-          ", retrying in 2 seconds. Giving up in " +
-          nobRafGiveUp * 2 +
-          " seconds."
+        `Raffle interval error: ${e}, retrying in 2 seconds. Giving up in ${
+          nobRafGiveUp * 2
+        } seconds.`
       );
       if (nobRafGiveUp < 1) {
         intState = -1;
@@ -13886,11 +13271,9 @@ function nobPresent() {
       }
     } catch (e) {
       console.log(
-        "Present interval error: " +
-          e +
-          ", retrying in 2 seconds. Giving up in " +
-          nobPresGiveUp * 2 +
-          " seconds."
+        `Present interval error: ${e}, retrying in 2 seconds. Giving up in ${
+          nobPresGiveUp * 2
+        } seconds.`
       );
       if (nobPresGiveUp < 1) {
         intState = -1;
@@ -13930,8 +13313,8 @@ function createClockArea() {
 
     for (i = 0; i < LOCATION_TIMERS.length; i++) {
       child[i] = document.createElement("div");
-      child[i].setAttribute("id", "NOB" + LOCATION_TIMERS[i][0]);
-      text = '<span id="text_' + LOCATION_TIMERS[i][0] + '">';
+      child[i].setAttribute("id", `NOB${LOCATION_TIMERS[i][0]}`);
+      text = `<span id="text_${LOCATION_TIMERS[i][0]}">`;
       child[i].innerHTML = text;
     }
 
@@ -13940,7 +13323,7 @@ function createClockArea() {
 
     parent.insertBefore(document.createElement("br"), parent.firstChild);
   } catch (e) {
-    console.log("createClockArea() ERROR: " + e);
+    console.log(`createClockArea() ERROR: ${e}`);
   }
 }
 
@@ -13981,14 +13364,14 @@ function updateTime() {
       clockNeedOn = false;
     }
   } catch (e) {
-    if (debug) console.log("UpdateTime error: " + e);
+    if (debug) console.log(`UpdateTime error: ${e}`);
     clearTimeout(NOBtickerTimout);
     clearTimeout(NOBtickerInterval);
   }
 }
 
 function nobCalculateTime(runOnly) {
-  if (debug) console.log("Running nobCalculateTime(" + runOnly + ")");
+  if (debug) console.log(`Running nobCalculateTime(${runOnly})`);
   var child;
   if (runOnly != "relic" && runOnly != "toxic" && runOnly != "none")
     runOnly = "all";
@@ -14070,7 +13453,7 @@ function nobCalculateTime(runOnly) {
 
     if (runOnly == "all") nobCalculateOfflineTimers();
   } catch (e) {
-    if (debug) console.log("updateTime ERR - " + e);
+    if (debug) console.log(`updateTime ERR - ${e}`);
   }
 }
 
@@ -14187,20 +13570,14 @@ function nobCalculateOfflineTimers(runOnly) {
 
       SeasonRemaining = SeasonLength - SeasonRemaining;
 
-      var seasonalDiv = document.getElementById("NOB" + LOCATION_TIMERS[i][0]);
+      var seasonalDiv = document.getElementById(`NOB${LOCATION_TIMERS[i][0]}`);
       var content = "";
-      content +=
-        LOCATION_TIMERS[i][0] +
-        ': <font color="' +
-        LOCATION_TIMERS[i][1].color[CurrentName] +
-        '">' +
-        LOCATION_TIMERS[i][1].name[CurrentName] +
-        "</font>";
+      content += `${LOCATION_TIMERS[i][0]}: <font color="${LOCATION_TIMERS[i][1].color[CurrentName]}">${LOCATION_TIMERS[i][1].name[CurrentName]}</font>`;
       if (LOCATION_TIMERS[i][1].effective != null) {
-        content += " (" + LOCATION_TIMERS[i][1].effective[CurrentName] + ")";
+        content += ` (${LOCATION_TIMERS[i][1].effective[CurrentName]})`;
       }
 
-      content += " &#126; For " + updateTimer(SeasonRemaining, true);
+      content += ` &#126; For ${updateTimer(SeasonRemaining, true)}`;
       seasonalDiv.innerHTML = content;
     }
     return;
@@ -14451,7 +13828,7 @@ function bodyJS() {
     for (i = 0; i < window.localStorage.length; i++) {
       strKeyName = window.localStorage.key(i);
       if (strKeyName.indexOf("KR") === 0) continue;
-      str += strKeyName + "|" + window.localStorage.getItem(strKeyName);
+      str += `${strKeyName}|${window.localStorage.getItem(strKeyName)}`;
       str += "\r\n";
     }
     for (i = 0; i < window.sessionStorage.length; i++) {
@@ -14468,9 +13845,9 @@ function bodyJS() {
       else {
         arrTimestamp[i] += nTimezoneOffset;
         strKeyName = new Date(arrTimestamp[i]).toISOString();
-        strKeyName += "." + arrTimestamp[i].toFixed(3).split(".")[1];
+        strKeyName += `.${arrTimestamp[i].toFixed(3).split(".")[1]}`;
       }
-      str += strKeyName + "|" + arrValue[i];
+      str += `${strKeyName}|${arrValue[i]}`;
       str += "\r\n";
     }
     saveFile(str, "log_preference.txt");
@@ -14480,7 +13857,7 @@ function bodyJS() {
     var pom = document.createElement("a");
     pom.setAttribute(
       "href",
-      "data:text/plain;charset=utf-8," + encodeURIComponent(content)
+      `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`
     );
     pom.setAttribute("download", filename);
 
@@ -14630,8 +14007,7 @@ function bodyJS() {
     var selectMouseList = document.getElementById("selectMouseList");
     if (inputUncaughtMouse.value.indexOf(selectMouseList.value) < 0) {
       if (inputUncaughtMouse.value.length !== 0)
-        inputUncaughtMouse.value =
-          selectMouseList.value + "," + inputUncaughtMouse.value;
+        inputUncaughtMouse.value = `${selectMouseList.value},${inputUncaughtMouse.value}`;
       else inputUncaughtMouse.value = selectMouseList.value;
     }
     saveMapHunting();
@@ -14780,10 +14156,7 @@ function bodyJS() {
     if (algoOnSession != algoOnLocal) {
       if (debug)
         console.log(
-          "initEventAlgo() WARNING: Session algo is different from local storage." +
-            algoOnSession +
-            " | " +
-            algoOnLocal
+          `initEventAlgo() WARNING: Session algo is different from local storage.${algoOnSession} | ${algoOnLocal}`
         );
     }
 
@@ -14797,7 +14170,7 @@ function bodyJS() {
       }
     }
 
-    if (debug) console.log("Algo not found: " + algoOnSession);
+    if (debug) console.log(`Algo not found: ${algoOnSession}`);
   }
 
   function onInputResetReload() {
@@ -15540,7 +14913,7 @@ function bodyJS() {
           if (nStreak !== 0) selectFWStreak.value = nStreak + 1;
         }
       }
-      var strWave = "wave" + selectFWWave.value;
+      var strWave = `wave${selectFWWave.value}`;
       if (isNullOrUndefined(storageValue[strWave].weapon))
         storageValue[strWave].weapon = "Sandtail Sentinel";
       if (isNullOrUndefined(storageValue[strWave].base))
@@ -15688,7 +15061,7 @@ function bodyJS() {
       storageValue = JSON.stringify(objAll);
     }
     storageValue = JSON.parse(storageValue);
-    var strWave = "wave" + selectFWWave.value;
+    var strWave = `wave${selectFWWave.value}`;
     if (isNullOrUndefined(storageValue[strWave].weapon))
       storageValue[strWave].weapon = "Sandtail Sentinel";
     if (isNullOrUndefined(storageValue[strWave].base))
@@ -16726,24 +16099,24 @@ function bodyJS() {
       selectBWRiftFTC.style.display = "none";
       selectBWRiftHunt.style.display = "none";
     } else {
-    /*else if(strChamberName == 'INGRESS'){
-            nIndex = selectBWRiftFTC.selectedIndex;
-            if(bCursed)
-                nIndex += 4;
-            strTemp = 'ic';
-            selectBWRiftAlertLvl.style.display = 'none';
-            selectBWRiftFTC.style.display = '';
-            selectBWRiftHunt.style.display = 'none';
-        }
-        else if(strChamberName == 'FROZEN'){
-            nIndex = selectBWRiftHunt.selectedIndex;
-            if(bCursed)
-                nIndex += 16;
-            strTemp = 'fa';
-            selectBWRiftAlertLvl.style.display = 'none';
-            selectBWRiftFTC.style.display = 'none';
-            selectBWRiftHunt.style.display = '';
-        }*/
+      /*else if(strChamberName == 'INGRESS'){
+              nIndex = selectBWRiftFTC.selectedIndex;
+              if(bCursed)
+                  nIndex += 4;
+              strTemp = 'ic';
+              selectBWRiftAlertLvl.style.display = 'none';
+              selectBWRiftFTC.style.display = '';
+              selectBWRiftHunt.style.display = 'none';
+          }
+          else if(strChamberName == 'FROZEN'){
+              nIndex = selectBWRiftHunt.selectedIndex;
+              if(bCursed)
+                  nIndex += 16;
+              strTemp = 'fa';
+              selectBWRiftAlertLvl.style.display = 'none';
+              selectBWRiftFTC.style.display = 'none';
+              selectBWRiftHunt.style.display = '';
+          }*/
       strTemp = "master";
       selectBWRiftAlertLvl.style.display = "none";
       selectBWRiftFTC.style.display = "none";
