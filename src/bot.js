@@ -1352,7 +1352,7 @@ function saveToSessionStorage() {
       str += arguments[i];
     }
 
-    if (i != arguments.length - 1) str += " ";
+    if (i !== arguments.length - 1) str += " ";
   }
   var key = "";
   var arrLog = [];
@@ -1372,7 +1372,7 @@ function saveToSessionStorage() {
       str
     );
   } catch (e) {
-    if (e.name == "QuotaExceededError") {
+    if (e.name === "QuotaExceededError") {
       for (i = 0; i < window.sessionStorage.length; i++) {
         key = window.sessionStorage.key(i);
         if (key.indexOf("Log_") > -1) removeSessionStorage(key);
@@ -1401,7 +1401,7 @@ function FinalizePuzzleImageAnswer(answer) {
   if (debug) console.log(answer);
 
   var myFrame;
-  if (answer.length != 5) {
+  if (answer.length !== 5) {
     //Get a new puzzle
     if (kingsRewardRetry >= kingsRewardRetryMax) {
       kingsRewardRetry = 0;
@@ -1416,7 +1416,7 @@ function FinalizePuzzleImageAnswer(answer) {
       setStorage("KingsRewardRetry", kingsRewardRetry);
       var tagName = document.getElementsByTagName("a");
       for (var i = 0; i < tagName.length; i++) {
-        if (tagName[i].innerText == "Click here to get a new one!") {
+        if (tagName[i].innerText === "Click here to get a new one!") {
           // TODO IMPORTANT: Find another time to fetch new puzzle
           fireEvent(tagName[i], "click");
           myFrame = document.getElementById("myFrame");
@@ -1617,7 +1617,7 @@ function addKREntries() {
       }
       replaced = `${temp}. ${replaced}`;
       strInnerHTML += `<option value="${keyKR[i]}"${
-        i == keyKR.length - 1 ? " selected" : ""
+        i === keyKR.length - 1 ? " selected" : ""
       }>${replaced}</option>`;
       count++;
     }
@@ -1638,8 +1638,8 @@ function setKREntriesColor() {
     }
     strCurrent = selectViewKR.children[i].value.split("~")[2];
     if (
-      strCurrent == strCurrent.toUpperCase() &&
-      selectViewKR.children[i].style.color != "red"
+      strCurrent === strCurrent.toUpperCase() &&
+      selectViewKR.children[i].style.color !== "red"
     ) {
       selectViewKR.children[i].style = "color:magenta";
     }
@@ -1652,7 +1652,7 @@ if (debugKR) CallKRSolver();
 
 // start executing script
 if (debug) console.log(`STARTING SCRIPT - ver: ${scriptVersion}`);
-if (window.top != window.self) {
+if (window.top !== window.self) {
   if (debug)
     console.log(
       `In IFRAME - may cause firefox to error, location: ${window.location.href}`
@@ -1701,7 +1701,7 @@ function exeScript() {
     trapCheckTimeDiff = GetTrapCheckTime();
 
     // check the trap check setting first
-    if (trapCheckTimeDiff == 60) {
+    if (trapCheckTimeDiff === 60) {
       trapCheckTimeDiff = 0;
     } else if (trapCheckTimeDiff < 0 || trapCheckTimeDiff > 60) {
       // invalid value, just disable the trap check
@@ -1710,7 +1710,7 @@ function exeScript() {
 
     if (showTimerInTitle) {
       // check if they are running in iFrame
-      if (window.location.href.indexOf("apps.facebook.com/mousehunt/") != -1) {
+      if (window.location.href.indexOf("apps.facebook.com/mousehunt/") !== -1) {
         contentElement = document.getElementById("pagelet_canvas_content");
         if (contentElement) {
           breakFrameDivElement = document.createElement("div");
@@ -1724,7 +1724,7 @@ function exeScript() {
         }
         contentElement = undefined;
       } else if (
-        window.location.href.indexOf("hi5.com/friend/games/MouseHunt") != -1
+        window.location.href.indexOf("hi5.com/friend/games/MouseHunt") !== -1
       ) {
         contentElement = document.getElementById("apps-canvas-body");
         if (contentElement) {
@@ -1742,14 +1742,14 @@ function exeScript() {
     }
 
     // check user running this script from where
-    if (window.location.href.indexOf("mousehuntgame.com/canvas/") != -1) {
+    if (window.location.href.indexOf("mousehuntgame.com/canvas/") !== -1) {
       // from facebook
       fbPlatform = true;
       setStorage("Platform", "FB");
-    } else if (window.location.href.indexOf("mousehuntgame.com") != -1) {
+    } else if (window.location.href.indexOf("mousehuntgame.com") !== -1) {
       // need to check if it is running in mobile version
       var version = getCookie("switch_to");
-      if (version !== null && version == "mobile") {
+      if (version !== null && version === "mobile") {
         // from mousehunt game mobile version
         mhMobilePlatform = true;
         setStorage("Platform", "MHMobile");
@@ -1760,7 +1760,7 @@ function exeScript() {
       }
       version = undefined;
     } else if (
-      window.location.href.indexOf("mousehunt.hi5.hitgrab.com") != -1
+      window.location.href.indexOf("mousehunt.hi5.hitgrab.com") !== -1
     ) {
       // from hi5
       hiFivePlatform = true;
@@ -1773,18 +1773,18 @@ function exeScript() {
 
     if (fbPlatform) {
       if (
-        window.location.href == "http://www.mousehuntgame.com/canvas/" ||
-        window.location.href == "http://www.mousehuntgame.com/canvas/#" ||
-        window.location.href == "https://www.mousehuntgame.com/canvas/" ||
-        window.location.href == "https://www.mousehuntgame.com/canvas/#" ||
-        window.location.href.indexOf("mousehuntgame.com/canvas/?") != -1
+        window.location.href === "http://www.mousehuntgame.com/canvas/" ||
+        window.location.href === "http://www.mousehuntgame.com/canvas/#" ||
+        window.location.href === "https://www.mousehuntgame.com/canvas/" ||
+        window.location.href === "https://www.mousehuntgame.com/canvas/#" ||
+        window.location.href.indexOf("mousehuntgame.com/canvas/?") !== -1
       ) {
-        window.location.href == "https://www.mousehuntgame.com/" ||
-          window.location.href == "https://www.mousehuntgame.com/#" ||
-          window.location.href ==
+        window.location.href === "https://www.mousehuntgame.com/" ||
+          window.location.href === "https://www.mousehuntgame.com/#" ||
+          window.location.href ===
             "https://www.mousehuntgame.com/?switch_to=standard" ||
-          window.location.href == "https://www.mousehuntgame.com/index.php" ||
-          window.location.href == "https://www.mousehuntgame.com/camp.php" ||
+          window.location.href === "https://www.mousehuntgame.com/index.php" ||
+          window.location.href === "https://www.mousehuntgame.com/camp.php" ||
           window.location.href.indexOf("mousehuntgame.com/index.php") >= 0 ||
           // page to execute the script!
 
@@ -1820,20 +1820,20 @@ function exeScript() {
       }
     } else if (mhPlatform) {
       if (
-        window.location.href == "http://www.mousehuntgame.com/" ||
-        window.location.href == "https://www.mousehuntgame.com/" ||
-        window.location.href == "http://www.mousehuntgame.com/#" ||
-        window.location.href == "https://www.mousehuntgame.com/#" ||
-        window.location.href ==
+        window.location.href === "http://www.mousehuntgame.com/" ||
+        window.location.href === "https://www.mousehuntgame.com/" ||
+        window.location.href === "http://www.mousehuntgame.com/#" ||
+        window.location.href === "https://www.mousehuntgame.com/#" ||
+        window.location.href ===
           "http://www.mousehuntgame.com/?switch_to=standard" ||
-        window.location.href ==
+        window.location.href ===
           "https://www.mousehuntgame.com/?switch_to=standard" ||
-        window.location.href == "http://www.mousehuntgame.com/index.php" ||
-        window.location.href == "https://www.mousehuntgame.com/index.php" ||
-        window.location.href == "http://www.mousehuntgame.com/camp.php" ||
-        window.location.href == "https://www.mousehuntgame.com/camp.php" ||
-        window.location.href == "http://www.mousehuntgame.com/camp.php#" ||
-        window.location.href == "https://www.mousehuntgame.com/camp.php#" ||
+        window.location.href === "http://www.mousehuntgame.com/index.php" ||
+        window.location.href === "https://www.mousehuntgame.com/index.php" ||
+        window.location.href === "http://www.mousehuntgame.com/camp.php" ||
+        window.location.href === "https://www.mousehuntgame.com/camp.php" ||
+        window.location.href === "http://www.mousehuntgame.com/camp.php#" ||
+        window.location.href === "https://www.mousehuntgame.com/camp.php#" ||
         window.location.href.indexOf("mousehuntgame.com/index.php") >= 0 ||
         window.location.href.indexOf("mousehuntgame.com/camp.php") >= 0 ||
         window.location.href.indexOf("mousehuntgame.com/camp.php#") >= 0
@@ -1879,19 +1879,19 @@ function exeScript() {
       embedTimer(false);
     } else if (hiFivePlatform) {
       if (
-        window.location.href == "http://mousehunt.hi5.hitgrab.com/#" ||
-        window.location.href.indexOf("http://mousehunt.hi5.hitgrab.com/?") !=
+        window.location.href === "http://mousehunt.hi5.hitgrab.com/#" ||
+        window.location.href.indexOf("http://mousehunt.hi5.hitgrab.com/?") !==
           -1 ||
-        window.location.href == "http://mousehunt.hi5.hitgrab.com/" ||
+        window.location.href === "http://mousehunt.hi5.hitgrab.com/" ||
         window.location.href.indexOf(
           "http://mousehunt.hi5.hitgrab.com/turn.php"
-        ) != -1 ||
+        ) !== -1 ||
         window.location.href.indexOf(
           "http://mousehunt.hi5.hitgrab.com/?newpuzzle"
-        ) != -1 ||
+        ) !== -1 ||
         window.location.href.indexOf(
           "http://mousehunt.hi5.hitgrab.com/index.php"
-        ) != -1
+        ) !== -1
       ) {
         // page to execute the script!
 
@@ -1934,7 +1934,7 @@ function exeScript() {
 function GetTrapCheckTime() {
   // Check storage first
   var trapCheckFromStorage = getStorageToVariableInt("TrapCheckTimeOffset", -1);
-  if (trapCheckFromStorage != -1) return trapCheckFromStorage;
+  if (trapCheckFromStorage !== -1) return trapCheckFromStorage;
 
   try {
     var passiveElement = document.getElementsByClassName("passive");
@@ -1996,7 +1996,8 @@ function getJournalDetail() {
     bait: false,
   };
   for (i = 0; i < classJournal.length; i++) {
-    if (classJournal[i].parentNode.textContent == strLastRecordedJournal) break;
+    if (classJournal[i].parentNode.textContent === strLastRecordedJournal)
+      break;
 
     eleA = classJournal[i].getElementsByTagName("a");
     if (eleA.length > 0) {
@@ -2063,7 +2064,7 @@ function getJournalDetail() {
 }
 
 function getJournalDetailFRift() {
-  if (g_arrHeirloom.length != 3) return;
+  if (g_arrHeirloom.length !== 3) return;
   var strLastRecordedJournal = getStorageToVariableStr(
     "LastRecordedJournalFRift",
     ""
@@ -2071,7 +2072,8 @@ function getJournalDetailFRift() {
   var classJournal = document.getElementsByClassName("journaltext");
   var i, j, eleA, temp, nIndex;
   for (i = 0; i < classJournal.length; i++) {
-    if (classJournal[i].parentNode.textContent == strLastRecordedJournal) break;
+    if (classJournal[i].parentNode.textContent === strLastRecordedJournal)
+      break;
     eleA = classJournal[i].getElementsByTagName("a");
     if (eleA.length > 0) {
       // has loot(s)
@@ -2098,7 +2100,7 @@ function eventLocationCheck(caller) {
   var selAlgo = getStorageToVariableStr("eventLocation", "None");
   var temp = "";
 
-  if (selAlgo != null && selAlgo != "" && debug)
+  if (selAlgo != null && selAlgo !== "" && debug)
     console.debug(`Running ${selAlgo} bot.`);
 
   switch (selAlgo) {
@@ -2260,7 +2262,7 @@ function mapHunting() {
   };
   var objMapHunting = getStorageToObject("MapHunting", objDefaultMapHunting);
   var strViewState = getPageVariable("user.quests.QuestRelicHunter.view_state");
-  var bHasMap = strViewState == "hasMap" || strViewState == "hasReward";
+  var bHasMap = strViewState === "hasMap" || strViewState === "hasReward";
   if (
     !objMapHunting.status ||
     !bHasMap ||
@@ -2276,7 +2278,7 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
   if (!Array.isArray(arrUpdatedUncaught)) arrUpdatedUncaught = [];
 
   var bHasReward =
-    getPageVariable("user.quests.QuestRelicHunter.view_state") == "hasReward";
+    getPageVariable("user.quests.QuestRelicHunter.view_state") === "hasReward";
   if (!bHasReward && arrUpdatedUncaught.length === 0) {
     var nRemaining = -1;
     var classTreasureMap = document.getElementsByClassName(
@@ -2289,12 +2291,12 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
     )
       nRemaining = parseInt(classTreasureMap.children[2].textContent);
 
-    if (Number.isNaN(nRemaining) || nRemaining == -1) return;
+    if (Number.isNaN(nRemaining) || nRemaining === -1) return;
 
     var temp = getStorageToVariableStr("Last Record Uncaught", null);
     if (!isNullOrUndefined(temp)) arrUncaughtMouse = temp.split(",");
 
-    if (arrUncaughtMouse.length != nRemaining) {
+    if (arrUncaughtMouse.length !== nRemaining) {
       // get updated uncaught mouse list
       arrUncaughtMouse = [];
       var objData = {
@@ -2354,9 +2356,9 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
   for (i = 0; i < obj.selectedMouse.length; i++) {
     arrIndex.push(arrUncaughtMouse.indexOf(obj.selectedMouse[i]));
   }
-  if (obj.logic == "AND") {
+  if (obj.logic === "AND") {
     bChangeTrap =
-      countArrayElement(-1, arrIndex) == arrIndex.length || bHasReward;
+      countArrayElement(-1, arrIndex) === arrIndex.length || bHasReward;
   } else {
     bChangeTrap = countArrayElement(-1, arrIndex) > 0 || bHasReward;
   }
@@ -2364,19 +2366,19 @@ function checkCaughtMouse(obj, arrUpdatedUncaught) {
   bCanLeave = !bHasReward && bChangeTrap;
   if (bChangeTrap) {
     for (i = arrIndex.length - 1; i >= 0; i--) {
-      if (arrIndex[i] == -1) obj.selectedMouse.splice(i, 1);
+      if (arrIndex[i] === -1) obj.selectedMouse.splice(i, 1);
     }
     setStorage("MapHunting", JSON.stringify(obj));
     for (var prop in obj) {
       if (
         obj.hasOwnProperty(prop) &&
-        (prop == "weapon" ||
-          prop == "base" ||
-          prop == "trinket" ||
-          prop == "bait")
+        (prop === "weapon" ||
+          prop === "base" ||
+          prop === "trinket" ||
+          prop === "bait")
       ) {
-        if (obj[prop] != "Remain") {
-          if (obj[prop] == "None") disarmTrap(prop);
+        if (obj[prop] !== "Remain") {
+          if (obj[prop] === "None") disarmTrap(prop);
           else checkThenArm(null, prop, obj[prop]);
         }
       }
@@ -2549,7 +2551,7 @@ function bwRift() {
   var strChamberName = objUser.chamber_name.split(" ")[0].toUpperCase();
   var strTestName = objUser.chamber_name.toUpperCase();
   if (strTestName.indexOf("LUCK") > -1) strChamberName = "LUCKY";
-  if (strChamberName == "ACOLYTE") {
+  if (strChamberName === "ACOLYTE") {
     // in Acolyte Chamber
     var strStatus;
     if (objUser.minigame.acolyte_chamber.obelisk_charge < 100) {
@@ -2571,7 +2573,7 @@ function bwRift() {
       objUser.minigame.acolyte_chamber.acolyte_sand
     );
     nIndex = objBWRift.order.indexOf(strStatus);
-  } else if (strChamberName == "RIFT") nIndex = 0;
+  } else if (strChamberName === "RIFT") nIndex = 0;
   else {
     if (nLootRemaining > 0) nIndex = objBWRift.order.indexOf(strChamberName);
     else nIndex = 0;
@@ -2621,7 +2623,7 @@ function bwRift() {
     "Obj:",
     objUser.status_effects
   );
-  if (nIndex === 0 || objUser.chamber_status == "open") {
+  if (nIndex === 0 || objUser.chamber_status === "open") {
     // Choosing portal
 
     var classPortalContainer = document.getElementsByClassName(
@@ -2636,7 +2638,7 @@ function bwRift() {
       };
       var i, j;
       var arrPriorities =
-        nIndexBuffCurse == 8
+        nIndexBuffCurse === 8
           ? objBWRift.prioritiesCursed
           : objBWRift.priorities;
       var nIndexCustom = -1;
@@ -2663,7 +2665,8 @@ function bwRift() {
         objPortal.arrIndex[i] = arrPriorities.indexOf(objPortal.arrName[i]);
         if (
           nIndexCustom > -1 &&
-          (objPortal.arrName[i] == "ANCIENT" || objPortal.arrName[i] == "RUNIC")
+          (objPortal.arrName[i] === "ANCIENT" ||
+            objPortal.arrName[i] === "RUNIC")
         ) {
           if (objPortal.arrIndex[i] < 0 || nIndexCustom < objPortal.arrIndex[i])
             objPortal.arrIndex[i] = nIndexCustom;
@@ -2676,7 +2679,7 @@ function bwRift() {
         if (
           nIndex === 0 ||
           (nIndex > 0 &&
-            objUser.chamber_status == "open" &&
+            objUser.chamber_status === "open" &&
             objBWRift.choosePortalAfterCC)
         ) {
           var nIndexOld = nIndex;
@@ -2699,8 +2702,8 @@ function bwRift() {
               nTotalRSC
             );
             var nMinRSC = -1;
-            if (objBWRift.minRSCType == "NUMBER") nMinRSC = objBWRift.minRSC;
-            else if (objBWRift.minRSCType == "GEQ")
+            if (objBWRift.minRSCType === "NUMBER") nMinRSC = objBWRift.minRSC;
+            else if (objBWRift.minRSCType === "GEQ")
               nMinRSC = objBWRift.minTimeSand[nIndexBuffCurse];
             if (
               nTotalRSC < nMinRSC ||
@@ -2728,7 +2731,7 @@ function bwRift() {
             nIndexTemp = objPortal.arrName.indexOf(arrTemp[i]);
             if (
               nIndexTemp > -1 &&
-              nIndexBuffCurse == 8 &&
+              nIndexBuffCurse === 8 &&
               objBWRift.enterMinigameWCurse === false
             ) {
               arrIndices = getAllIndices(objPortal.arrName, arrTemp[i]);
@@ -2775,12 +2778,12 @@ function bwRift() {
           console.plog(objPortal);
           var nMinIndex = minIndex(objPortal.arrIndex);
           if (
-            objPortal.arrIndex[nMinIndex] == Number.MAX_SAFE_INTEGER ||
-            classPortalContainer[0].children[nMinIndex] == "frozen"
+            objPortal.arrIndex[nMinIndex] === Number.MAX_SAFE_INTEGER ||
+            classPortalContainer[0].children[nMinIndex] === "frozen"
           )
             nIndex = nIndexOld;
           else {
-            if (objPortal.arrName[nMinIndex] == "ACOLYTE") {
+            if (objPortal.arrName[nMinIndex] === "ACOLYTE") {
               console.plog(
                 "Chosen Portal:",
                 objPortal.arrName[nMinIndex],
@@ -2800,7 +2803,7 @@ function bwRift() {
               }, 2000);
               return;
             }
-            if (objPortal.arrName[nMinIndex] == "ENTER")
+            if (objPortal.arrName[nMinIndex] === "ENTER")
               nIndex = objBWRift.order.indexOf("GEARWORKS");
             else nIndex = objBWRift.order.indexOf(objPortal.arrName[nMinIndex]);
             if (nIndex > -1) {
@@ -2837,27 +2840,27 @@ function bwRift() {
   };
 
   if (nIndex === 0) strChamberName = "NONE";
-  if (nIndexBuffCurse == 8) nIndex += 16;
+  if (nIndexBuffCurse === 8) nIndex += 16;
   if (
-    strChamberName == "GEARWORKS" ||
-    strChamberName == "ANCIENT" ||
-    strChamberName == "RUNIC"
+    strChamberName === "GEARWORKS" ||
+    strChamberName === "ANCIENT" ||
+    strChamberName === "RUNIC"
   ) {
-    var nCleaverAvailable = objUser.cleaver_status == "available" ? 1 : 0;
+    var nCleaverAvailable = objUser.cleaver_status === "available" ? 1 : 0;
     console.plog("Cleaver Available Status:", nCleaverAvailable);
     var strTemp = "";
-    if (strChamberName == "GEARWORKS") strTemp = "gw";
-    else if (strChamberName == "ANCIENT") strTemp = "al";
+    if (strChamberName === "GEARWORKS") strTemp = "gw";
+    else if (strChamberName === "ANCIENT") strTemp = "al";
     else strTemp = "rl";
-    if (nIndexBuffCurse == 8) nCleaverAvailable += 2;
+    if (nIndexBuffCurse === 8) nCleaverAvailable += 2;
     for (var prop in objTemp) {
       if (objTemp.hasOwnProperty(prop))
         objTemp[prop] =
-          objBWRift[strTemp][prop][nCleaverAvailable] == "MASTER"
+          objBWRift[strTemp][prop][nCleaverAvailable] === "MASTER"
             ? objBWRift.master[prop][nIndex]
             : objBWRift[strTemp][prop][nCleaverAvailable];
     }
-  } else if (strChamberName == "GUARD") {
+  } else if (strChamberName === "GUARD") {
     var nAlertLvl = isNullOrUndefined(objUser.minigame.guard_chamber)
       ? -1
       : parseInt(objUser.minigame.guard_chamber.status.split("_")[1]);
@@ -2870,12 +2873,12 @@ function bwRift() {
       }
     } else {
       // Alert on
-      if (nIndexBuffCurse == 8) nAlertLvl += 7;
+      if (nIndexBuffCurse === 8) nAlertLvl += 7;
 
       for (var prop in objTemp) {
         if (objTemp.hasOwnProperty(prop))
           objTemp[prop] =
-            objBWRift.gb[prop][nAlertLvl] == "MASTER"
+            objBWRift.gb[prop][nAlertLvl] === "MASTER"
               ? objBWRift.master[prop][nIndex]
               : objBWRift.gb[prop][nAlertLvl];
       }
@@ -2897,12 +2900,12 @@ function bwRift() {
   checkThenArm(null, "weapon", objTemp.weapon);
   checkThenArm(null, "base", objTemp.base);
   checkThenArm(null, "trinket", objTemp.trinket);
-  if (objTemp.bait == "Runic/Ancient")
+  if (objTemp.bait === "Runic/Ancient")
     checkThenArm("any", "bait", [
       "Runic String Cheese",
       "Ancient String Cheese",
     ]);
-  else if (objTemp.bait == "Runic=>Ancient")
+  else if (objTemp.bait === "Runic=>Ancient")
     checkThenArm("best", "bait", [
       "Runic String Cheese",
       "Ancient String Cheese",
@@ -2985,10 +2988,10 @@ function fortRox() {
   if (objUser.is_dawn === true) {
     nIndex = 6;
     console.plog("In Dawn");
-  } else if (objUser.current_phase == "night") {
+  } else if (objUser.current_phase === "night") {
     nIndex = objFRox.stage.indexOf(objUser.current_stage);
     console.plog("In Night, Current Stage:", objUser.current_stage);
-  } else if (objUser.current_phase == "day") {
+  } else if (objUser.current_phase === "day") {
     nIndex = 0;
     console.plog("In Day");
   }
@@ -2997,7 +3000,7 @@ function fortRox() {
   checkThenArm(null, "weapon", objFRox.weapon[nIndex]);
   checkThenArm(null, "base", objFRox.base[nIndex]);
   checkThenArm(null, "trinket", objFRox.trinket[nIndex]);
-  if (objFRox.bait[nIndex] == "ANY_LUNAR")
+  if (objFRox.bait[nIndex] === "ANY_LUNAR")
     checkThenArm("any", "bait", ["Moon Cheese", "Crescent Cheese"]);
   else if (objFRox.bait[nIndex].indexOf("=>") > -1) {
     var arr = objFRox.bait[nIndex].split("=>");
@@ -3060,7 +3063,9 @@ function Halloween2014() {
       var treatContainer = document.getElementsByClassName(
         "halloween2014Hud-bait treat_cheese clear-block"
       )[0];
-      if (trickContainer.children[2].getAttribute("class") == "armNow active") {
+      if (
+        trickContainer.children[2].getAttribute("class") === "armNow active"
+      ) {
         console.debug(
           "Currently armed: Trick cheese, Going to arm Treat cheese"
         );
@@ -3094,7 +3099,9 @@ function Halloween2015() {
       var treatContainer = document.getElementsByClassName(
         "halloweenHud-bait treat_cheese clear-block"
       )[0];
-      if (trickContainer.children[2].getAttribute("class") == "armNow active") {
+      if (
+        trickContainer.children[2].getAttribute("class") === "armNow active"
+      ) {
         console.debug(
           "Currently armed: Trick cheese, Going to arm Treat cheese"
         );
@@ -3126,9 +3133,9 @@ function Halloween2016() {
     "halloweenHud-bait treat_cheese clear-block"
   )[0];
   var bTricking =
-    trickContainer.children[2].getAttribute("class") == "armNow active";
+    trickContainer.children[2].getAttribute("class") === "armNow active";
   var bTreating =
-    treatContainer.children[2].getAttribute("class") == "armNow active";
+    treatContainer.children[2].getAttribute("class") === "armNow active";
   console.plog(
     "Current Area Name:",
     areaName,
@@ -3200,7 +3207,7 @@ function gnawnianExpress(load) {
     var onTrain = getPageVariable("user.quests.QuestTrainStation.on_train");
     var charmArmed = getPageVariable("user.trinket_name");
     var trapArmed = getPageVariable("user.weapon_name");
-    if (onTrain == "false" || onTrain == 0) {
+    if (onTrain === "false" || onTrain === 0) {
       if (
         charmArmed.indexOf("Supply Schedule") > -1 ||
         charmArmed.indexOf("Roof Rack") > -1 ||
@@ -3244,7 +3251,7 @@ function gnawnianExpress(load) {
               .getElementsByClassName("supplyHoarderTab")[0]
               .textContent.substr(0, 1)
           );
-          if (supplyHoarder == 0) {
+          if (supplyHoarder === 0) {
             console.debug("Looking for supply hoarder");
             checkThenArm(null, "trinket", "Supply Schedule");
           } else {
@@ -3257,7 +3264,7 @@ function gnawnianExpress(load) {
           checkThenArm("best", "weapon", raiderRiverTrap);
           var attacking = document.getElementsByClassName("attacked");
           for (var i = 0; i < attacking.length; i++) {
-            if (attacking[i].tagName == "DIV")
+            if (attacking[i].tagName === "DIV")
               attacking = attacking[i].className.substr(
                 0,
                 attacking[i].className.indexOf(" ")
@@ -3313,7 +3320,7 @@ function loadTrain(location) {
           .textContent.substr(10);
         // Fire only when time left is less than 16 mins :P (needs checking if works)
         if (
-          parseInt(timeLeft.substr(0, timeLeft.indexOf(":"))) == 0 &&
+          parseInt(timeLeft.substr(0, timeLeft.indexOf(":"))) === 0 &&
           parseInt(timeLeft.substr(timeLeft.indexOf(":") + 1)) <= 16
         )
           fireEvent(document.getElementsByClassName("phaseButton")[0], "click");
@@ -3334,7 +3341,7 @@ function ges() {
 
   var i, j;
   var bOnTrain =
-    getPageVariable("user.quests.QuestTrainStation.on_train") == "true";
+    getPageVariable("user.quests.QuestTrainStation.on_train") === "true";
   var charmArmed = getPageVariable("user.trinket_name");
   var arrCharm;
   var nCharmQuantity;
@@ -3461,7 +3468,7 @@ function ges() {
       checkThenArm(null, "trinket", objGES[strStage].trinket);
     } else {
       strStage = "RR";
-      if (objGES.RR.trinket == "AUTO") {
+      if (objGES.RR.trinket === "AUTO") {
         // get raider status and arm respective charm
         arrCharm = ["Roof Rack", "Door Guard", "Greasy Glob"];
         var classTrainCarArea = document.getElementsByClassName("trainCarArea");
@@ -3493,7 +3500,7 @@ function ges() {
               fireEvent(classTrainCarArea[i].firstChild, "click");
             else {
               for (j = 0; j < arrCharm.length; j++) {
-                if (j != i && charmArmed.indexOf(arrCharm[j]) > -1) {
+                if (j !== i && charmArmed.indexOf(arrCharm[j]) > -1) {
                   disarmTrap("trinket");
                   break;
                 }
@@ -3533,7 +3540,7 @@ function ges() {
         "Black Powder Charm",
         "Dusty Coal Charm",
       ];
-      if (objGES.DC.trinket == "AUTO")
+      if (objGES.DC.trinket === "AUTO")
         checkThenArm("best", "trinket", arrCharm);
       else {
         arrCharm.reverse();
@@ -3645,7 +3652,7 @@ function wwrift() {
   var nIndexCharm = -1;
   var nLimit = 0;
   var bResave = false;
-  if (objWWRift.factionFocus == "MBW_40_44") {
+  if (objWWRift.factionFocus === "MBW_40_44") {
     for (i = 0; i < objWWRift.rage.length; i++) {
       if (objWWRift.rage[i] >= 25) nBar25++;
     }
@@ -3675,7 +3682,7 @@ function wwrift() {
     }
     checkThenArm(null, "trinket", objWWRift.MBW.rage4044.trinket[nIndex]);
     checkThenArm(null, "bait", objWWRift.MBW.rage4044.bait[nIndex]);
-  } else if (objWWRift.factionFocus == "MBW_45_48") {
+  } else if (objWWRift.factionFocus === "MBW_45_48") {
     for (i = 0; i < objWWRift.rage.length; i++) {
       if (objWWRift.rage[i] >= 25) nBar25++;
     }
@@ -3712,14 +3719,14 @@ function wwrift() {
     checkThenArm(null, "bait", objWWRift.MBW.rage4548.bait[nIndex]);
   } else {
     temp = objWWRift.order.indexOf(objWWRift.factionFocus);
-    if (temp == -1) return;
+    if (temp === -1) return;
     nIndex = Math.floor(objWWRift.rage[temp] / 25);
     checkThenArm(null, "weapon", objWWRift.faction.weapon[nIndex]);
     checkThenArm(null, "base", objWWRift.faction.base[nIndex]);
     if (objWWRift.faction.trinket[nIndex].indexOf("FSC") > -1) {
       if (
-        objWWRift.factionFocusNext == "Remain" ||
-        objWWRift.factionFocus == objWWRift.factionFocusNext
+        objWWRift.factionFocusNext === "Remain" ||
+        objWWRift.factionFocus === objWWRift.factionFocusNext
       )
         objWWRift.faction.trinket[nIndex] = objWWRift.funnelCharm[temp];
       else {
@@ -3760,10 +3767,10 @@ function iceberg(waxOrSticky) {
 
     // Check if theres general
     if (
-      progress == 300 ||
-      progress == 600 ||
-      progress == 1600 ||
-      progress == 1800
+      progress === 300 ||
+      progress === 600 ||
+      progress === 1600 ||
+      progress === 1800
     ) {
       console.debug("General encountered.");
       checkThenArm("best", "base", bestPowerBase);
@@ -3772,7 +3779,7 @@ function iceberg(waxOrSticky) {
     }
 
     var icebergCharm;
-    if (waxOrSticky == "sticky") {
+    if (waxOrSticky === "sticky") {
       icebergCharm = ["Sticky", "Wax"];
     } else {
       icebergCharm = ["Wax", "Sticky"];
@@ -3857,10 +3864,10 @@ function icebergV2() {
     console.plog("In", phase, "at", nProgress, "feets");
 
     if (
-      nProgress == 300 ||
-      nProgress == 600 ||
-      nProgress == 1600 ||
-      nProgress == 1800
+      nProgress === 300 ||
+      nProgress === 600 ||
+      nProgress === 1600 ||
+      nProgress === 1800
     )
       nIndex = 0;
     else {
@@ -3892,7 +3899,7 @@ function BurroughRift(bCheckLoc, minMist, maxMist, nToggle) {
     document.getElementsByClassName("mistQuantity")[0].innerText
   );
   var isMisting =
-    getPageVariable("user.quests.QuestRiftBurroughs.is_misting") == "true";
+    getPageVariable("user.quests.QuestRiftBurroughs.is_misting") === "true";
   var mistButton = document.getElementsByClassName("mistButton")[0];
   console.plog(
     "Current Mist Quantity:",
@@ -3906,8 +3913,8 @@ function BurroughRift(bCheckLoc, minMist, maxMist, nToggle) {
       fireEvent(mistButton, "click");
     }
   } else if (currentMistQuantity >= maxMist && isMisting) {
-    if (maxMist == 20 && Number.isInteger(nToggle)) {
-      if (nToggle == 1) {
+    if (maxMist === 20 && Number.isInteger(nToggle)) {
+      if (nToggle === 1) {
         console.plog("Stop mist...");
         fireEvent(mistButton, "click");
       } else {
@@ -3945,10 +3952,10 @@ function BRCustom() {
   };
   var objBR = getStorageToObject("BRCustom", objDefaultBRCustom);
   var mistQuantity = 0;
-  if (objBR.hunt == "Red")
+  if (objBR.hunt === "Red")
     mistQuantity = BurroughRift(false, 19, 20, objBR.toggle);
-  else if (objBR.hunt == "Green") mistQuantity = BurroughRift(false, 6, 18);
-  else if (objBR.hunt == "Yellow") mistQuantity = BurroughRift(false, 1, 5);
+  else if (objBR.hunt === "Green") mistQuantity = BurroughRift(false, 6, 18);
+  else if (objBR.hunt === "Yellow") mistQuantity = BurroughRift(false, 1, 5);
   else mistQuantity = BurroughRift(false, 0, 0);
 
   var currentTier = "";
@@ -3957,13 +3964,13 @@ function BRCustom() {
   else if (mistQuantity >= 1) currentTier = "Yellow";
   else currentTier = "None";
 
-  if (currentTier != objBR.hunt) return;
+  if (currentTier !== objBR.hunt) return;
 
   var nIndex = objBR.name.indexOf(currentTier);
   checkThenArm(null, "weapon", objBR.weapon[nIndex]);
   checkThenArm(null, "base", objBR.base[nIndex]);
   checkThenArm(null, "bait", objBR.bait[nIndex]);
-  if (objBR.trinket[nIndex] == "None") disarmTrap("trinket");
+  if (objBR.trinket[nIndex] === "None") disarmTrap("trinket");
   else checkThenArm(null, "trinket", objBR.trinket[nIndex]);
 }
 
@@ -4009,11 +4016,11 @@ function livingGarden(obj) {
   if (obj.LG.trinket.after.indexOf("Sponge") > -1)
     obj.LG.trinket.after = "None";
 
-  if (strStatus == "Poured") {
+  if (strStatus === "Poured") {
     checkThenArm(null, "base", obj.LG.base.after);
     checkThenArm(null, "trinket", obj.LG.trinket.after);
     checkThenArm(null, "bait", obj.LG.bait.after);
-  } else if (strStatus == "Filled") {
+  } else if (strStatus === "Filled") {
     var pourButton = document.getElementsByClassName("pour")[0];
     if (obj.LG.isAutoPour && !isNullOrUndefined(pourButton)) {
       fireEvent(pourButton, "click");
@@ -4039,7 +4046,7 @@ function livingGarden(obj) {
       if (baitArmed.indexOf("Camembert") > -1)
         checkThenArm(null, "bait", "Gouda");
     }
-  } else if (strStatus == "Filling") {
+  } else if (strStatus === "Filling") {
     checkThenArm("best", "base", bestLGBase);
     if (!obj.LG.isAutoFill) {
       if (
@@ -4086,7 +4093,7 @@ function sandDunes() {
   console.plog("Has Stampede:", hasStampede);
 
   //disarm grubling chow charm when there is no stampede
-  if (hasStampede == "false") {
+  if (hasStampede === "false") {
     if (getPageVariable("user.trinket_name").indexOf("Chow") > -1)
       disarmTrap("trinket");
   } else checkThenArm(null, "trinket", "Grubling Chow");
@@ -4115,7 +4122,7 @@ function twistedGarden(obj) {
     nEstimateHunt = parseInt(
       document.getElementsByClassName("pouring")[0].textContent
     );
-  } else if (red == 10 && yellow == 10) strStatus = "Filled";
+  } else if (red === 10 && yellow === 10) strStatus = "Filled";
   else strStatus = "Filling";
   console.plog(
     "Red:",
@@ -4133,11 +4140,11 @@ function twistedGarden(obj) {
     obj.TG.trinket.after.indexOf("Yellow") > -1
   )
     obj.TG.trinket.after = "None";
-  if (strStatus == "Poured") {
+  if (strStatus === "Poured") {
     checkThenArm(null, "base", obj.TG.base.after);
     checkThenArm(null, "trinket", obj.TG.trinket.after);
     checkThenArm(null, "bait", obj.TG.bait.after);
-  } else if (strStatus == "Filled") {
+  } else if (strStatus === "Filled") {
     var pourButton = document.getElementsByClassName("pour")[0];
     if (obj.TG.isAutoPour && !isNullOrUndefined(pourButton)) {
       fireEvent(pourButton, "click");
@@ -4163,7 +4170,7 @@ function twistedGarden(obj) {
         disarmTrap("trinket");
       checkThenArm(null, "bait", "Duskshade Camembert");
     }
-  } else if (strStatus == "Filling") {
+  } else if (strStatus === "Filling") {
     checkThenArm("best", "base", bestLGBase);
     if (!obj.TG.isAutoFill) {
       if (
@@ -4179,7 +4186,7 @@ function twistedGarden(obj) {
       else if (red < 10) {
         if (red <= 8) checkThenArm("best", "trinket", redSpongeCharm);
         else checkThenArm(null, "trinket", "Red Sponge");
-      } else if (red == 10 && yellow < 10) {
+      } else if (red === 10 && yellow < 10) {
         if (yellow <= 8) checkThenArm("best", "trinket", yellowSpongeCharm);
         else checkThenArm(null, "trinket", "Yellow Sponge");
       }
@@ -4244,7 +4251,7 @@ function sandCrypts(obj) {
     checkThenArm(null, "trinket", "Grub Scent");
   } else {
     checkThenArm(null, "base", obj.SC.base.before);
-    if (obj.SC.maxSaltCharged - salt == 1)
+    if (obj.SC.maxSaltCharged - salt === 1)
       checkThenArm(null, "trinket", "Grub Salt");
     else checkThenArm("best", "trinket", bestSalt);
   }
@@ -4276,8 +4283,8 @@ function ZTower() {
   var location = getPageVariable("user.environment_name");
   console.debug(location);
   if (
-    location.indexOf("Zugzwang's Tower") == -1 &&
-    location.indexOf("Seasonal Garden") == -1
+    location.indexOf("Zugzwang's Tower") === -1 &&
+    location.indexOf("Seasonal Garden") === -1
   ) {
     console.debug("Not in Zugzwang's Tower or Seasonal Garden.");
     return;
@@ -4343,7 +4350,7 @@ function ZTower() {
         return;
       } else {
         if (debug) console.log(`Count down to ZT bot give up: ${ztTriesLeft}`);
-        if (ztTriesLeft == 0) {
+        if (ztTriesLeft === 0) {
           clearInterval(intervalZT);
           intervalZT = null;
           mouseList = [];
@@ -4460,7 +4467,7 @@ function zugzwangTower() {
   );
   if (objZT.focus.indexOf("MYSTIC") === 0) {
     // Mystic side first
-    if (strUnlockMystic == "CHESSMASTER" && objZT.focus.indexOf("=>") > -1) {
+    if (strUnlockMystic === "CHESSMASTER" && objZT.focus.indexOf("=>") > -1) {
       // is double run?
       nIndex = objZT.order.indexOf(strUnlockTechnic);
       if (nIndex > -1) nIndex += 7;
@@ -4470,7 +4477,7 @@ function zugzwangTower() {
     }
   } else {
     // Technic side first
-    if (strUnlockTechnic == "CHESSMASTER" && objZT.focus.indexOf("=>") > -1) {
+    if (strUnlockTechnic === "CHESSMASTER" && objZT.focus.indexOf("=>") > -1) {
       // is double run?
       nIndex = objZT.order.indexOf(strUnlockMystic);
       if (nIndex > -1) nIndex += 7;
@@ -4480,16 +4487,16 @@ function zugzwangTower() {
     }
   }
 
-  if (nIndex == -1) return;
+  if (nIndex === -1) return;
 
-  if (objZT.weapon[nIndex] == "MPP/TPP") {
+  if (objZT.weapon[nIndex] === "MPP/TPP") {
     if (objZT.focus.indexOf("MYSTIC") === 0)
       objZT.weapon[nIndex] =
         nIndex >= 7 ? "Technic Pawn Pincher" : "Mystic Pawn Pincher";
     else
       objZT.weapon[nIndex] =
         nIndex >= 7 ? "Mystic Pawn Pincher" : "Technic Pawn Pincher";
-  } else if (objZT.weapon[nIndex] == "BPT/OAT") {
+  } else if (objZT.weapon[nIndex] === "BPT/OAT") {
     if (objZT.focus.indexOf("MYSTIC") === 0)
       objZT.weapon[nIndex] =
         nIndex >= 7 ? "Obvious Ambush Trap" : "Blackstone Pass Trap";
@@ -4501,12 +4508,12 @@ function zugzwangTower() {
   for (var prop in objZT) {
     if (
       objZT.hasOwnProperty(prop) &&
-      (prop == "weapon" ||
-        prop == "base" ||
-        prop == "trinket" ||
-        prop == "bait")
+      (prop === "weapon" ||
+        prop === "base" ||
+        prop === "trinket" ||
+        prop === "bait")
     ) {
-      if (objZT[prop][nIndex] == "None") disarmTrap(prop);
+      if (objZT[prop][nIndex] === "None") disarmTrap(prop);
       else checkThenArm(null, prop, objZT[prop][nIndex]);
     }
   }
@@ -4570,8 +4577,8 @@ function balackCoveJOD() {
     var tideNameNext;
     if (tideNameCurrent.indexOf("Low") > -1) tideNameNext = "Mid Rising";
     else if (tideNameCurrent.indexOf("High") > -1) tideNameNext = "Mid Ebbing";
-    else if (tideNameCurrent == "Mid Rising") tideNameNext = "High Rising";
-    else if (tideNameCurrent == "Mid Ebbing") tideNameNext = "Low Ebbing";
+    else if (tideNameCurrent === "Mid Rising") tideNameNext = "High Rising";
+    else if (tideNameCurrent === "Mid Ebbing") tideNameNext = "Low Ebbing";
 
     var nTideDist =
       objBC.arrAll.indexOf(tideNameNext) + nTideTotalLength - nIndexCurrentTide;
@@ -4580,7 +4587,7 @@ function balackCoveJOD() {
     var strTempCurrent = tideNameCurrent.toUpperCase().split(" ")[0];
     var strTempNext = tideNameNext.toUpperCase().split(" ")[0];
     nIndex = objBCJOD.order.indexOf(strTempCurrent);
-    if (nNextTideTime <= nextActiveTime && strTempNext != strTempCurrent)
+    if (nNextTideTime <= nextActiveTime && strTempNext !== strTempCurrent)
       // total seconds left to next tide less than next active time
       nIndex = objBCJOD.order.indexOf(strTempNext);
     console.plog(
@@ -4628,7 +4635,7 @@ function SunkenCity(isAggro) {
   console.plog("Current Zone:", zone);
   var currentZone = GetSunkenCityZone(zone);
   checkThenArm("best", "weapon", objBestTrap.weapon.hydro);
-  if (currentZone == objSCZone.ZONE_NOT_DIVE) {
+  if (currentZone === objSCZone.ZONE_NOT_DIVE) {
     checkThenArm("best", "base", objBestTrap.base.luck);
     checkThenArm(null, "trinket", "Oxygen Burst");
     checkThenArm("best", "bait", ["Fishy Fromage", "Gouda"]);
@@ -4645,11 +4652,11 @@ function SunkenCity(isAggro) {
   var isEACArmed = charmArmed.indexOf("Empowered Anchor") > -1;
   var isWJCArmed = charmArmed.indexOf("Water Jet") > -1;
   if (
-    currentZone == objSCZone.ZONE_OXYGEN ||
-    currentZone == objSCZone.ZONE_TREASURE ||
-    currentZone == objSCZone.ZONE_BONUS
+    currentZone === objSCZone.ZONE_OXYGEN ||
+    currentZone === objSCZone.ZONE_TREASURE ||
+    currentZone === objSCZone.ZONE_BONUS
   ) {
-    if (isAggro && currentZone == objSCZone.ZONE_TREASURE)
+    if (isAggro && currentZone === objSCZone.ZONE_TREASURE)
       checkThenArm("best", "trinket", ["Golden Anchor", "Empowered Anchor"]);
     else {
       // arm Empowered Anchor Charm
@@ -4661,8 +4668,8 @@ function SunkenCity(isAggro) {
 
     checkThenArm(null, "bait", "SUPER");
   } else if (
-    currentZone == objSCZone.ZONE_DANGER_PP ||
-    currentZone == objSCZone.ZONE_DANGER_PP_LOTA
+    currentZone === objSCZone.ZONE_DANGER_PP ||
+    currentZone === objSCZone.ZONE_DANGER_PP_LOTA
   ) {
     if (!isAggro) {
       // arm Empowered Anchor Charm
@@ -4673,7 +4680,7 @@ function SunkenCity(isAggro) {
     } else
       checkThenArm("best", "trinket", ["Spiked Anchor", "Empowered Anchor"]);
     checkThenArm(null, "bait", "Gouda");
-  } else if (currentZone == objSCZone.ZONE_DEFAULT && isAggro) {
+  } else if (currentZone === objSCZone.ZONE_DEFAULT && isAggro) {
     var depth = parseInt(
       getPageVariable("user.quests.QuestSunkenCity.zones[1].length")
     );
@@ -4689,7 +4696,7 @@ function SunkenCity(isAggro) {
       console.plog("Distance to next zone(m):", distanceToNextZone);
       if (
         distanceToNextZone >= 480 ||
-        (distanceToNextZone >= 230 && nextZone == objSCZone.ZONE_DEFAULT)
+        (distanceToNextZone >= 230 && nextZone === objSCZone.ZONE_DEFAULT)
       ) {
         // arm Water Jet Charm
         checkThenArm("best", "trinket", ["Smart Water Jet", "Water Jet"]);
@@ -4730,7 +4737,7 @@ function SCCustom() {
   var zone = document.getElementsByClassName("zoneName")[0].innerText;
   var zoneID = GetSunkenCityZone(zone);
   checkThenArm("best", "weapon", objBestTrap.weapon.hydro);
-  if (zoneID == objSCZone.ZONE_NOT_DIVE) {
+  if (zoneID === objSCZone.ZONE_NOT_DIVE) {
     checkThenArm("best", "base", objBestTrap.base.luck);
     checkThenArm(null, "trinket", objSCCustom.trinket[zoneID]);
     checkThenArm(null, "bait", objSCCustom.bait[zoneID]);
@@ -4754,7 +4761,7 @@ function SCCustom() {
     var nStartZoneIndex = 0;
     var i, nIndex;
     for (i = 0; i < arrZone.length; i++) {
-      if (arrZone[i].num == nActiveZone) {
+      if (arrZone[i].num === nActiveZone) {
         nStartZoneIndex = i + 1;
         break;
       }
@@ -4893,10 +4900,10 @@ function labyrinth() {
   }
 
   var labyStatus = getPageVariable("user.quests.QuestLabyrinth.status");
-  var isAtEntrance = labyStatus == "intersection entrance";
-  var isAtHallway = labyStatus == "hallway";
-  var isAtIntersection = labyStatus == "intersection";
-  var isAtExit = labyStatus == "exit";
+  var isAtEntrance = labyStatus === "intersection entrance";
+  var isAtHallway = labyStatus === "hallway";
+  var isAtIntersection = labyStatus === "intersection";
+  var isAtExit = labyStatus === "exit";
   var lastHunt =
     document.getElementsByClassName("labyrinthHUD-hallway-tile locked").length +
     1;
@@ -4920,7 +4927,7 @@ function labyrinth() {
     .concat(objBestTrap.base.luck)
     .concat(objBestTrap.base.power);
   var charmArmed = getPageVariable("user.trinket_name");
-  if (objLaby.armOtherBase != "false") {
+  if (objLaby.armOtherBase !== "false") {
     if (charmArmed.indexOf("Compass Magnet") === 0)
       checkThenArm(null, "base", objLaby.armOtherBase);
     else checkThenArm("best", "base", bestLabyBase);
@@ -4944,7 +4951,7 @@ function labyrinth() {
       .getElementsByClassName("labyrinthHUD-hallwayName")[0]
       .textContent.toUpperCase();
     if (strCurHallwayFullname.indexOf("FARMING") > -1) {
-      if (objLaby.weaponFarming == "Arcane")
+      if (objLaby.weaponFarming === "Arcane")
         checkThenArm(
           "best",
           "weapon",
@@ -4955,8 +4962,8 @@ function labyrinth() {
     if (objLaby.securityDisarm) {
       var strCurHallwayTier = strCurHallwayFullname.split(" ")[1];
       var maxCluePerHunt = 0;
-      if (strCurHallwayTier == "PLAIN") maxCluePerHunt = 1;
-      else if (strCurHallwayTier == "SUPERIOR") maxCluePerHunt = 2;
+      if (strCurHallwayTier === "PLAIN") maxCluePerHunt = 1;
+      else if (strCurHallwayTier === "SUPERIOR") maxCluePerHunt = 2;
       else maxCluePerHunt = 3;
       var classLantern = document.getElementsByClassName(
         "labyrinthHUD-toggleLantern mousehuntTooltipParent"
@@ -4964,7 +4971,7 @@ function labyrinth() {
       var bLanternActive = true;
       if (classLantern.length < 1)
         bLanternActive =
-          getPageVariable("user.quests.QuestLabyrinth.lantern_status") ==
+          getPageVariable("user.quests.QuestLabyrinth.lantern_status") ===
           "active";
       else
         bLanternActive =
@@ -5133,7 +5140,7 @@ function labyrinth() {
         for (var i = 0; i < arrTemp.length; i++) {
           if (objDoors.name[arrTemp[i]].indexOf("BROKEN") < 0) {
             if (objDoors.name[arrTemp[i]].indexOf("FARMING") > -1) {
-              if (objLaby.weaponFarming == "Arcane")
+              if (objLaby.weaponFarming === "Arcane")
                 checkThenArm(
                   "best",
                   "weapon",
@@ -5202,7 +5209,7 @@ function labyrinth() {
       );
     }, 1500);
     if (objLaby.districtFocus.indexOf("FARMING") > -1) {
-      if (objLaby.weaponFarming == "Arcane")
+      if (objLaby.weaponFarming === "Arcane")
         checkThenArm(
           "best",
           "weapon",
@@ -5250,7 +5257,7 @@ function zokor() {
   checkThenArm("best", "base", objBestTrap.base.luck);
   if (nIndex > -1) {
     checkThenArm(null, "bait", objZokor.bait[nIndex]);
-    if (objZokor.trinket[nIndex] == "None") disarmTrap("trinket");
+    if (objZokor.trinket[nIndex] === "None") disarmTrap("trinket");
     else checkThenArm(null, "trinket", objZokor.trinket[nIndex]);
   }
 }
@@ -5398,7 +5405,7 @@ function fw() {
   }
   if (temp) setStorage("FW", JSON.stringify(objFWAll));
   var objFW = objFWAll[`wave${wave}`];
-  if (wave == 4) {
+  if (wave === 4) {
     var nWardenLeft = parseInt(
       document
         .getElementsByClassName("warpathHUD-wave wave_4")[0]
@@ -5459,9 +5466,9 @@ function fw() {
     if (temp > 0) objFW.population.active.push(1);
     else objFW.population.active.push(0);
     if (
-      i == objPopulation.WARRIOR ||
-      i == objPopulation.SCOUT ||
-      i == objPopulation.ARCHER
+      i === objPopulation.WARRIOR ||
+      i === objPopulation.SCOUT ||
+      i === objPopulation.ARCHER
     ) {
       objFW.population.normal.push(temp);
       objFW.soldierActive |= temp > 0;
@@ -5470,43 +5477,43 @@ function fw() {
     }
   }
 
-  if (!objFW.soldierActive && objFW.focusType == "NORMAL")
+  if (!objFW.soldierActive && objFW.focusType === "NORMAL")
     objFW.focusType = "SPECIAL";
 
   console.plog(objFW);
   var index = -1;
   var charmArmed = getPageVariable("user.trinket_name");
   var nSum;
-  if (wave == 3 && !objFW.includeArtillery) {
+  if (wave === 3 && !objFW.includeArtillery) {
     var arrTemp = objFW.population.active.slice();
     arrTemp[objPopulation.ARTILLERY] = 0;
     nSum = sumData(arrTemp);
     if (nSum < 1) nSum = 1;
   } else nSum = sumData(objFW.population.active);
-  if (nSum == 1) {
+  if (nSum === 1) {
     // only one soldier type left
-    if (objFW.lastSoldierConfig == "CONFIG_STREAK")
+    if (objFW.lastSoldierConfig === "CONFIG_STREAK")
       objFW.priorities = "HIGHEST";
-    else if (objFW.lastSoldierConfig == "CONFIG_UNCHANGED") return;
+    else if (objFW.lastSoldierConfig === "CONFIG_UNCHANGED") return;
     else if (
-      objFW.lastSoldierConfig == "CONFIG_GOUDA" ||
-      objFW.lastSoldierConfig == "NO_WARPATH"
+      objFW.lastSoldierConfig === "CONFIG_GOUDA" ||
+      objFW.lastSoldierConfig === "NO_WARPATH"
     ) {
       index = objFW.population.active.indexOf(1);
-      if (index == objPopulation.CAVALRY)
+      if (index === objPopulation.CAVALRY)
         checkThenArm("best", "weapon", objBestTrap.weapon.tactical);
-      else if (index == objPopulation.MAGE)
+      else if (index === objPopulation.MAGE)
         checkThenArm("best", "weapon", objBestTrap.weapon.hydro);
-      else if (index == objPopulation.ARTILLERY)
+      else if (index === objPopulation.ARTILLERY)
         checkThenArm("best", "weapon", objBestTrap.weapon.arcane);
       else checkThenArm(null, "weapon", objFW.weapon);
       if (charmArmed.indexOf("Warpath") > -1) disarmTrap("trinket");
-      if (objFW.lastSoldierConfig == "CONFIG_GOUDA")
+      if (objFW.lastSoldierConfig === "CONFIG_GOUDA")
         checkThenArm(null, "bait", "Gouda");
       return;
     }
   }
-  if (objFW.special[objFW.streak] == "COMMANDER") {
+  if (objFW.special[objFW.streak] === "COMMANDER") {
     checkThenArm(null, "weapon", objFW.weapon);
     if (objFW.charmType[objFW.streak].indexOf("Super") > -1)
       charmName = [
@@ -5516,7 +5523,7 @@ function fw() {
     else charmName = "Warpath Commander's Charm";
   } else if (objFW.special[objFW.streak].indexOf("GARGANTUA") === 0) {
     checkThenArm("best", "weapon", objBestTrap.weapon.draconic);
-    if (objFW.special[objFW.streak] == "GARGANTUA_GGC" && objFW.streak >= 7)
+    if (objFW.special[objFW.streak] === "GARGANTUA_GGC" && objFW.streak >= 7)
       charmName = "Gargantua Guarantee Charm";
     else charmName = charmArmed.indexOf("Warpath") > -1 ? "None" : undefined;
   } else {
@@ -5524,7 +5531,7 @@ function fw() {
     var bWrongSoldierTypeStreak = false;
     var indexMinMax;
     objFW.focusType = objFW.focusType.toLowerCase();
-    if (objFW.priorities == "HIGHEST")
+    if (objFW.priorities === "HIGHEST")
       indexMinMax = maxIndex(objFW.population[objFW.focusType]);
     else {
       for (var i = 0; i < objFW.population[objFW.focusType].length; i++) {
@@ -5539,14 +5546,14 @@ function fw() {
       if (
         objFW.soldierActive &&
         index >= 3 &&
-        objFW.focusType.toUpperCase() == "NORMAL"
+        objFW.focusType.toUpperCase() === "NORMAL"
       ) {
-        bWrongSoldierTypeStreak = !(objFW.streak == 2 || objFW.streak >= 5);
+        bWrongSoldierTypeStreak = !(objFW.streak === 2 || objFW.streak >= 5);
       } else if (
         !objFW.soldierActive &&
-        objFW.focusType.toUpperCase() == "SPECIAL"
+        objFW.focusType.toUpperCase() === "SPECIAL"
       ) {
-        bWrongSoldierTypeStreak = index != indexMinMax + 3 && objFW.streak < 2;
+        bWrongSoldierTypeStreak = index !== indexMinMax + 3 && objFW.streak < 2;
       }
     }
 
@@ -5557,38 +5564,38 @@ function fw() {
     ) {
       objFW.streak = 0;
       temp = objFW.population[objFW.focusType][indexMinMax];
-      if (objFW.focusType.toUpperCase() == "NORMAL") {
+      if (objFW.focusType.toUpperCase() === "NORMAL") {
         checkThenArm(null, "weapon", objFW.weapon);
         var count = countArrayElement(temp, objFW.population[objFW.focusType]);
         if (count > 1) {
-          if (objFW.population[objFW.focusType][objPopulation.SCOUT] == temp)
+          if (objFW.population[objFW.focusType][objPopulation.SCOUT] === temp)
             charmName = `${objFW.charmType[0]} Scout`;
           else if (
-            objFW.population[objFW.focusType][objPopulation.ARCHER] == temp
+            objFW.population[objFW.focusType][objPopulation.ARCHER] === temp
           )
             charmName = `${objFW.charmType[0]} Archer`;
           else if (
-            objFW.population[objFW.focusType][objPopulation.WARRIOR] == temp
+            objFW.population[objFW.focusType][objPopulation.WARRIOR] === temp
           )
             charmName = `${objFW.charmType[0]} Warrior`;
         } else {
           charmName = `${objFW.charmType[0]} ${objPopulation.name[indexMinMax]}`;
         }
       } else {
-        if (indexMinMax + 3 == objPopulation.ARTILLERY && nSum != 1) {
+        if (indexMinMax + 3 === objPopulation.ARTILLERY && nSum !== 1) {
           temp = objFW.population.special.slice();
           temp.splice(indexMinMax, 1);
-          if (objFW.priorities == "HIGHEST") indexMinMax = maxIndex(temp);
+          if (objFW.priorities === "HIGHEST") indexMinMax = maxIndex(temp);
           else indexMinMax = minIndex(temp);
         }
         indexMinMax += 3;
-        if (indexMinMax == objPopulation.CAVALRY) {
+        if (indexMinMax === objPopulation.CAVALRY) {
           checkThenArm("best", "weapon", objBestTrap.weapon.tactical);
           charmName = `${objFW.charmType[0]} Cavalry`;
-        } else if (indexMinMax == objPopulation.MAGE) {
+        } else if (indexMinMax === objPopulation.MAGE) {
           checkThenArm("best", "weapon", objBestTrap.weapon.hydro);
           charmName = `${objFW.charmType[0]} Mage`;
-        } else if (indexMinMax == objPopulation.ARTILLERY) {
+        } else if (indexMinMax === objPopulation.ARTILLERY) {
           checkThenArm("best", "weapon", objBestTrap.weapon.arcane);
           if (charmArmed.indexOf("Warpath") > -1) charmName = "None";
           else charmName = undefined;
@@ -5597,7 +5604,7 @@ function fw() {
     } else {
       // streak 1 and above
       if (
-        index == objPopulation.ARTILLERY &&
+        index === objPopulation.ARTILLERY &&
         charmArmed.indexOf("Warpath") > -1
       )
         charmName = "None";
@@ -5613,11 +5620,11 @@ function fw() {
           }`;
       }
 
-      if (index == objPopulation.CAVALRY)
+      if (index === objPopulation.CAVALRY)
         checkThenArm("best", "weapon", objBestTrap.weapon.tactical);
-      else if (index == objPopulation.MAGE)
+      else if (index === objPopulation.MAGE)
         checkThenArm("best", "weapon", objBestTrap.weapon.hydro);
-      else if (index == objPopulation.ARTILLERY)
+      else if (index === objPopulation.ARTILLERY)
         checkThenArm("best", "weapon", objBestTrap.weapon.arcane);
       else checkThenArm(null, "weapon", objFW.weapon);
     }
@@ -5651,8 +5658,8 @@ function fRift() {
   );
   console.plog(objUserFRift.view_state);
   var bInPagoda =
-    objUserFRift.view_state == "pagoda" ||
-    objUserFRift.view_state == "pagoda knows_all";
+    objUserFRift.view_state === "pagoda" ||
+    objUserFRift.view_state === "pagoda knows_all";
   var i;
   if (bInPagoda) {
     var nCurBatteryLevel = 0;
@@ -5738,15 +5745,15 @@ function fRiftArmTrap(obj, nIndex, bReadJournal) {
   checkThenArm(null, "weapon", obj.weapon[nIndex]);
   checkThenArm(null, "base", obj.base[nIndex]);
   checkThenArm(null, "trinket", obj.trinket[nIndex]);
-  if (obj.bait[nIndex] == "ANY_MASTER")
+  if (obj.bait[nIndex] === "ANY_MASTER")
     checkThenArm("any", "bait", "ANY_MASTER");
-  else if (obj.bait[nIndex] == "ORDER_MASTER") {
+  else if (obj.bait[nIndex] === "ORDER_MASTER") {
     var arr = obj.masterOrder[nIndex].split("=>");
     arr = arr.map(function (e) {
       return `Rift ${e}`;
     });
     checkThenArm("best", "bait", arr);
-  } else if (obj.bait[nIndex] == "BALANCE_MASTER") {
+  } else if (obj.bait[nIndex] === "BALANCE_MASTER") {
     if (g_arrHeirloom.length === 0) {
       var nRetry = 4;
       var bFirst = true;
@@ -5777,7 +5784,7 @@ function fRiftArmTrap(obj, nIndex, bReadJournal) {
               return;
             }
           }
-          if (g_arrHeirloom.length != 3) {
+          if (g_arrHeirloom.length !== 3) {
             console.plog("Invalid length:", g_arrHeirloom);
             checkThenArm("any", "bait", "ANY_MASTER");
             return;
@@ -5812,7 +5819,7 @@ function fRiftArmTrap(obj, nIndex, bReadJournal) {
       var arrBait = g_objConstTrap.bait.ANY_MASTER.name;
       var nMin = min(g_arrHeirloom);
       var fAvg = average(g_arrHeirloom);
-      if (fAvg == nMin) {
+      if (fAvg === nMin) {
         checkThenArm("any", "bait", "ANY_MASTER");
       } else {
         temp = minIndex(g_arrHeirloom);
@@ -5945,7 +5952,7 @@ function gwh() {
       userVariable.status = "flying";
     }
   }
-  if (userVariable.status == "flying") {
+  if (userVariable.status === "flying") {
     if (nFireworkQuantity < 1 && objGWH.landAfterFireworkRunOut === true) {
       console.plog("Landing");
       fireEvent(
@@ -6082,32 +6089,32 @@ function gwh() {
       nIndexTemp - 1
     );
     if (
-      arrZone[nIndex].name == "Toy Lot" ||
-      arrZone[nIndex].name == "Toy Emporium"
+      arrZone[nIndex].name === "Toy Lot" ||
+      arrZone[nIndex].name === "Toy Emporium"
     )
       arrZone[nIndex].type = "toy";
     else if (
-      arrZone[nIndex].name == "Decorative Oasis" ||
-      arrZone[nIndex].name == "Tinsel Forest"
+      arrZone[nIndex].name === "Decorative Oasis" ||
+      arrZone[nIndex].name === "Tinsel Forest"
     )
       arrZone[nIndex].type = "decoration";
     else if (
-      arrZone[nIndex].name == "Bunny Hills" ||
-      arrZone[nIndex].name == "Frosty Mountains"
+      arrZone[nIndex].name === "Bunny Hills" ||
+      arrZone[nIndex].name === "Frosty Mountains"
     )
       arrZone[nIndex].type = "ski";
     arrZone[nIndex].tier =
       userVariable.sprites[i].css_class.indexOf("tier_two") > -1 ? 2 : 1;
     for (j = 0; j < arrOrder.length; j++) {
       if (
-        arrOrder[j].type == arrZone[nIndex].type &&
+        arrOrder[j].type === arrZone[nIndex].type &&
         arrOrder[j].tier <= arrZone[nIndex].tier
       ) {
         arrZone[nIndex].isOrderZone = true;
         break;
       }
     }
-    if (arrZone[nIndex].type == "none") {
+    if (arrZone[nIndex].type === "none") {
       arrZone[nIndex].codename = arrZone[nIndex].name
         .toUpperCase()
         .replace(/ /g, "_");
@@ -6156,7 +6163,7 @@ function gwh() {
     if (nLevel - fTemp >= 0.92)
       // because 230/250 = 0.92
       nLevel++;
-    if (nLevel == 1) {
+    if (nLevel === 1) {
       // normal boost
       fireEvent(
         document.getElementsByClassName(
@@ -6209,7 +6216,7 @@ function checkCharge2016(stopDischargeAt) {
       document.getElementsByClassName("springHuntHUD-charge-quantity")[0]
         .innerText
     );
-    var isDischarge = getStorage("discharge") == "true";
+    var isDischarge = getStorage("discharge") === "true";
     console.plog(
       "Current Charge:",
       charge,
@@ -6245,7 +6252,7 @@ function checkCharge2016(stopDischargeAt) {
       eggscavator.link.getAttribute("class").indexOf("active") > 0;
     eggscavator.canArm = eggscavator.quantity > 0 && !eggscavator.isArmed;
 
-    if (charge == 20) {
+    if (charge === 20) {
       checkThenArm(["eggstra", "disarm"], "best", "trinket");
       if (eggstra.canArm) fireEvent(eggstra.link, "click");
     } else if (charge < 20 && charge > stopDischargeAt) {
@@ -6285,21 +6292,21 @@ function checkCharge(stopDischargeAt) {
       document.getElementsByClassName("chargeQuantity")[0].innerText
     );
     console.plog("Current Charge:", charge);
-    if (charge == 20) {
+    if (charge === 20) {
       setStorage("discharge", true.toString());
       checkThenArm(null, "trinket", "Eggstra Charm");
     } else if (charge < 20 && charge > stopDischargeAt) {
-      if (getStorage("discharge") == "true") {
+      if (getStorage("discharge") === "true") {
         checkThenArm(null, "trinket", "Eggstra Charm");
       } else {
-        if (stopDischargeAt == 17) {
+        if (stopDischargeAt === 17) {
           checkThenArm("best", "trinket", chargeCharm);
         } else {
           checkThenArm(null, "trinket", "Eggscavator");
         }
       }
-    } else if (charge == stopDischargeAt) {
-      if (stopDischargeAt == 17) {
+    } else if (charge === stopDischargeAt) {
+      if (stopDischargeAt === 17) {
         checkThenArm("best", "trinket", chargeCharm);
       } else {
         checkThenArm(null, "trinket", "Eggscavator");
@@ -6479,7 +6486,7 @@ function checkThenArm(sort, category, name, isForcedRetry) {
   //category = weapon/base/charm/trinket/bait
   if (isNullOrUndefined(name) || name === "") return;
 
-  if (category == "charm") category = "trinket";
+  if (category === "charm") category = "trinket";
 
   if (!Array.isArray(name)) {
     var obj = getConstToRealValue(sort, category, name);
@@ -6490,8 +6497,8 @@ function checkThenArm(sort, category, name, isForcedRetry) {
   }
 
   if (Array.isArray(name)) {
-    if (!(sort == "best" || sort == "any")) sort = "best";
-    if (name.length == 1) {
+    if (!(sort === "best" || sort === "any")) sort = "best";
+    if (name.length === 1) {
       sort = null;
       name = name[0];
     }
@@ -6507,7 +6514,7 @@ function checkThenArm(sort, category, name, isForcedRetry) {
 
   var trapArmed = undefined;
   var userVariable = getPageVariable(`user.${category}_name`);
-  if (sort == "best") {
+  if (sort === "best") {
     getTrapList(category);
     if (objTrapList[category].length === 0) {
       var intervalCTA1 = setInterval(function () {
@@ -6548,7 +6555,7 @@ function checkThenArm(sort, category, name, isForcedRetry) {
         if (trapArmed === false) break;
       }
     }
-  } else if (sort == "any") {
+  } else if (sort === "any") {
     trapArmed = false;
     for (var i = 0; i < name.length; i++) {
       if (userVariable.indexOf(name[i]) === 0) {
@@ -6621,15 +6628,15 @@ function clickThenArmTrapInterval(sort, trap, name) {
   var retry = armTrapRetry;
   var intervalCTATI = setInterval(function () {
     armStatus = armTrap(sort, trap, name);
-    if (armStatus != LOADING) {
+    if (armStatus !== LOADING) {
       deleteArmingFromList(trap);
       if (isNewUI && !isArmingInList()) closeTrapSelector(trap);
       clearInterval(intervalCTATI);
       arming = false;
       intervalCTATI = null;
-      if (armStatus == NOT_FOUND) {
+      if (armStatus === NOT_FOUND) {
         //clearTrapList(trap);
-        if (trap == "trinket") {
+        if (trap === "trinket") {
           disarmTrap("trinket");
           closeTrapSelector(trap);
         } else {
@@ -6672,7 +6679,7 @@ function armTrapClassicUI(sort, trap, name) {
   var nIndex = -1;
   var arrName = Array.isArray(name) ? name.slice() : [name];
 
-  if (sort == "best" || sort == "any") name = name[0];
+  if (sort === "best" || sort === "any") name = name[0];
 
   if (tagGroupElement.length > 0) {
     if (debug) console.plog("Try to arm", name);
@@ -6711,7 +6718,7 @@ function armTrapClassicUI(sort, trap, name) {
         break;
       }
     }
-    if (sort == "best" || sort == "any") {
+    if (sort === "best" || sort === "any") {
       arrName.shift();
       if (arrName.length > 0) {
         return armTrapClassicUI(sort, trap, arrName);
@@ -6733,7 +6740,7 @@ function armTrapNewUI(sort, trap, name) {
   var nameElement;
   var arrName = Array.isArray(name) ? name.slice() : [name];
 
-  if (sort == "best" || sort == "any") name = name[0];
+  if (sort === "best" || sort === "any") name = name[0];
 
   if (itemEle.length > 0) {
     console.plog(`Trying to arm ${name}`);
@@ -6773,7 +6780,7 @@ function armTrapNewUI(sort, trap, name) {
         break;
       }
     }
-    if (sort == "best" || sort == "any") {
+    if (sort === "best" || sort === "any") {
       arrName.shift();
       if (arrName.length > 0) return armTrapNewUI(sort, trap, arrName);
       else return NOT_FOUND;
@@ -6789,7 +6796,7 @@ function clickTrapSelector(strSelect, bForceClick) {
       `campPage-trap-armedItem ${strSelect}`
     )[0];
     var arrTemp = armedItem.getAttribute("class").split(" ");
-    if (bForceClick !== true && arrTemp[arrTemp.length - 1] == "active") {
+    if (bForceClick !== true && arrTemp[arrTemp.length - 1] === "active") {
       // trap selector opened
       arming = true;
       return console.plog("Trap selector", strSelect, "opened");
@@ -6804,22 +6811,22 @@ function clickTrapSelector(strSelect, bForceClick) {
       arming = true;
       return console.plog("Trap selector", strSelect, "opened");
     }
-    if (strSelect == "base")
+    if (strSelect === "base")
       fireEvent(
         document.getElementsByClassName("trapControlThumb")[0],
         "click"
       );
-    else if (strSelect == "weapon")
+    else if (strSelect === "weapon")
       fireEvent(
         document.getElementsByClassName("trapControlThumb")[1],
         "click"
       );
-    else if (strSelect == "charm" || strSelect == "trinket")
+    else if (strSelect === "charm" || strSelect === "trinket")
       fireEvent(
         document.getElementsByClassName("trapControlThumb")[2],
         "click"
       );
-    else if (strSelect == "bait")
+    else if (strSelect === "bait")
       fireEvent(
         document.getElementsByClassName("trapControlThumb")[3],
         "click"
@@ -6927,7 +6934,7 @@ function retrieveDataFirst() {
             hasPuzzleStartIndex,
             hasPuzzleEndIndex
           );
-          isKingReward = hasPuzzleString != "false";
+          isKingReward = hasPuzzleString !== "false";
 
           if (debug) console.log(`Fetched isKingReward: ${isKingReward}`);
 
@@ -7038,7 +7045,7 @@ function GetHornTime() {
     if (huntTimerElement.toLowerCase().indexOf("ready") > -1) totalSec = 0;
     else if (isNewUI) {
       var arrTime = huntTimerElement.split(":");
-      if (arrTime.length == 2) {
+      if (arrTime.length === 2) {
         for (var i = 0; i < arrTime.length; i++)
           arrTime[i] = parseInt(arrTime[i]);
         totalSec = arrTime[0] * 60 + arrTime[1];
@@ -7054,7 +7061,7 @@ function GetHornTime() {
 function getKingRewardStatus() {
   var strValue = getPageVariable("user.has_puzzle");
   console.plog("user.has_puzzle:", strValue);
-  return strValue == "true";
+  return strValue === "true";
 
   // Does the following bits even matter lol
   var headerOrHud = document.getElementById(header);
@@ -7067,7 +7074,7 @@ function getKingRewardStatus() {
       textContentLowerCase.indexOf("kings reward") > -1
     ) {
       return true;
-    } else return strValue == "true";
+    } else return strValue === "true";
   } else return false;
 }
 
@@ -7103,7 +7110,7 @@ function retrieveData() {
     var browser = browserDetection();
 
     // get next horn time
-    if (browser == "firefox" || browser == "opera" || browser == "chrome") {
+    if (browser === "firefox" || browser === "opera" || browser === "chrome") {
       currentLocation = getCurrentLocation();
       isKingReward = getKingRewardStatus();
       baitQuantity = getBaitQuantity();
@@ -7137,7 +7144,11 @@ function retrieveData() {
 
       // calculation base on the js in Mousehunt
       var additionalDelayTime = Math.ceil(nextActiveTime * 0.1);
-      if (timerInterval != "" && !isNaN(timerInterval) && timerInterval == 1) {
+      if (
+        timerInterval !== "" &&
+        !isNaN(timerInterval) &&
+        timerInterval === 1
+      ) {
         additionalDelayTime = 2;
       }
 
@@ -7175,7 +7186,7 @@ function checkJournalDate() {
 
       var nowDate = new Date();
       var lastHuntDate = new Date();
-      if (hourSysStr == "am") {
+      if (hourSysStr === "am") {
         lastHuntDate.setHours(parseInt(hrStr), parseInt(minStr), 0, 0);
       } else {
         lastHuntDate.setHours(parseInt(hrStr) + 12, parseInt(minStr), 0, 0);
@@ -7219,7 +7230,7 @@ function action() {
         "http://3.bp.blogspot.com/_O2yZIhpq9E8/TBoAMw0fMNI/AAAAAAAAAxo/1ytaIxQQz4o/s1600/Subliminal+Message.JPG",
         "Kings Reward NOW"
       );
-    } else if (pauseAtInvalidLocation && huntLocation != currentLocation) {
+    } else if (pauseAtInvalidLocation && huntLocation !== currentLocation) {
       // update timer
       displayTimer(
         "Out of pre-defined hunting location...",
@@ -7262,7 +7273,7 @@ function action() {
       displayKingRewardSumTime(null);
 
       // pause script
-    } else if (baitQuantity == 0) {
+    } else if (baitQuantity === 0) {
       // update timer
       displayTimer(
         "No more cheese!",
@@ -7287,7 +7298,7 @@ function action() {
       var headerElement = document.getElementById(header).firstChild;
       if (headerElement) {
         var headerStatus = headerElement.getAttribute("class");
-        if (headerStatus.indexOf(hornReady) != -1) {
+        if (headerStatus.indexOf(hornReady) !== -1) {
           // if the horn image is visible, why do we need to wait any more, sound the horn!
           soundHorn();
 
@@ -7340,7 +7351,7 @@ function countdownTimer() {
     window.setTimeout(function () {
       reloadWithMessage("Fail to click on camp button. Reloading...", false);
     }, 5000);
-  } else if (pauseAtInvalidLocation && huntLocation != currentLocation) {
+  } else if (pauseAtInvalidLocation && huntLocation !== currentLocation) {
     // update timer
     displayTimer(
       "Out of pre-defined hunting location...",
@@ -7381,7 +7392,7 @@ function countdownTimer() {
     displayKingRewardSumTime(null);
 
     // pause script
-  } else if (baitQuantity == 0) {
+  } else if (baitQuantity === 0) {
     // update timer
     displayTimer(
       "No more cheese!",
@@ -7403,7 +7414,7 @@ function countdownTimer() {
 
     // Update time
     hornTime -= intervalTime;
-    if (lastKingRewardSumTime != -1) {
+    if (lastKingRewardSumTime !== -1) {
       lastKingRewardSumTime += intervalTime;
     }
     if (enableTrapCheck) checkTime -= intervalTime;
@@ -7411,7 +7422,7 @@ function countdownTimer() {
     intervalTime = undefined;
 
     // Check event location 60s before trap check
-    if (enableTrapCheck && checkTime == 60) eventLocationCheck();
+    if (enableTrapCheck && checkTime === 60) eventLocationCheck();
 
     if (hornTime <= 0) {
       // blow the horn!
@@ -7438,7 +7449,7 @@ function countdownTimer() {
         var scriptNode = document.getElementById("scriptNode");
         if (scriptNode) {
           var isHornSounded = scriptNode.getAttribute("soundedHornAtt");
-          if (isHornSounded == "true") {
+          if (isHornSounded === "true") {
             // sound horn function do the rest
             soundHorn();
 
@@ -7449,7 +7460,7 @@ function countdownTimer() {
         }
         scriptNode = undefined;
 
-        if (hornTime - hornTimeDelay == 0) eventLocationCheck();
+        if (hornTime - hornTimeDelay === 0) eventLocationCheck();
       } else {
         // update timer
         displayTimer(
@@ -7464,7 +7475,7 @@ function countdownTimer() {
         var scriptNode = document.getElementById("scriptNode");
         if (scriptNode) {
           var isHornSounded = scriptNode.getAttribute("soundedHornAtt");
-          if (isHornSounded == "true") {
+          if (isHornSounded === "true") {
             // sound horn function do the rest
             soundHorn();
 
@@ -7475,7 +7486,7 @@ function countdownTimer() {
         }
         scriptNode = undefined;
 
-        if (hornTime - hornTimeDelay == 0) eventLocationCheck();
+        if (hornTime - hornTimeDelay === 0) eventLocationCheck();
       }
 
       // set king reward sum time
@@ -7610,7 +7621,7 @@ function embedTimer(targetPage) {
 
           var lastKingRewardDate = getStorage("lastKingRewardDate");
           var lastDateStr;
-          if (lastKingRewardDate == undefined || lastKingRewardDate == null) {
+          if (lastKingRewardDate === undefined || lastKingRewardDate == null) {
             lastDateStr = "-";
           } else {
             var lastDate = new Date(lastKingRewardDate);
@@ -7658,8 +7669,8 @@ function embedTimer(targetPage) {
             var timersElementStyle =
               document.getElementById("loadTimersElement");
             if (
-              timersElementStyle.style.display == "block" ||
-              timersElementStyle.style.display == ""
+              timersElementStyle.style.display === "block" ||
+              timersElementStyle.style.display === ""
             ) {
               timersElementStyle.style.display = "none";
             } else {
@@ -7775,7 +7786,7 @@ function embedTimer(targetPage) {
         }
 
         var showPreference = getStorage("showPreference");
-        if (showPreference == undefined || showPreference == null) {
+        if (showPreference === undefined || showPreference == null) {
           showPreference = false;
           setStorage("showPreference", showPreference);
         }
@@ -9861,7 +9872,7 @@ function embedTimer(targetPage) {
 </tr>
 
 ${
-  eventLocation == "Hunt For"
+  eventLocation === "Hunt For"
     ? `
   <tr>
     <td style="height:24px; text-align:right;">
@@ -10375,7 +10386,7 @@ function loadPreferenceSettingFromStorage() {
       ];
       var nIndex = -1;
       for (var prop in obj) {
-        if (obj.hasOwnProperty(prop) && prop == "trinket") {
+        if (obj.hasOwnProperty(prop) && prop === "trinket") {
           for (i = 0; i < obj[prop].length; i++) {
             nIndex = arrTempOri.indexOf(obj[prop][i]);
             if (nIndex > -1) {
@@ -10430,18 +10441,18 @@ function loadPreferenceSettingFromStorage() {
       for (var prop in obj) {
         if (
           obj.hasOwnProperty(prop) &&
-          (prop == "weapon" ||
-            prop == "base" ||
-            prop == "trinket" ||
-            prop == "bait")
+          (prop === "weapon" ||
+            prop === "base" ||
+            prop === "trinket" ||
+            prop === "bait")
         ) {
-          if (obj[prop].length == 7) {
+          if (obj[prop].length === 7) {
             obj[prop] = obj[prop].concat(arrTemp);
             bResave = true;
           }
-          if (prop == "bait") {
+          if (prop === "bait") {
             for (i = 0; i < obj[prop].length; i++) {
-              if (obj[prop][i] == "Brie") {
+              if (obj[prop][i] === "Brie") {
                 obj[prop][i] = "Brie Cheese";
                 bResave = true;
               }
@@ -10462,8 +10473,8 @@ function loadPreferenceSettingFromStorage() {
       bResave = false;
       for (i = 0; i < obj.trinket.length; i++) {
         if (
-          obj.trinket[i] == "None" ||
-          obj.trinket[i] == "NoAbove" ||
+          obj.trinket[i] === "None" ||
+          obj.trinket[i] === "NoAbove" ||
           obj.trinket[i] === "" ||
           isNullOrUndefined(obj.trinket[i])
         )
@@ -10486,8 +10497,8 @@ function loadPreferenceSettingFromStorage() {
       bResave = false;
       for (i = 0; i < obj.trinket.length; i++) {
         if (
-          obj.trinket[i] == "None" ||
-          obj.trinket[i] == "NoAbove" ||
+          obj.trinket[i] === "None" ||
+          obj.trinket[i] === "NoAbove" ||
           obj.trinket[i] === "" ||
           isNullOrUndefined(obj.trinket[i])
         )
@@ -10505,7 +10516,7 @@ function loadPreferenceSettingFromStorage() {
 
     // Remove old LG
     keyValue = getStorage("LGArea");
-    if (!isNullOrUndefined(keyValue) && keyValue.split(",").length == 2) {
+    if (!isNullOrUndefined(keyValue) && keyValue.split(",").length === 2) {
       removeStorage("LGArea");
       removeSessionStorage("LGArea");
     }
@@ -10532,7 +10543,7 @@ function loadPreferenceSettingFromStorage() {
       for (i = 1; i <= 4; i++) {
         temp = `wave${i}`;
         for (j = 0; j < obj[temp].cheese.length; j++) {
-          if (obj[temp].cheese[j] == "Brie") {
+          if (obj[temp].cheese[j] === "Brie") {
             obj[temp].cheese[j] = "Brie Cheese";
             bResave = true;
           }
@@ -10571,7 +10582,7 @@ function loadPreferenceSettingFromStorage() {
       obj = JSON.parse(keyValue);
       bResave = false;
       for (i = 0; i < obj.bait.length; i++) {
-        if (obj.bait[i] == "Brie") {
+        if (obj.bait[i] === "Brie") {
           obj.bait[i] = "Brie Cheese";
           bResave = true;
         }
@@ -10661,7 +10672,7 @@ function loadPreferenceSettingFromStorage() {
     if (!isNullOrUndefined(keyValue)) {
       obj = JSON.parse(keyValue);
       bResave = false;
-      if (obj.order.length != 16) {
+      if (obj.order.length !== 16) {
         obj.order = [
           "NONE",
           "GEARWORKS",
@@ -10682,8 +10693,8 @@ function loadPreferenceSettingFromStorage() {
         ];
         bResave = true;
       }
-      if (obj.priorities.length != 13) {
-        if (obj.priorities.length == 11) {
+      if (obj.priorities.length !== 13) {
+        if (obj.priorities.length === 11) {
           obj.priorities.push("LUCKY");
           obj.priorities.push("HIDDEN");
         } else
@@ -10717,7 +10728,7 @@ function loadPreferenceSettingFromStorage() {
         delete obj.remainingLootDeactivate;
         bResave = true;
       }
-      if (obj.minTimeSand.length != 9) {
+      if (obj.minTimeSand.length !== 9) {
         var arrTemp = new Array(9);
         arrTemp[0] = obj.minTimeSand[0];
         arrTemp[8] = obj.minTimeSand[2];
@@ -10907,7 +10918,7 @@ function getBestTrap() {
 function getStorageToVariableInt(storageName, defaultInt) {
   var temp = getStorage(storageName);
   var tempInt = defaultInt;
-  if (temp == undefined || temp == null) {
+  if (temp === undefined || temp == null) {
     setStorage(storageName, defaultInt);
   } else {
     tempInt = parseInt(temp);
@@ -10927,10 +10938,10 @@ function getStorageToVariableStr(storageName, defaultStr) {
 
 function getStorageToVariableBool(storageName, defaultBool) {
   var temp = getStorage(storageName);
-  if (temp == undefined || temp == null) {
+  if (temp === undefined || temp == null) {
     setStorage(storageName, defaultBool.toString());
     return defaultBool;
-  } else if (temp == true || temp.toLowerCase() == "true") {
+  } else if (temp === true || temp.toLowerCase() === "true") {
     return true;
   } else {
     return false;
@@ -11032,10 +11043,10 @@ function addGoogleAd() {
     var allowAds = getStorage("allowAds");
     if (
       allowAds != null &&
-      allowAds != undefined &&
-      allowAds != "" &&
-      allowAds != "false" &&
-      allowAds != false
+      allowAds !== undefined &&
+      allowAds !== "" &&
+      allowAds !== "false" &&
+      allowAds !== false
     ) {
       allowAds = true;
     } else {
@@ -11045,7 +11056,7 @@ function addGoogleAd() {
 
     if (!NOBadFree) {
       NOBadFree = nobGet("adFree");
-      NOBadFree = NOBadFree == true || NOBadFree == "true";
+      NOBadFree = NOBadFree === true || NOBadFree === "true";
     }
 
     if (debug) console.log(`addGoogleAd${NOBadFree}${allowAds}`);
@@ -11178,8 +11189,8 @@ function soundHorn() {
           afterSoundingHorn();
         }, 5000);
       } else if (
-        headerStatus.indexOf("hornsounding") != -1 ||
-        headerStatus.indexOf("hornsounded") != -1
+        headerStatus.indexOf("hornsounding") !== -1 ||
+        headerStatus.indexOf("hornsounded") !== -1
       ) {
         // some one just sound the horn...
 
@@ -11202,7 +11213,7 @@ function soundHorn() {
         window.setTimeout(function () {
           afterSoundingHorn();
         }, 5000);
-      } else if (headerStatus.indexOf("hornwaiting") != -1) {
+      } else if (headerStatus.indexOf("hornwaiting") !== -1) {
         // the horn is not appearing, let check the time again
 
         // update timer
@@ -11278,7 +11289,7 @@ function afterSoundingHorn() {
     headerElement = headerElement.firstChild;
     // double check if the horn image is still visible after the script already sound it
     var headerStatus = headerElement.getAttribute("class");
-    if (headerStatus.indexOf(hornReady) != -1) {
+    if (headerStatus.indexOf(hornReady) !== -1) {
       // seen like the horn is not functioning well
 
       // update timer
@@ -11312,7 +11323,7 @@ function afterSoundingHorn() {
           afterSoundingHorn();
         }, 1000);
       }
-    } else if (headerStatus.indexOf("hornsounding") != -1) {
+    } else if (headerStatus.indexOf("hornsounding") !== -1) {
       // the horn is already sound, but the network seen to slow on fetching the data
 
       // update timer
@@ -11419,7 +11430,7 @@ function nobTestBetaUI() {
   // Return true if beta UI
   campButton = "mousehuntHud-campButton";
   var testNewUI = document.getElementsByClassName(campButton);
-  if (testNewUI != undefined && testNewUI[0] != null) {
+  if (testNewUI !== undefined && testNewUI[0] != null) {
     if (debug) console.log("OLD UI DETECTED");
     // old UI
     hornButton = "mousehuntHud-huntersHorn-container";
@@ -11558,7 +11569,7 @@ function kingRewardAction() {
     var i;
     for (i = 0; i < inputElementList.length; ++i) {
       // check if it is a resume button
-      if (inputElementList[i].getAttribute("name") == "puzzle_answer") {
+      if (inputElementList[i].getAttribute("name") === "puzzle_answer") {
         inputElementList[i].focus();
         break;
       }
@@ -11614,12 +11625,12 @@ function kingRewardAction() {
 function emailCaptcha() {
   if (
     kingRewardEmail != null &&
-    kingRewardEmail != undefined &&
-    kingRewardEmail != ""
+    kingRewardEmail !== undefined &&
+    kingRewardEmail !== ""
   ) {
     if (debug) console.log("Attempting to email captcha via Parse now.");
     var un = getPageVariable("user.username");
-    if (un == undefined) un = "";
+    if (un === undefined) un = "";
 
     Parse.initialize("mh-autobot", "unused");
     Parse.serverURL = "https://mh-autobot.herokuapp.com/parse";
@@ -11786,7 +11797,7 @@ function checkResumeButton() {
         if (
           linkElementList[i]
             .getAttribute("src")
-            .indexOf("resume_hunting_blue.gif") != -1
+            .indexOf("resume_hunting_blue.gif") !== -1
         ) {
           // found resume button
 
@@ -11925,11 +11936,11 @@ function versionCompare(v1, v2, options) {
   }
 
   for (var i = 0; i < v1parts.length; ++i) {
-    if (v2parts.length == i) {
+    if (v2parts.length === i) {
       return 1;
     }
 
-    if (v1parts[i] == v2parts[i]) {
+    if (v1parts[i] === v2parts[i]) {
       continue;
     } else if (v1parts[i] > v2parts[i]) {
       return 1;
@@ -11938,7 +11949,7 @@ function versionCompare(v1, v2, options) {
     }
   }
 
-  if (v1parts.length != v2parts.length) {
+  if (v1parts.length !== v2parts.length) {
     return -1;
   }
 
@@ -12052,7 +12063,7 @@ function hasDuplicate(arrIn) {
 function countArrayElement(value, arrIn) {
   var count = 0;
   for (var i = 0; i < arrIn.length; i++) {
-    if (arrIn[i] == value) count++;
+    if (arrIn[i] === value) count++;
   }
   return count;
 }
@@ -12067,7 +12078,7 @@ function sortWithIndices(toSort, sortType) {
     arr[i] = [arr[i], i];
   }
 
-  if (sortType == "descend") {
+  if (sortType === "descend") {
     arr.sort(function (left, right) {
       return left[0] > right[0] ? -1 : 1;
     });
@@ -12201,10 +12212,10 @@ function getStorage(name) {
 function getCookie(c_name) {
   if (document.cookie.length > 0) {
     var c_start = document.cookie.indexOf(`${c_name}=`);
-    if (c_start != -1) {
+    if (c_start !== -1) {
       c_start = c_start + c_name.length + 1;
       var c_end = document.cookie.indexOf(";", c_start);
-      if (c_end == -1) {
+      if (c_end === -1) {
         c_end = document.cookie.length;
       }
 
@@ -12253,7 +12264,7 @@ function getStorageToVariableBool(storageName, defaultBool) {
   if (isNullOrUndefined(temp)) {
     setStorage(storageName, defaultBool.toString());
     return defaultBool;
-  } else if (temp === true || temp.toLowerCase() == "true") {
+  } else if (temp === true || temp.toLowerCase() === "true") {
     return true;
   } else {
     return false;
@@ -12279,7 +12290,7 @@ function getStorageToObject(keyName, objDefault) {
 }
 
 function disarmTrap(trapSelector) {
-  if (trapSelector == "weapon" || trapSelector == "base") return;
+  if (trapSelector === "weapon" || trapSelector === "base") return;
 
   var nQuantity = parseInt(getPageVariable(`user.${trapSelector}_quantity`));
   if (nQuantity === 0) {
@@ -12386,28 +12397,28 @@ function getPageVariable(name) {
   try {
     var browser = browserDetection();
 
-    if (browser == "chrome") {
-      if (name == "user.unique_hash") {
+    if (browser === "chrome") {
+      if (name === "user.unique_hash") {
         return user.unique_hash;
       } else {
         return getPageVariableForChrome(name);
       }
-    } else if (browser == "firefox") {
-      if (name == "user.next_activeturn_seconds") {
+    } else if (browser === "firefox") {
+      if (name === "user.next_activeturn_seconds") {
         return unsafeWindow.user.next_activeturn_seconds;
-      } else if (name == "user.unique_hash") {
+      } else if (name === "user.unique_hash") {
         return unsafeWindow.user.unique_hash;
-      } else if (name == "user.has_puzzle") {
+      } else if (name === "user.has_puzzle") {
         return unsafeWindow.user.has_puzzle;
-      } else if (name == "user.bait_quantity") {
+      } else if (name === "user.bait_quantity") {
         return unsafeWindow.user.bait_quantity;
-      } else if (name == "user.environment_name") {
+      } else if (name === "user.environment_name") {
         return unsafeWindow.user.environment_name;
-      } else if (name == "user.trinket_name") {
+      } else if (name === "user.trinket_name") {
         return unsafeWindow.user.trinket_name;
-      } else if (name == "user.weapon_name") {
+      } else if (name === "user.weapon_name") {
         return unsafeWindow.user.weapon_name;
-      } else if (name == "user.quests.QuestTrainStation.on_train") {
+      } else if (name === "user.quests.QuestTrainStation.on_train") {
         return unsafeWindow.user.quests.QuestTrainStation.on_train;
       } else {
         if (debug) console.log(`GPV firefox: ${name} not found.`);
@@ -12516,7 +12527,7 @@ function timeFormat(time) {
 function timeFormatLong(time) {
   var timeString;
 
-  if (time != -1) {
+  if (time !== -1) {
     var day = Math.floor(time / 86400);
     var hr = Math.floor((time % 86400) / 3600);
     var min = Math.floor((time % 3600) / 60);
@@ -12558,25 +12569,25 @@ function nobInit() {
   try {
     if (!isKingReward) {
       if (
-        window.location.href == "http://www.mousehuntgame.com/" ||
-        window.location.href == "http://www.mousehuntgame.com/#" ||
-        window.location.href ==
+        window.location.href === "http://www.mousehuntgame.com/" ||
+        window.location.href === "http://www.mousehuntgame.com/#" ||
+        window.location.href ===
           "http://www.mousehuntgame.com/?switch_to=standard" ||
-        window.location.href == "https://www.mousehuntgame.com/" ||
-        window.location.href == "https://www.mousehuntgame.com/#" ||
-        window.location.href ==
+        window.location.href === "https://www.mousehuntgame.com/" ||
+        window.location.href === "https://www.mousehuntgame.com/#" ||
+        window.location.href ===
           "https://www.mousehuntgame.com/?switch_to=standard" ||
-        window.location.href.indexOf("mousehuntgame.com/turn.php") != -1 ||
-        window.location.href.indexOf("mousehuntgame.com/index.php") != -1 ||
-        window.location.href == "http://www.mousehuntgame.com/canvas/" ||
-        window.location.href == "http://www.mousehuntgame.com/canvas/#" ||
-        window.location.href == "https://www.mousehuntgame.com/canvas/" ||
-        window.location.href == "https://www.mousehuntgame.com/canvas/#" ||
-        window.location.href.indexOf("mousehuntgame.com/canvas/index.php") !=
+        window.location.href.indexOf("mousehuntgame.com/turn.php") !== -1 ||
+        window.location.href.indexOf("mousehuntgame.com/index.php") !== -1 ||
+        window.location.href === "http://www.mousehuntgame.com/canvas/" ||
+        window.location.href === "http://www.mousehuntgame.com/canvas/#" ||
+        window.location.href === "https://www.mousehuntgame.com/canvas/" ||
+        window.location.href === "https://www.mousehuntgame.com/canvas/#" ||
+        window.location.href.indexOf("mousehuntgame.com/canvas/index.php") !==
           -1 ||
-        window.location.href.indexOf("mousehuntgame.com/canvas/turn.php") !=
+        window.location.href.indexOf("mousehuntgame.com/canvas/turn.php") !==
           -1 ||
-        window.location.href.indexOf("mousehuntgame.com/canvas/?") != -1
+        window.location.href.indexOf("mousehuntgame.com/canvas/?") !== -1
       ) {
         NOBpage = true;
       }
@@ -12621,7 +12632,7 @@ function nobAjaxGet(url, callback, throwError) {
 
 function nobAjaxPost(url, data, callback, throwError, dataType) {
   if (!isKingReward) {
-    if (dataType == null || dataType == undefined) dataType = "json";
+    if (dataType == null || dataType === undefined) dataType = "json";
 
     jQuery.ajax({
       type: "POST",
@@ -12652,7 +12663,7 @@ function updateTimer(timeleft, inhours) {
   var FirstPart, SecondPart, Size;
 
   if (timeleft > 0) {
-    if (inhours != null && inhours == true && timeleft > 3600) {
+    if (inhours != null && inhours === true && timeleft > 3600) {
       FirstPart = Math.floor(timeleft / (60 * 60));
       SecondPart = Math.floor(timeleft / 60) % 60;
       Size = "hrs";
@@ -12700,7 +12711,7 @@ function nobHTMLFetch() {
       var StartPos = value.indexOf("user = ");
       var EndPos = value.indexOf("};", StartPos);
 
-      if (StartPos != -1) {
+      if (StartPos !== -1) {
         var FullObjectText = value.substring(StartPos + 7, EndPos + 1);
         nobStore(JSON.parse(FullObjectText), "data");
       }
@@ -12909,19 +12920,19 @@ function nobScript(qqEvent) {
     try {
       var NOBdata = nobGet("data");
       mapThere = document.getElementsByClassName("treasureMap")[0];
-      if (mapThere.textContent.indexOf("remaining") == -1) {
+      if (mapThere.textContent.indexOf("remaining") === -1) {
         mapThere = false;
         if (debug) console.log("No map, using HTML data now");
       } else {
         mapThere = true;
       }
 
-      if (NOBdata != null || NOBdata != undefined) {
+      if (NOBdata != null || NOBdata !== undefined) {
         if (!mapRequestFailed && mapThere) {
           nobMapRequest(function (output) {
             if (debug) console.log("RUN nobMapRequest()");
             if (debug) console.log(output);
-            if (output.status == 200 || output.status == undefined) {
+            if (output.status === 200 || output.status === undefined) {
               nobStore(output, "data");
               nobGDoc(JSON.stringify(output), "map");
             } else {
@@ -13077,7 +13088,7 @@ function pingServer() {
       })
       .then(
         function (message) {
-          if (message != undefined || message != null)
+          if (message !== undefined || message != null)
             console.log(`Parse message: ${message}`);
           if (Parse.User.current() != null) {
             Parse.User.logOut();
@@ -13085,7 +13096,7 @@ function pingServer() {
           }
         },
         function (error) {
-          if (error != undefined || error != null) {
+          if (error !== undefined || error != null) {
             if (debug) console.log(`Parse error: ${error}`);
           }
         }
@@ -13111,7 +13122,7 @@ function nobInjectFFfunctions() {
   var addAdDiv = document.getElementById("addAdLink");
   var removeAdDiv = document.getElementById("removeAdLink");
 
-  if (browser == "firefox") {
+  if (browser === "firefox") {
     unsafeWindow.nobRaffle = exportFunction(nobRaffle, unsafeWindow);
     unsafeWindow.nobPresent = exportFunction(nobPresent, unsafeWindow);
     unsafeWindow.addGoogleAd = exportFunction(addGoogleAd, unsafeWindow);
@@ -13171,15 +13182,15 @@ function nobRaffle() {
   var nobRafGiveUp = 10;
   var nobRafInt = window.setInterval(function () {
     try {
-      if (intState == 0 && !($(".tabs a:eq(1)").length > 0)) {
+      if (intState === 0 && !($(".tabs a:eq(1)").length > 0)) {
         $("#hgbar_messages").click();
         intState = 1;
         return;
-      } else if ($("a.active.tab")[0].dataset.tab != "daily_draw") {
+      } else if ($("a.active.tab")[0].dataset.tab !== "daily_draw") {
         var tabs = $("a.tab");
         var theTab = "";
         for (i = 0; i < tabs.length; i++) {
-          if (tabs[i].dataset.tab == "daily_draw") {
+          if (tabs[i].dataset.tab === "daily_draw") {
             tabs[i].click();
             return;
           }
@@ -13196,8 +13207,8 @@ function nobRaffle() {
         i = null;
         return;
       } else if (
-        intState != 2 &&
-        $("a.active.tab")[0].dataset.tab == "daily_draw"
+        intState !== 2 &&
+        $("a.active.tab")[0].dataset.tab === "daily_draw"
       ) {
         var ballot = $(".notificationMessageList input.sendBallot");
         for (i = ballot.length - 1; i >= 0; i--) {
@@ -13205,7 +13216,7 @@ function nobRaffle() {
         }
         intState = 2;
         return;
-      } else if ($("a.active.tab")[0].dataset.tab == "daily_draw") {
+      } else if ($("a.active.tab")[0].dataset.tab === "daily_draw") {
         intState = 3;
       } else {
         intState = -1;
@@ -13222,7 +13233,7 @@ function nobRaffle() {
         nobRafGiveUp--;
       }
     } finally {
-      if (intState == 3) {
+      if (intState === 3) {
         $("a.messengerUINotificationClose")[0].click();
         window.clearInterval(nobRafInt);
 
@@ -13230,7 +13241,7 @@ function nobRaffle() {
         intState = null;
         i = null;
         return;
-      } else if (intState == -1) {
+      } else if (intState === -1) {
         console.log("Present error, user pls resolve yourself");
         window.clearInterval(nobRafInt);
 
@@ -13249,11 +13260,11 @@ function nobPresent() {
   var nobPresGiveUp = 10;
   var nobPresInt = window.setInterval(function () {
     try {
-      if (intState == 0 && !($(".tabs a:eq(1)").length > 0)) {
+      if (intState === 0 && !($(".tabs a:eq(1)").length > 0)) {
         $("#hgbar_freegifts").click();
         intState = 1;
         return;
-      } else if (intState != 2) {
+      } else if (intState !== 2) {
         var presents = $('a[class~="return"]');
         for (i = presents.length - 1; i >= 0; i--) {
           presents[i].click();
@@ -13264,7 +13275,7 @@ function nobPresent() {
         }
         intState = 2;
         return;
-      } else if (intState == 2) {
+      } else if (intState === 2) {
         intState = 3;
       } else {
         intState = -1;
@@ -13281,14 +13292,14 @@ function nobPresent() {
         nobPresGiveUp--;
       }
     } finally {
-      if (intState == 3) {
+      if (intState === 3) {
         $("a.giftSelectorView-inboxHeader-closeButton")[0].click();
         window.clearInterval(nobPresInt);
         nobPresInt = null;
         intState = null;
         i = null;
         return;
-      } else if (intState == -1) {
+      } else if (intState === -1) {
         console.log("Present error, user pls resolve yourself");
         window.clearInterval(nobPresInt);
         nobPresInt = null;
@@ -13373,16 +13384,16 @@ function updateTime() {
 function nobCalculateTime(runOnly) {
   if (debug) console.log(`Running nobCalculateTime(${runOnly})`);
   var child;
-  if (runOnly != "relic" && runOnly != "toxic" && runOnly != "none")
+  if (runOnly !== "relic" && runOnly !== "toxic" && runOnly !== "none")
     runOnly = "all";
 
   try {
     Parse.initialize("mh-autobot", "unused");
     Parse.serverURL = "https://mh-autobot.herokuapp.com/parse";
     if (
-      (runOnly == "relic" || runOnly == "all") &&
+      (runOnly === "relic" || runOnly === "all") &&
       (typeof LOCATION_TIMERS[3][1].url != "undefined" ||
-        LOCATION_TIMERS[3][1].url != "undefined")
+        LOCATION_TIMERS[3][1].url !== "undefined")
     ) {
       /*Parse.Cloud.run('nobRelic', {}, {
                 success: function (data) {
@@ -13451,7 +13462,7 @@ function nobCalculateTime(runOnly) {
                 });
             }*/
 
-    if (runOnly == "all") nobCalculateOfflineTimers();
+    if (runOnly === "all") nobCalculateOfflineTimers();
   } catch (e) {
     if (debug) console.log(`updateTime ERR - ${e}`);
   }
@@ -13459,7 +13470,7 @@ function nobCalculateTime(runOnly) {
 
 function nobCalculateOfflineTimers(runOnly) {
   //if (debug) console.log('nobCalculateOfflineTimers(' + runOnly + ')');
-  if (runOnly != "seasonal" && runOnly != "balack" && runOnly != "fg")
+  if (runOnly !== "seasonal" && runOnly !== "balack" && runOnly !== "fg")
     runOnly = "all";
 
   var CurrentTime = currentTimeStamp();
@@ -13468,7 +13479,7 @@ function nobCalculateOfflineTimers(runOnly) {
   var TotalBreakdown = 0;
   var iCount2;
 
-  if (runOnly == "seasonal") {
+  if (runOnly === "seasonal") {
     for (
       iCount2 = 0;
       iCount2 < LOCATION_TIMERS[0][1].breakdown.length;
@@ -13484,7 +13495,7 @@ function nobCalculateOfflineTimers(runOnly) {
 
     for (
       iCount2 = 0;
-      iCount2 < LOCATION_TIMERS[0][1].breakdown.length && CurrentName == -1;
+      iCount2 < LOCATION_TIMERS[0][1].breakdown.length && CurrentName === -1;
       iCount2++
     ) {
       CurrentBreakdown += LOCATION_TIMERS[0][1].breakdown[iCount2];
@@ -13516,7 +13527,7 @@ function nobCalculateOfflineTimers(runOnly) {
     SeasonRemaining = SeasonLength - SeasonRemaining;
 
     return LOCATION_TIMERS[0][1].name[CurrentName];
-  } else if (runOnly == "all") {
+  } else if (runOnly === "all") {
     for (i = 0; i < 4; i++) {
       // Reset var
       CurrentTime = currentTimeStamp();
@@ -13539,7 +13550,7 @@ function nobCalculateOfflineTimers(runOnly) {
 
       for (
         iCount2 = 0;
-        iCount2 < LOCATION_TIMERS[i][1].breakdown.length && CurrentName == -1;
+        iCount2 < LOCATION_TIMERS[i][1].breakdown.length && CurrentName === -1;
         iCount2++
       ) {
         CurrentBreakdown += LOCATION_TIMERS[i][1].breakdown[iCount2];
@@ -13735,7 +13746,7 @@ function bodyJS() {
     var idRestore = document.getElementById("idRestore");
     var inputFiles = document.getElementById("inputFiles");
     if (window.FileReader) {
-      if (inputFiles && window.sessionStorage.getItem("bRestart") != "true") {
+      if (inputFiles && window.sessionStorage.getItem("bRestart") !== "true") {
         inputFiles.click();
       }
     } else {
@@ -13747,7 +13758,7 @@ function bodyJS() {
     if (files.length < 1) return;
     var reader = new FileReader();
     reader.onloadend = function (evt) {
-      if (evt.target.readyState == FileReader.DONE) {
+      if (evt.target.readyState === FileReader.DONE) {
         // DONE == 2
         var arr = evt.target.result.split("\r\n");
         var arrSplit = [];
@@ -13757,7 +13768,7 @@ function bodyJS() {
         for (var i = 0; i < arr.length; i++) {
           if (arr[i].indexOf("|") > -1) {
             arrSplit = arr[i].split("|");
-            if (arrSplit.length == 2) {
+            if (arrSplit.length === 2) {
               nIndex = arrSplit[0].indexOf("Z");
               temp =
                 nIndex > -1 ? arrSplit[0].substr(0, nIndex + 1) : arrSplit[0];
@@ -13790,7 +13801,7 @@ function bodyJS() {
     document.getElementById("inputShowAds").disabled = "disabled";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
-      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
         document.getElementById("inputShowAds").value = "Click to Show Ads";
         document.getElementById("inputShowAds").disabled = "";
         var arr = xmlHttp.responseText.split("\r\n");
@@ -13915,7 +13926,7 @@ function bodyJS() {
     };
     var storageValue = JSON.parse(window.sessionStorage.getItem("MapHunting"));
     if (isNullOrUndefined(storageValue)) storageValue = objDefaultMapHunting;
-    storageValue.status = selectMapHunting.value == "true";
+    storageValue.status = selectMapHunting.value === "true";
     if (inputUncaughtMouse.value === "") storageValue.selectedMouse = [];
     else storageValue.selectedMouse = inputUncaughtMouse.value.split(",");
     storageValue.logic = selectCatchLogic.value;
@@ -13923,7 +13934,7 @@ function bodyJS() {
     storageValue.base = selectBase.value;
     storageValue.trinket = selectTrinket.value;
     storageValue.bait = selectBait.value;
-    storageValue.leave = selectLeaveMap.value == "true";
+    storageValue.leave = selectLeaveMap.value === "true";
     window.sessionStorage.setItem("MapHunting", JSON.stringify(storageValue));
   }
 
@@ -14153,7 +14164,7 @@ function bodyJS() {
       algoOnSession = algoOnLocal;
     }
 
-    if (algoOnSession != algoOnLocal) {
+    if (algoOnSession !== algoOnLocal) {
       if (debug)
         console.log(
           `initEventAlgo() WARNING: Session algo is different from local storage.${algoOnSession} | ${algoOnLocal}`
@@ -14163,7 +14174,7 @@ function bodyJS() {
     var eventAlgoSelect = document.getElementById("eventAlgo");
     var eventAlgoSelectOpt = eventAlgoSelect.options;
     for (var opt, j = 0; (opt = eventAlgoSelectOpt[j]); j++) {
-      if (opt.value == algoOnSession) {
+      if (opt.value === algoOnSession) {
         eventAlgoSelect.selectedIndex = j;
         showOrHideTr(algoOnSession);
         return;
@@ -14176,23 +14187,23 @@ function bodyJS() {
   function onInputResetReload() {
     var strValue = document.getElementById("eventAlgo").value;
     var keyName;
-    if (strValue == "Burroughs Rift Custom") keyName = "BRCustom";
-    else if (strValue == "All LG Area") keyName = "LGArea";
-    else if (strValue == "SG") keyName = "SGarden";
-    else if (strValue == "ZT") keyName = "ZTower";
-    else if (strValue == "Sunken City Custom") keyName = "SCCustom";
-    else if (strValue == "Labyrinth") keyName = "Labyrinth";
-    else if (strValue == "Zokor") keyName = "Zokor";
-    else if (strValue == "Fiery Warpath") keyName = "FW";
-    else if (strValue == "Furoma Rift") keyName = "FRift";
-    else if (strValue == "Iceberg") keyName = "Iceberg";
-    else if (strValue == "WWRift") keyName = "WWRift";
-    else if (strValue == "GES") keyName = "GES";
-    else if (strValue == "Fort Rox") keyName = "FRox";
-    else if (strValue == "GWH2016R") keyName = "GWH2016R";
-    else if (strValue == "Bristle Woods Rift") keyName = "BWRift";
-    else if (strValue == "BC/JOD") keyName = "BC_JOD";
-    else if (strValue == "FG/AR") keyName = "FG_AR";
+    if (strValue === "Burroughs Rift Custom") keyName = "BRCustom";
+    else if (strValue === "All LG Area") keyName = "LGArea";
+    else if (strValue === "SG") keyName = "SGarden";
+    else if (strValue === "ZT") keyName = "ZTower";
+    else if (strValue === "Sunken City Custom") keyName = "SCCustom";
+    else if (strValue === "Labyrinth") keyName = "Labyrinth";
+    else if (strValue === "Zokor") keyName = "Zokor";
+    else if (strValue === "Fiery Warpath") keyName = "FW";
+    else if (strValue === "Furoma Rift") keyName = "FRift";
+    else if (strValue === "Iceberg") keyName = "Iceberg";
+    else if (strValue === "WWRift") keyName = "WWRift";
+    else if (strValue === "GES") keyName = "GES";
+    else if (strValue === "Fort Rox") keyName = "FRox";
+    else if (strValue === "GWH2016R") keyName = "GWH2016R";
+    else if (strValue === "Bristle Woods Rift") keyName = "BWRift";
+    else if (strValue === "BC/JOD") keyName = "BC_JOD";
+    else if (strValue === "FG/AR") keyName = "FG_AR";
 
     if (!isNullOrUndefined(keyName)) {
       window.sessionStorage.removeItem(keyName);
@@ -14373,12 +14384,12 @@ function bodyJS() {
     storageValue.boost[nIndex] =
       selectGWHTrinket.value.toUpperCase().indexOf("ANCHOR") > -1
         ? false
-        : selectGWHBoost.value == "true";
-    storageValue.turbo = selectGWHUseTurboBoost.value == "true";
+        : selectGWHBoost.value === "true";
+    storageValue.turbo = selectGWHUseTurboBoost.value === "true";
     storageValue.minAAToFly = parseInt(inputMinAA.value);
     storageValue.minFireworkToFly = parseInt(inputMinFirework.value);
     storageValue.landAfterFireworkRunOut =
-      selectGWHLandAfterRunOutFirework.value == "true";
+      selectGWHLandAfterRunOutFirework.value === "true";
     window.sessionStorage.setItem("GWH2016R", JSON.stringify(storageValue));
   }
 
@@ -14456,7 +14467,7 @@ function bodyJS() {
     selectSCHuntTrinket.value = storageValue.trinket[nIndex];
     selectSCUseSmartJet.value = storageValue.useSmartJet;
     selectSCHuntZoneEnable.style.display =
-      selectSCHuntZone.value == "ZONE_NOT_DIVE" ? "none" : "";
+      selectSCHuntZone.value === "ZONE_NOT_DIVE" ? "none" : "";
   }
 
   function saveSCCustomAlgo() {
@@ -14515,7 +14526,7 @@ function bodyJS() {
       "selectLabyrinthDisarm"
     );
     inputLabyrinthLastHunt.disabled =
-      selectLabyrinthDisarm.value == "true" ? "" : "disabled";
+      selectLabyrinthDisarm.value === "true" ? "" : "disabled";
     saveLaby();
   }
 
@@ -14592,16 +14603,16 @@ function bodyJS() {
       selectHallway60Epic.value,
     ];
     storageValue.chooseOtherDoors =
-      document.getElementById("chooseOtherDoors").value == "true";
+      document.getElementById("chooseOtherDoors").value === "true";
     storageValue.typeOtherDoors =
       document.getElementById("typeOtherDoors").value;
     storageValue.securityDisarm =
-      document.getElementById("selectLabyrinthDisarm").value == "true";
+      document.getElementById("selectLabyrinthDisarm").value === "true";
     storageValue.lastHunt = parseInt(
       document.getElementById("inputLabyrinthLastHunt").value
     );
     storageValue.armOtherBase = selectLabyrinthOtherBase.value;
-    storageValue.disarmCompass = selectLabyrinthDisarmCompass.value == "true";
+    storageValue.disarmCompass = selectLabyrinthDisarmCompass.value === "true";
     storageValue.nDeadEndClue = parseInt(inputLabyrinthDEC.value);
     storageValue.weaponFarming = selectLabyrinthWeaponType.value;
     window.sessionStorage.setItem("Labyrinth", JSON.stringify(storageValue));
@@ -14686,17 +14697,17 @@ function bodyJS() {
       ? ""
       : "disabled";
     document.getElementById("trPriorities15").style.display =
-      selectLabyrinthDistrict.value == "None" ? "none" : "table-row";
+      selectLabyrinthDistrict.value === "None" ? "none" : "table-row";
     document.getElementById("trPriorities1560").style.display =
-      selectLabyrinthDistrict.value == "None" ? "none" : "table-row";
+      selectLabyrinthDistrict.value === "None" ? "none" : "table-row";
     document.getElementById("trPriorities60").style.display =
-      selectLabyrinthDistrict.value == "None" ? "none" : "table-row";
+      selectLabyrinthDistrict.value === "None" ? "none" : "table-row";
     document.getElementById("trLabyrinthOtherHallway").style.display =
-      selectLabyrinthDistrict.value == "None" ? "none" : "table-row";
+      selectLabyrinthDistrict.value === "None" ? "none" : "table-row";
     inputLabyrinthDEC.disabled = storageValue.disarmCompass ? "" : "disabled";
     selectHallway60Epic.style =
-      selectLabyrinthDistrict.value == "TREASURY" ||
-      selectLabyrinthDistrict.value == "FARMING"
+      selectLabyrinthDistrict.value === "TREASURY" ||
+      selectLabyrinthDistrict.value === "FARMING"
         ? "display:none"
         : "display:inline";
     document.getElementById("typeOtherDoors").disabled =
@@ -14757,9 +14768,9 @@ function bodyJS() {
     }
     storageValue = JSON.parse(storageValue);
     storageValue[selectLGTGAutoFillSide.value].isAutoFill =
-      selectLGTGAutoFillState.value == "true";
+      selectLGTGAutoFillState.value === "true";
     storageValue[selectLGTGAutoPourSide.value].isAutoPour =
-      selectLGTGAutoPourState.value == "true";
+      selectLGTGAutoPourState.value === "true";
     storageValue[selectLGTGSide.value].base.after = selectLGTGBase.value;
     storageValue[selectLGTGSide.value].base.after = selectLGTGBase.value;
     storageValue[selectLGTGSide.value].trinket.after = selectLGTGTrinket.value;
@@ -14918,7 +14929,7 @@ function bodyJS() {
         storageValue[strWave].weapon = "Sandtail Sentinel";
       if (isNullOrUndefined(storageValue[strWave].base))
         storageValue[strWave].base = "Physical Brace Base";
-      if (selectFWWave.value == 4) {
+      if (selectFWWave.value === 4) {
         selectFW4TrapSetupWeapon.value =
           storageValue[strWave].warden[selectFW4WardenStatus.value].weapon;
         selectFW4TrapSetupBase.value =
@@ -14950,7 +14961,7 @@ function bodyJS() {
         : "false";
     }
     for (var i = 0; i < selectFWSpecial.options.length; i++) {
-      if (selectFWSpecial.options[i].value == "GARGANTUA_GGC") {
+      if (selectFWSpecial.options[i].value === "GARGANTUA_GGC") {
         if (selectFWStreak.selectedIndex >= 7)
           selectFWSpecial.options[i].removeAttribute("disabled");
         else selectFWSpecial.options[i].setAttribute("disabled", "disabled");
@@ -14961,9 +14972,9 @@ function bodyJS() {
     var option = selectFWFocusType.children;
     for (var i = 0; i < option.length; i++) {
       if (option[i].innerText.indexOf("Special") > -1)
-        option[i].style = nWave == 1 ? "display:none" : "";
+        option[i].style = nWave === 1 ? "display:none" : "";
     }
-    if (selectFWWave.value == 4) {
+    if (selectFWWave.value === 4) {
       document.getElementById("trFWStreak").style.display = "none";
       document.getElementById("trFWFocusType").style.display = "none";
       document.getElementById("trFWLastType").style.display = "none";
@@ -14977,7 +14988,7 @@ function bodyJS() {
       document.getElementById("trFWSupportConfig").style.display = "table-row";
       document.getElementById("trFWTrapSetup").style.display = "table-row";
       document.getElementById("trFW4TrapSetup").style.display = "none";
-      if (selectFWWave.value == 3)
+      if (selectFWWave.value === 3)
         selectFWLastTypeConfigIncludeArtillery.disabled = "";
       else selectFWLastTypeConfigIncludeArtillery.disabled = "disabled";
     }
@@ -15066,7 +15077,7 @@ function bodyJS() {
       storageValue[strWave].weapon = "Sandtail Sentinel";
     if (isNullOrUndefined(storageValue[strWave].base))
       storageValue[strWave].base = "Physical Brace Base";
-    if (nWave == 4) {
+    if (nWave === 4) {
       storageValue[strWave].warden[selectFW4WardenStatus.value].weapon =
         selectFW4TrapSetupWeapon.value;
       storageValue[strWave].warden[selectFW4WardenStatus.value].base =
@@ -15086,9 +15097,9 @@ function bodyJS() {
     storageValue[strWave].special[nStreak] = selectFWSpecial.value;
     storageValue[strWave].lastSoldierConfig = selectFWLastTypeConfig.value;
     storageValue[strWave].includeArtillery =
-      selectFWLastTypeConfigIncludeArtillery.value == "true";
+      selectFWLastTypeConfigIncludeArtillery.value === "true";
     storageValue[strWave].disarmAfterSupportRetreat =
-      selectFWSupportConfig.value == "true";
+      selectFWSupportConfig.value === "true";
     window.sessionStorage.setItem("FW", JSON.stringify(storageValue));
   }
 
@@ -15144,7 +15155,7 @@ function bodyJS() {
       bait.value = storageValue.bait[nIndex];
     }
     document.getElementById("trBRToggle").style.display =
-      hunt.value == "Red" ? "table-row" : "none";
+      hunt.value === "Red" ? "table-row" : "none";
   }
 
   function saveBR() {
@@ -15206,7 +15217,7 @@ function bodyJS() {
     storageValue.base[nIndex] = selectSGTrapBase.value;
     storageValue.trinket[nIndex] = selectSGTrapTrinket.value;
     storageValue.bait[nIndex] = selectSGTrapBait.value;
-    storageValue.disarmBaitAfterCharged = selectSGDisarmBait.value == "true";
+    storageValue.disarmBaitAfterCharged = selectSGDisarmBait.value === "true";
     window.sessionStorage.setItem("SGarden", JSON.stringify(storageValue));
   }
 
@@ -15516,8 +15527,8 @@ function bodyJS() {
         bAutoChangeBatteryLevel &&
         !isNullOrUndefined(user) &&
         user.environment_name.indexOf("Furoma Rift") > -1 &&
-        (user.quests.QuestRiftFuroma.view_state == "pagoda" ||
-          user.quests.QuestRiftFuroma.view_state == "pagoda knows_all")
+        (user.quests.QuestRiftFuroma.view_state === "pagoda" ||
+          user.quests.QuestRiftFuroma.view_state === "pagoda knows_all")
       ) {
         var classCharge = document.getElementsByClassName(
           "riftFuromaHUD-droid-charge"
@@ -15551,7 +15562,7 @@ function bodyJS() {
       selectFRTrapBaitMasterOrder.value = storageValue.masterOrder[nIndex];
     }
     selectFRTrapBaitMasterOrder.style.display =
-      selectFRTrapBait.value == "ORDER_MASTER" ? "" : "none";
+      selectFRTrapBait.value === "ORDER_MASTER" ? "" : "none";
   }
 
   function saveIceberg() {
@@ -15627,10 +15638,10 @@ function bodyJS() {
               ? parseInt(classProgress[0].textContent.replace(",", ""))
               : parseInt(user.quests.QuestIceberg.user_progress);
           if (
-            nProgress == 300 ||
-            nProgress == 600 ||
-            nProgress == 1600 ||
-            nProgress == 1800
+            nProgress === 300 ||
+            nProgress === 600 ||
+            nProgress === 1600 ||
+            nProgress === 1800
           )
             nIndex = 0;
           else {
@@ -15857,29 +15868,29 @@ function bodyJS() {
     storageValue.master.bait[nIndex] = selectBWRiftBait.value;
     storageValue.master.trinket[nIndex] = selectBWRiftTrinket.value;
     storageValue.master.activate[nIndex] =
-      selectBWRiftActivatePocketWatch.value == "true";
+      selectBWRiftActivatePocketWatch.value === "true";
     storageValue.specialActivate.forceActivate[nIndex] =
-      selectBWRiftForceActiveQuantum.value == "true";
+      selectBWRiftForceActiveQuantum.value === "true";
     storageValue.specialActivate.remainingLootActivate[nIndex] = parseInt(
       inputRemainingLootA.value
     );
     storageValue.specialActivate.forceDeactivate[nIndex] =
-      selectBWRiftForceDeactiveQuantum.value == "true";
+      selectBWRiftForceDeactiveQuantum.value === "true";
     storageValue.specialActivate.remainingLootDeactivate[nIndex] = parseInt(
       inputRemainingLootD.value
     );
     var strTemp = "";
     if (
-      strChamberName == "GEARWORKS" ||
-      strChamberName == "ANCIENT" ||
-      strChamberName == "RUNIC"
+      strChamberName === "GEARWORKS" ||
+      strChamberName === "ANCIENT" ||
+      strChamberName === "RUNIC"
     ) {
       nIndex = selectBWRiftCleaverStatus.selectedIndex;
       if (bCursed) nIndex += 2;
-      if (strChamberName == "GEARWORKS") strTemp = "gw";
-      else if (strChamberName == "ANCIENT") strTemp = "al";
+      if (strChamberName === "GEARWORKS") strTemp = "gw";
+      else if (strChamberName === "ANCIENT") strTemp = "al";
       else strTemp = "rl";
-    } else if (strChamberName == "GUARD") {
+    } else if (strChamberName === "GUARD") {
       nIndex = selectBWRiftAlertLvl.selectedIndex;
       if (bCursed) nIndex += 7;
       strTemp = "gb";
@@ -15901,19 +15912,19 @@ function bodyJS() {
       storageValue[strTemp].base[nIndex] = selectBWRiftBaseSpecial.value;
       storageValue[strTemp].bait[nIndex] = selectBWRiftBaitSpecial.value;
       storageValue[strTemp].trinket[nIndex] = selectBWRiftTrinketSpecial.value;
-      if (selectBWRiftActivatePocketWatchSpecial.value == "MASTER")
+      if (selectBWRiftActivatePocketWatchSpecial.value === "MASTER")
         storageValue[strTemp].activate[nIndex] =
           selectBWRiftActivatePocketWatchSpecial.value;
       else
         storageValue[strTemp].activate[nIndex] =
-          selectBWRiftActivatePocketWatchSpecial.value == "true";
+          selectBWRiftActivatePocketWatchSpecial.value === "true";
     }
     storageValue.minRSCType = selectBWRiftMinRSCType.value;
     storageValue.minRSC = parseInt(inputMinRSC.value);
-    storageValue.choosePortal = selectBWRiftChoosePortal.value == "true";
+    storageValue.choosePortal = selectBWRiftChoosePortal.value === "true";
     if (storageValue.choosePortal) {
       storageValue.choosePortalAfterCC =
-        selectBWRiftChoosePortalAfterCC.value == "true";
+        selectBWRiftChoosePortalAfterCC.value === "true";
       storageValue.priorities[selectBWRiftPriority.selectedIndex] =
         selectBWRiftPortal.value;
       storageValue.prioritiesCursed[selectBWRiftPriorityCursed.selectedIndex] =
@@ -15921,7 +15932,7 @@ function bodyJS() {
       nIndex = parseInt(selectBWRiftBuffCurse.value);
       storageValue.minTimeSand[nIndex] = parseInt(inputMinTimeSand.value);
       storageValue.enterMinigameWCurse =
-        selectBWRiftEnterWCurse.value == "true";
+        selectBWRiftEnterWCurse.value === "true";
     }
     window.sessionStorage.setItem("BWRift", JSON.stringify(storageValue));
   }
@@ -16028,7 +16039,7 @@ function bodyJS() {
         var strName = user.quests.QuestRiftBristleWoods.chamber_name
           .split(" ")[0]
           .toUpperCase();
-        if (strName == "ACOLYTE") {
+        if (strName === "ACOLYTE") {
           if (
             user.quests.QuestRiftBristleWoods.minigame.acolyte_chamber
               .obelisk_charge < 100
@@ -16066,7 +16077,7 @@ function bodyJS() {
     inputRemainingLootA.value =
       storageValue.specialActivate.remainingLootActivate[nIndex];
     inputRemainingLootA.disabled =
-      selectBWRiftForceActiveQuantum.value == "true" ? "" : "disabled";
+      selectBWRiftForceActiveQuantum.value === "true" ? "" : "disabled";
     selectBWRiftForceDeactiveQuantum.value =
       storageValue.specialActivate.forceDeactivate[nIndex] === true
         ? "true"
@@ -16074,23 +16085,23 @@ function bodyJS() {
     inputRemainingLootD.value =
       storageValue.specialActivate.remainingLootDeactivate[nIndex];
     inputRemainingLootD.disabled =
-      selectBWRiftForceDeactiveQuantum.value == "true" ? "" : "disabled";
+      selectBWRiftForceDeactiveQuantum.value === "true" ? "" : "disabled";
     var strTemp = "";
     if (
-      strChamberName == "GEARWORKS" ||
-      strChamberName == "ANCIENT" ||
-      strChamberName == "RUNIC"
+      strChamberName === "GEARWORKS" ||
+      strChamberName === "ANCIENT" ||
+      strChamberName === "RUNIC"
     ) {
       nIndex = selectBWRiftCleaverStatus.selectedIndex;
       if (bCursed) nIndex += 2;
-      if (strChamberName == "GEARWORKS") strTemp = "gw";
-      else if (strChamberName == "ANCIENT") strTemp = "al";
+      if (strChamberName === "GEARWORKS") strTemp = "gw";
+      else if (strChamberName === "ANCIENT") strTemp = "al";
       else strTemp = "rl";
       selectBWRiftCleaverStatus.style.display = "";
       selectBWRiftAlertLvl.style.display = "none";
       selectBWRiftFTC.style.display = "none";
       selectBWRiftHunt.style.display = "none";
-    } else if (strChamberName == "GUARD") {
+    } else if (strChamberName === "GUARD") {
       nIndex = selectBWRiftAlertLvl.selectedIndex;
       if (bCursed) nIndex += 7;
       strTemp = "gb";
@@ -16122,7 +16133,7 @@ function bodyJS() {
       selectBWRiftFTC.style.display = "none";
       selectBWRiftHunt.style.display = "none";
     }
-    if (strTemp == "master")
+    if (strTemp === "master")
       document.getElementById("trBWRiftTrapSetupSpecial").style.display =
         "none";
     else {
@@ -16130,7 +16141,7 @@ function bodyJS() {
       selectBWRiftBaseSpecial.value = storageValue[strTemp].base[nIndex];
       selectBWRiftTrinketSpecial.value = storageValue[strTemp].trinket[nIndex];
       selectBWRiftBaitSpecial.value = storageValue[strTemp].bait[nIndex];
-      if (storageValue[strTemp].activate[nIndex] == "MASTER")
+      if (storageValue[strTemp].activate[nIndex] === "MASTER")
         selectBWRiftActivatePocketWatchSpecial.value =
           storageValue[strTemp].activate[nIndex];
       else
@@ -16152,7 +16163,7 @@ function bodyJS() {
     inputMinRSC.value = storageValue.minRSC;
     selectBWRiftEnterWCurse.value =
       storageValue.enterMinigameWCurse === true ? "true" : "false";
-    if (selectBWRiftChoosePortal.value == "true") {
+    if (selectBWRiftChoosePortal.value === "true") {
       document.getElementById("trBWRiftChoosePortalAfterCC").style.display = "";
       document.getElementById("trBWRiftPortalPriority").style.display = "";
       document.getElementById("trBWRiftPortalPriorityCursed").style.display =
@@ -16171,7 +16182,7 @@ function bodyJS() {
       document.getElementById("trBWRiftMinRSC").style.display = "none";
     }
     inputMinRSC.style.display =
-      selectBWRiftMinRSCType.value == "NUMBER" ? "" : "none";
+      selectBWRiftMinRSCType.value === "NUMBER" ? "" : "none";
   }
 
   function saveFRox() {
@@ -16223,8 +16234,8 @@ function bodyJS() {
     storageValue.base[nIndex] = selectFRoxBase.value;
     storageValue.bait[nIndex] = selectFRoxBait.value;
     storageValue.trinket[nIndex] = selectFRoxTrinket.value;
-    storageValue.activate[nIndex] = selectFRoxActivateTower.value == "true";
-    storageValue.fullHPDeactivate = selectFRoxFullHPDeactivate.value == "true";
+    storageValue.activate[nIndex] = selectFRoxActivateTower.value === "true";
+    storageValue.fullHPDeactivate = selectFRoxFullHPDeactivate.value === "true";
     window.sessionStorage.setItem("FRox", JSON.stringify(storageValue));
   }
 
@@ -16259,12 +16270,12 @@ function bodyJS() {
       ) {
         if (user.quests.QuestFortRox.is_dawn === true)
           selectFRoxStage.value = "DAWN";
-        else if (user.quests.QuestFortRox.current_phase == "night") {
+        else if (user.quests.QuestFortRox.current_phase === "night") {
           nIndex = storageValue.stage.indexOf(
             user.quests.QuestFortRox.current_stage
           );
           if (nIndex > -1) selectFRoxStage.value = storageValue.order[nIndex];
-        } else if (user.quests.QuestFortRox.current_phase == "day") {
+        } else if (user.quests.QuestFortRox.current_phase === "day") {
           selectFRoxStage.value = "DAY";
         }
       }
@@ -16287,8 +16298,8 @@ function bodyJS() {
 
   function onInputMinRageChanged(input) {
     var selectWWRiftFaction = document.getElementById("selectWWRiftFaction");
-    var nMin = selectWWRiftFaction.value == "MBW_45_48" ? 45 : input.min;
-    var nMax = selectWWRiftFaction.value == "MBW_40_44" ? 44 : input.max;
+    var nMin = selectWWRiftFaction.value === "MBW_45_48" ? 45 : input.min;
+    var nMax = selectWWRiftFaction.value === "MBW_40_44" ? 44 : input.max;
     input.value = limitMinMax(input.value, nMin, nMax);
     saveWWRift();
     initControlsWWRift();
@@ -16366,7 +16377,7 @@ function bodyJS() {
     storageValue.faction.trinket[nIndex] = selectWWRiftTrapTrinket.value;
     storageValue.faction.bait[nIndex] = selectWWRiftTrapBait.value;
     storageValue.MBW.minRageLLC = parseInt(inputMinRage.value);
-    if (selectWWRiftFaction.value == "MBW_40_44") {
+    if (selectWWRiftFaction.value === "MBW_40_44") {
       nIndex = selectWWRiftMBWBar4044.selectedIndex;
       if (nIndex < 0) nIndex = 0;
       storageValue.MBW.rage4044.weapon[nIndex] =
@@ -16375,7 +16386,7 @@ function bodyJS() {
       storageValue.MBW.rage4044.trinket[nIndex] =
         selectWWRiftMBWTrapTrinket.value;
       storageValue.MBW.rage4044.bait[nIndex] = selectWWRiftMBWTrapBait.value;
-    } else if (selectWWRiftFaction.value == "MBW_45_48") {
+    } else if (selectWWRiftFaction.value === "MBW_45_48") {
       nIndex = selectWWRiftMBWBar4548.selectedIndex;
       if (nIndex < 0) nIndex = 0;
       storageValue.MBW.rage4548.weapon[nIndex] =
@@ -16455,7 +16466,7 @@ function bodyJS() {
         for (var i = 0; i < classRage.length; i++)
           arrRage[i] = parseInt(classRage[i].textContent);
         var temp = arrOrder.indexOf(storageValue.factionFocus);
-        if (temp != -1 && Number.isInteger(arrRage[temp]))
+        if (temp !== -1 && Number.isInteger(arrRage[temp]))
           selectWWRiftRage.selectedIndex = Math.floor(arrRage[temp] / 25);
       }
       var nIndex =
@@ -16466,13 +16477,13 @@ function bodyJS() {
       selectWWRiftTrapBait.value = storageValue.faction.bait[nIndex];
       inputMinRage.value = storageValue.MBW.minRageLLC;
       var temp = "";
-      if (selectWWRiftFaction.value == "MBW_40_44") {
+      if (selectWWRiftFaction.value === "MBW_40_44") {
         nIndex =
           selectWWRiftMBWBar4044.selectedIndex < 0
             ? 0
             : selectWWRiftMBWBar4044.selectedIndex;
         temp = "rage4044";
-      } else if (selectWWRiftFaction.value == "MBW_45_48") {
+      } else if (selectWWRiftFaction.value === "MBW_45_48") {
         nIndex =
           selectWWRiftMBWBar4548.selectedIndex < 0
             ? 0
@@ -16489,9 +16500,9 @@ function bodyJS() {
     }
     if (selectWWRiftFaction.value.indexOf("MBW") > -1) {
       selectWWRiftMBWBar4044.style.display =
-        selectWWRiftFaction.value == "MBW_40_44" ? "" : "none";
+        selectWWRiftFaction.value === "MBW_40_44" ? "" : "none";
       selectWWRiftMBWBar4548.style.display =
-        selectWWRiftFaction.value == "MBW_40_44" ? "none" : "";
+        selectWWRiftFaction.value === "MBW_40_44" ? "none" : "";
       document.getElementById("trWWRiftFactionFocusNext").style.display =
         "none";
       document.getElementById("trWWRiftMBWMinRage").style.display = "table-row";
@@ -16591,16 +16602,16 @@ function bodyJS() {
     storageValue[strStage].weapon = selectGESTrapWeapon.value;
     storageValue[strStage].base = selectGESTrapBase.value;
     storageValue[strStage].bait = selectGESTrapBait.value;
-    if (strStage == "RR")
+    if (strStage === "RR")
       storageValue[strStage].trinket = selectGESRRTrapTrinket.value;
-    else if (strStage == "DC")
+    else if (strStage === "DC")
       storageValue[strStage].trinket = selectGESDCTrapTrinket.value;
     else storageValue[strStage].trinket = selectGESTrapTrinket.value;
-    storageValue.bLoadCrate = selectGESSDLoadCrate.value == "true";
+    storageValue.bLoadCrate = selectGESSDLoadCrate.value === "true";
     storageValue.nMinCrate = parseInt(inputMinCrate.value);
-    storageValue.bUseRepellent = selectGESRRRepellent.value == "true";
+    storageValue.bUseRepellent = selectGESRRRepellent.value === "true";
     storageValue.nMinRepellent = parseInt(inputMinRepellent.value);
-    storageValue.bStokeEngine = selectGESDCStokeEngine.value == "true";
+    storageValue.bStokeEngine = selectGESDCStokeEngine.value === "true";
     storageValue.nMinFuelNugget = parseInt(inputMinFuelNugget.value);
     window.sessionStorage.setItem("GES", JSON.stringify(storageValue));
   }
@@ -16637,7 +16648,7 @@ function bodyJS() {
         var classPhase = document.getElementsByClassName("box phaseName");
         if (classPhase.length > 0 && classPhase[0].children.length > 1)
           strCurrentPhase = classPhase[0].children[1].textContent;
-        if (strCurrentPhase == "Supply Depot") {
+        if (strCurrentPhase === "Supply Depot") {
           selectGESStage.value = "SD";
           var nTurn = parseInt(
             document
@@ -16645,9 +16656,9 @@ function bodyJS() {
               .textContent.substr(0, 1)
           );
           selectGESStage.value = nTurn <= 0 ? "SD_BEFORE" : "SD_AFTER";
-        } else if (strCurrentPhase == "Raider River")
+        } else if (strCurrentPhase === "Raider River")
           selectGESStage.value = "RR";
-        else if (strCurrentPhase == "Daredevil Canyon")
+        else if (strCurrentPhase === "Daredevil Canyon")
           selectGESStage.value = "DC";
       } else selectGESStage.value = "WAITING";
     }
@@ -16670,9 +16681,9 @@ function bodyJS() {
       selectGESTrapWeapon.value = storageValue[strStage].weapon;
       selectGESTrapBase.value = storageValue[strStage].base;
       selectGESTrapBait.value = storageValue[strStage].bait;
-      if (strStage == "RR")
+      if (strStage === "RR")
         selectGESRRTrapTrinket.value = storageValue.RR.trinket;
-      else if (strStage == "DC")
+      else if (strStage === "DC")
         selectGESDCTrapTrinket.value = storageValue.DC.trinket;
       else selectGESTrapTrinket.value = storageValue[strStage].trinket;
       selectGESSDLoadCrate.value =
@@ -16685,11 +16696,11 @@ function bodyJS() {
         storageValue.bStokeEngine === true ? "true" : "false";
       inputMinFuelNugget.value = storageValue.nMinFuelNugget;
     }
-    if (strStage == "RR") {
+    if (strStage === "RR") {
       selectGESTrapTrinket.style.display = "none";
       selectGESRRTrapTrinket.style.display = "";
       selectGESDCTrapTrinket.style.display = "none";
-    } else if (strStage == "DC") {
+    } else if (strStage === "DC") {
       selectGESTrapTrinket.style.display = "none";
       selectGESRRTrapTrinket.style.display = "none";
       selectGESDCTrapTrinket.style.display = "";
@@ -16699,11 +16710,11 @@ function bodyJS() {
       selectGESDCTrapTrinket.style.display = "none";
     }
     inputMinCrate.disabled =
-      selectGESSDLoadCrate.value == "true" ? "" : "disabled";
+      selectGESSDLoadCrate.value === "true" ? "" : "disabled";
     inputMinRepellent.disabled =
-      selectGESRRRepellent.value == "true" ? "" : "disabled";
+      selectGESRRRepellent.value === "true" ? "" : "disabled";
     inputMinFuelNugget.disabled =
-      selectGESDCStokeEngine.value == "true" ? "" : "disabled";
+      selectGESDCStokeEngine.value === "true" ? "" : "disabled";
   }
 
   function showOrHideTr(algo) {
@@ -16872,7 +16883,7 @@ function bodyJS() {
     var i, temp;
     for (var prop in objTableRow) {
       if (objTableRow.hasOwnProperty(prop)) {
-        temp = prop == algo ? "table-row" : "none";
+        temp = prop === algo ? "table-row" : "none";
         for (i = 0; i < objTableRow[prop].arr.length; i++)
           document.getElementById(objTableRow[prop].arr[i]).style.display =
             temp;
